@@ -1,0 +1,5 @@
+ctrl+enter 在下一行输入
+ctrl+d 选取下一个匹配项
+shift+alt+下箭头复制当前行
+ctrl+shift+pgup 移动选项卡 ctrl+pgup是切换上一个选项卡
+ctrl+w 可以把选项卡关闭

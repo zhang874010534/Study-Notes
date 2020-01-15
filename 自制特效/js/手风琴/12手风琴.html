@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>胡大大</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #box{
+            margin: 0 auto;
+            /*5张图片一共1200可是鼠标放上去会小于1200*/
+            width: 1150px;
+            height: 400px;
+            border: 1px solid red;
+            position: relative;
+            overflow: hidden;
+        }
+        ul{
+            /*需要更长才能放得下释放事件的图片因为定时器需要时间可是指令一次性结束*/
+            width: 1760px;
+            position: absolute;
+            list-style: none;
+            height: 400px;
+
+        }
+        div li{
+            width: 240px;
+            height: 400px;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+<script src="common.js"></script>
+<script>
+    var list=my$("box").getElementsByTagName("li");
+    for (let i = 0; i <list.length ; i++) {
+        list[i].style.backgroundImage="url("+(i+1)+".png)";
+        //注册鼠标进入事件
+        list[i].onmouseover=mouseoverHandle;
+        list[i].onmouseout=mouseoutHandle;
+    }
+    function mouseoverHandle() {
+        for (let i = 0; i <list.length ; i++) {
+            animateS(list[i],{"width":100});
+        }
+        animateS(this,{"width":800})
+    }
+    function mouseoutHandle() {
+        for (let i = 0; i <list.length ; i++) {
+            animateS(list[i],{"width":240});
+        }
+    }
+</script>
+</body>
+</html>

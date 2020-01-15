@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .dv{
+            width: 200px;
+            height: 500px;
+            border: 1px solid red;
+        }
+
+        ul{
+            list-style: none;
+            text-align: center;
+        }
+        #u1 li{
+            margin-top: 10px;
+            background-color: orange;
+            cursor: pointer;
+        }
+        #u1 li ul li{
+            background-color: pink;
+            margin-top: 10px;
+        }
+    </style>
+    <script src="jquery-1.12.1.min.js"></script>
+    <script>
+        $(function () {
+            $("#u1>li>ul").hide();
+            $("#u1>li").click(function () {
+                if ($(this).children("ul")[0].style.display==="block") {
+                    $(this).children("ul").hide(500);
+                }else{
+                    $(this).siblings("li").children("ul").hide(500);
+                    $(this).children("ul").show(500);
+                }
+
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="dv">
+    <ul id="u1">
+        <li>
+            去去去去
+            <ul>
+                <li>啊点钱无</li>
+                <li>维权网</li>
+                <li>饿挖额为群</li>
+            </ul>
+        </li>
+        <li>
+            qq亲亲我俄
+            <ul>
+                <li>啊点钱无</li>
+                <li>维权网</li>
+                <li>饿挖额为群</li>
+            </ul>
+        </li>
+        <li>
+            qq亲亲我俄
+            <ul>
+                <li>啊点钱无</li>
+                <li>维权网</li>
+                <li>饿挖额为群</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

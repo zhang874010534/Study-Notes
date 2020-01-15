@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>胡大大</title>
+    <script src="common.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #wrap{
+            width: 1200px;
+            margin: 100px auto;
+        }
+        #slide{
+            height: 500px;
+            position: relative;
+        }
+
+        ul{
+
+            list-style: none;
+        }
+        ul li{
+            position: absolute;
+            left: 200px;
+            top: 50px;
+            overflow: hidden;
+        }
+        #focusD {
+            /*display: none;*/
+            opacity: 0;
+        }
+
+        #focusD a {
+
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #cccccc;
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            background-color: #cccccc;
+            color: #ffffff;
+            cursor: pointer;
+            top: 260px;
+            z-index: 5;
+        }
+
+        #right {
+            right: 0;
+        }
+
+    </style>
+    <script>
+        var config=[
+            {
+                width:400,
+                top:20,
+                left:50,
+                opacity:0.2,
+                zIndex:2
+            },
+            {
+                width:600,
+                top:70,
+                left:0,
+                opacity:0.8,
+                zIndex:3
+            },
+            {
+                width:800,
+                top:200,
+                left:200,
+                opacity:1,
+                zIndex:4
+            },
+            {
+                width:600,
+                top:70,
+                left:600,
+                opacity:0.8,
+                zIndex:3
+            },
+            {
+                width:400,
+                top:20,
+                left:750,
+                opacity:0.2,
+                zIndex:2
+
+            }
+        ];
+
+        window.onload=function () {
+            //控制锁住连续点的动作
+            var flag=true;
+            //散开图片
+            var list=my$("slide").getElementsByTagName("li");
+            function assign() {
+                for (let i = 0; i <list.length ; i++) {
+                    animateS(list[i],config[i],function () {
+                        //全部结束才变成true
+                        flag=true;
+                    })
+                }
+            }
+            assign();
+            //鼠标进入
+            my$("wrap").onmouseover=function () {
+                animateS(my$("focusD"),{"opacity":1});
+            };
+            my$("wrap").onmouseout=function () {
+                animateS(my$("focusD"),{"opacity":0});
+            };
+            my$("right").onclick=function () {
+                if (flag){
+                    flag=false;
+                    config.push(config.shift());
+                    assign();
+                }
+
+            };
+            my$("left").onclick=function () {
+                if (flag){
+                    flag=false;
+                    config.unshift(config.pop());
+                    assign();
+                }
+                }
+
+        }
+    </script>
+</head>
+<body>
+<div class="wrap" id="wrap">
+    <div class="slide" id="slide">
+        <ul>
+            <li><a href="#"><img src="1.png" alt=""></a></li>
+            <li><a href="#"><img src="2.png" alt=""></a></li>
+            <li><a href="#"><img src="3.png" alt=""></a></li>
+            <li><a href="#"><img src="4.png" alt=""></a></li>
+            <li><a href="#"><img src="3.png" alt=""></a></li>
+        </ul>
+        <div id="focusD"><a id="left">&lt;</a> <a id="right">&gt;</a></div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>胡大大</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+
+        }
+        span{
+            display: inline-block;
+            width: 52px;
+            height: 30px;
+            background-color: yellow;
+            position: absolute;
+
+        }
+        div{
+            width: 500px;
+            height: 30px;
+            background-color: aliceblue;
+            margin:200px auto;
+            position: relative;
+
+
+        }
+        ul{
+            list-style: none;
+            line-height: 30px;
+            position: absolute;
+            top: 0;
+        }
+        li{
+            float: left;
+            padding-left: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="dv">
+    <span id="cloud"></span>
+    <ul id="navBar">
+        <li>啊啊</li>
+        <li>恩恩</li>
+        <li>日日</li>
+    </ul>
+
+</div>
+<script src="common.js"></script>
+<script>
+    var cloud=my$("cloud");
+    //获取li标签
+    var list=my$("navBar").children;
+    //为每一个li注册事件
+    for (let i = 0; i <list.length ; i++) {
+        list[i].onmouseover=mouseoverHandle;
+        list[i].onclick=clickHandle;
+        list[i].onmouseout=mouseoutHandle;
+    }
+    function mouseoverHandle() {
+        animateS(cloud,{"left":this.offsetLeft});
+    }
+    var lastPosition=0;
+    function clickHandle() {
+        lastPosition=this.offsetLeft;
+    }
+    function mouseoutHandle() {
+        animateS(cloud,{"left":lastPosition});
+    }
+
+
+</script>
+</body>
+</html>

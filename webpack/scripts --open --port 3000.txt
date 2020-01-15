@@ -1,0 +1,5 @@
+"dev": "webpack-dev-server --open --port 3000 --contentBase src --hot"
+--open 运行后直接打开网站
+--port 设置端口
+--contentBase 默认打开地址
+--hot 热更新 只更新修改的部分 页面异步刷新减少请求

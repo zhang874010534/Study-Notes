@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <style>
+        .wrap{
+            float: left;
+        }
+        ul{
+            list-style: none;
+            width: 700px;
+            float: left;
+        }
+        li{
+            display: inline-block;
+            margin-left: 10px;
+
+        }
+    </style>
+    <script src="jquery-1.12.1.min.js"></script>
+    <script>
+        $(function () {
+            $(".wrap>ul>li").mouseenter(function () {
+                $(".wrap>ul>li").css("opacity","0.5");
+                $(this).css("opacity","1");
+            });
+            $(".wrap").mouseleave(function () {
+                // $(".wrap>ul>li").css("opacity","1");
+                $(".wrap").find("li").css("opacity","1");
+            });
+        })
+    </script>
+</head>
+<body>
+<div class="wrap">
+    <ul>
+        <li><a href="#"><img src="1.png" alt=""></a></li>
+        <li><a href="#"><img src="1.png" alt=""></a></li>
+        <li><a href="#"><img src="1.png" alt=""></a></li>
+        <li><a href="#"><img src="1.png" alt=""></a></li>
+        <li><a href="#"><img src="1.png" alt=""></a></li>
+        <li><a href="#"><img src="1.png" alt=""></a></li>
+    </ul>
+</div>
+</body>
+</html>

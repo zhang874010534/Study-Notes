@@ -1,0 +1,25 @@
+class Person {
+    constructor(name, age) {
+        this.name = name
+        this.age = age
+    }
+    say(){
+        console.log('父级构造函数的原型方法')
+    }
+    static jintai='静态属性'
+}
+
+class Chinese extends Person{
+    constructor(name,age,color, language) {
+        super(name,age)
+        this.color=color
+        this.language=language
+    }
+}
+
+var person = new Person('zc', 20)
+
+var chinese = new Chinese('张三',20,'yellow', '汉语')
+console.log(chinese)
+chinese.say()
+console.log(Chinese.jintai)//子构造函数会继承父构造函数的静态属性

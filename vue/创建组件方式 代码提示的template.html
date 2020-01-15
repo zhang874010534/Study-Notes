@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<my-comp></my-comp>
+			<login></login>
+		</div>
+		<template id="app-temp">
+			<div>
+				<h3>这是一个extend创建的组建{{msg}}</h3>
+				<span>123</span>
+			</div>
+		</template>
+		<template  id="app-temp1">
+			<h3>这是一个私有的组件</h3>
+		</template>
+		<script type="text/javascript">
+			Vue.component('my-comp', {
+				template: '#app-temp',
+				data:function(){
+					return {
+						msg:'这是一个组件中的msg'
+					}
+				}
+			});
+
+			var vm = new Vue({
+				el: '#app',
+				data: {
+
+				},
+				components:{
+					login:{
+						template:'#app-temp1'
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

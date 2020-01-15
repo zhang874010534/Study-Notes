@@ -1,0 +1,7 @@
+win+方向键左 让页面居左
+shift+鼠标右键 在此处打开命令窗口
+ctrl+pgup 浏览器选项卡上一个
+shift+enter 在新的浏览器打开并搜索
+ctrl+tab 浏览器选项卡切换
+shift+滚轮  alt+滚轮  滚动底部滚动栏
+ctrl+win+d创建一个虚拟桌面 ctrl+win+方向键左右可以切换

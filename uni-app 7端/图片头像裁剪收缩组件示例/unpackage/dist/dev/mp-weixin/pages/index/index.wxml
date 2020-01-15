@@ -1,0 +1,1 @@
+<view class="content"><cropper vue-id="1" selWidth="660rpx" selHeight="660rpx" avatarSrc="{{imgurl}}" avatarStyle="width:100vw;height:100vw;" data-event-opts="{{[['^upload',[['myUpload']]]]}}" bind:upload="__e" bind:__l="__l"></cropper><view>点击更换头像</view></view>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>胡大大</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .box {
+            position: relative;
+            top: 200px;
+            width: 300px;
+            height: 400px;
+            border: 1px solid red;
+            overflow: hidden;
+        }
+        .box div{
+            float: left;
+        }
+        .content {
+            position: relative;
+            width: 270px;
+        }
+        .scroll{
+            width: 30px;
+            height: 400px;
+            background-color: #e4deff;
+            position: relative;
+        }
+        .bar{
+            position: absolute;
+            width: 30px;
+            height: 50px;
+            border: 1px solid red;
+            background-color: red;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box">
+    <div class="content" id="content">
+        阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待
+        阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待
+        阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待
+        阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待
+        阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待
+        阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待阿德维奇就哦IE挤噢却忘记诶噢我IQ偶尔挤噢我期待
+    </div>
+    <div class="scroll" id="scroll">
+        <div class="bar" id="bar"></div>
+    </div>
+</div>
+<script src="common.js"></script>
+<script>
+    var box=my$("box");
+    var content=my$("content");
+    var bar=my$("bar");
+    var scroll=my$("scroll");
+    //设置滚动条的高
+    var height=box.offsetHeight*scroll.offsetHeight/content.offsetHeight;
+    bar.style.height=height+"px";
+    //移动滚动条
+    bar.onmousedown=function (e) {
+
+        var spaceY=e.clientY-box.offsetTop;
+        document.onmousemove=function (e) {
+            var y=e.clientY-spaceY-box.offsetTop;
+            y = y<0?0:y;
+            y = y>scroll.offsetHeight-bar.offsetHeight?scroll.offsetHeight-bar.offsetHeight
+                :y;
+            bar.style.top=y+"px";
+            //设置鼠标移动的时候，文字不要被选中
+            window.getSelection?window.getSelection().removeAllRanges():document.selection.empty();
+            var moveY=y*(content.offsetHeight-box.offsetHeight)/(scroll.offsetHeight -bar.offsetHeight);
+            content.style.bottom=moveY+"px";
+        }
+    };
+    document.onmouseup = function () {
+        document.onmousemove=null;
+    }
+</script>
+</body>
+</html>

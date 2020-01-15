@@ -1,0 +1,21 @@
+ctrl D 复制一整行 
+ctrl Y 删除一整行ctrl+x 直接剪切好了 建议改成ctrl+e很舒服
+shift enter 在下一行编辑
+Shift + Ctrl + Alt + J //选中所有同样的词
+Alt + J //选择当前词或下一个相同词
+Ctrl+X：删除当前行
+多光标模式，按住 option 点鼠标就可以了。windows 下可能是 alt
+column select mode 
+div输入完 +tab 变成<div></div>
+选择性粘贴 ctrl+shift+v
+p*5 + tab 可以出来5个p标签
+ctrl+w 选中周围的单词 可多按几下
+ctrl+shift+/ 选中的注释
+移动插入符号到行尾 End 并选中shift+End
+ctrl+"-" 折叠
+ctrl+shift+insert 选择历史内容粘贴
+alt+j 找到下一个和选中部分一样的部分 下一个匹配项
+css里 bg+    然后tab 
+ctrl+shift+back(返回键) 可以回到上一次编辑的地方
+alt+→ 切换选项卡 切换上一个选项卡（ctrl+Tab）
+ctrl+alt+方向键 可以让屏幕竖过来

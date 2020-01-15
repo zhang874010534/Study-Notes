@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            background-color: hotpink;
+        }
+        .box{
+            width: 1000px;
+            height: 240px;
+            margin: 0 auto;
+            margin-top: 100px;
+            clear: both;
+        }
+        #btn{
+            width: 100px;
+            height: 30px;
+            margin-left: 600px;
+            margin-top: 50px;
+        }
+        .name{
+            width: 100px;
+            height: 30px;
+            float: left;
+            background-color: antiquewhite;
+            margin-left: 10px;
+            margin-top: 10px;
+            text-align: center;
+            line-height: 30px;
+        }
+        #span{
+            float: right;
+            position: relative;
+            top: 55px;
+            right: 185px;
+        }
+        h1{
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+<h1>随机点名系统</h1>
+<span id="span"></span>
+<div class="box" id="box"></div>
+<input type="button" id="btn" value="点名" />
+<script type="text/javascript">
+    //创造虚拟后台数据
+    var arrs = ["崔雪莉","郭雪芙","嘉歆","阿芳","雪灵","老王","刘疙瘩","许大妈",
+        "韩晁","静涵","允儿","查灿灿","靓影","杨幂","李静","邓超","李伟","蓝老师"
+        ,"金枝","静恬","允儿","杨幂","晶灵","林志玲","嘉懿","流行","邓超","郭琦"
+        ,"允儿","许大妈","林妹妹","杨幂","佳思","吉玉","张焕","张赛","师傅","菊月"
+        ,"王晶","吉玟","王飞","林志玲","曾艳","王翠青","JaydenLD"];
+    //获取父元素
+    var boxNode = document.getElementById("box");
+    for (var i = 0; i < arrs.length; i++) {
+        //创建新元素
+        var divNode = document.createElement("div");
+        divNode.innerHTML=arrs[i];
+        divNode.className="name";
+        boxNode.appendChild(divNode);
+    }
+    //点名
+    var btn= document.getElementById("btn");
+    btn.onclick = function () {
+        if(this.value==="点名"){
+            //定时
+            timeId=setInterval(function () {
+                //清空所有颜色
+                for (var j = 0; j < arrs.length; j++) {
+                    boxNode.children[j].style.background="";
+                }
+                //留下当前颜色
+                var random = parseInt(Math.random()*arrs.length);
+                boxNode.children[random].style.background="red";
+            },100);
+            this.value="停止";
+        }else{
+            //清除计时器
+            clearInterval(timeId);
+            this.value="点名";
+        }
+    };
+    var spanNode = document.getElementById("span");
+    //调用时间
+    getTime();
+    setInterval(getTime , 1000);
+    function getTime() {
+        var day = new Date();
+        var year = day.getFullYear();
+        var month = day.getMonth()+1;
+        var dat = day.getDay();
+        var hours = day.getHours();
+        var minitues = day.getMinutes();
+        var second = day.getSeconds();
+        spanNode.innerHTML =year+"-"+month+"-"+dat+" "+hours+":"+minitues+":"+second;
+    }
+</script>
+</body>
+</html>

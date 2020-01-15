@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<demo>
+				<h1>我是没有名字的h1</h1>
+				<h1 slot="h11">我是h11</h1>
+				<template v-slot:h22>我是template</template>
+				<!-- default里的title是子组件的title:'abc'  用{{title}}
+				 把它弄出来-->
+				<template v-slot:default="title">{{title}}</template>
+			</demo>
+		</div>
+		
+		<script>
+			Vue.component('demo',{
+				data(){
+					return {
+						title:'abc'
+					}
+				},
+				template:`
+					<div>
+						<slot>ddd</slot>
+						<slot name="h11"></slot>
+						<slot name="h22"></slot>
+						<slot :title='title'></slot>
+					</div>
+				`
+				
+			})
+			var vm=new Vue({
+				el:'#app',
+				data:{
+					
+				},
+				
+			})
+		</script>
+	</body>
+</html>

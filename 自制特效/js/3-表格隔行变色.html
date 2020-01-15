@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>胡大大</title>
+    <style>
+        .wrap{
+            width: 400px;
+            margin: 200px auto;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <table border="1" cellpadding="10" cellspacing="10">
+        <thead>
+            <tr>
+                <th rowspan="2">序号</th>
+                <th rowspan="2">姓名</th>
+                <th colspan="2">课程</th>
+                <th colspan="2">成绩</th>
+            </tr>
+            <tr>
+                <td>爱您</td>
+                <td>爱您</td>
+                <td>爱您</td>
+                <td>爱您</td>
+            </tr>
+        </thead>
+        <tbody id="trs">
+            <tr>
+                <td rowspan="3">1</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>爱您</td>
+                <td>爱您</td>
+                <td>爱您</td>
+                <td>爱您</td>
+                <td>爱您</td>
+            </tr>
+            <tr>
+                <td rowspan="3">2</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>爱您</td>
+                <td>爱您</td>
+                <td>爱您</td>
+                <td>爱您</td>
+                <td>爱您</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<script src="common.js"></script>
+<script>
+    var trs=my$("trs").getElementsByTagName("tr");
+    for (let i = 0; i <trs.length ; i++) {
+        trs[i].style.backgroundColor=i%2===0?"red":"green";
+        //鼠标进入事件
+        trs[i].onmouseover=mouseoverHandle;
+        //鼠标离开时间
+        trs[i].onmouseout=mouseoutHandle;
+    }
+    var bkColor;
+    function mouseoverHandle() {
+        bkColor=this.style.backgroundColor;
+        this.style.backgroundColor="pink";
+
+    }
+    function mouseoutHandle() {
+        this.style.backgroundColor=bkColor;
+    }
+</script>
+</body>
+</html>

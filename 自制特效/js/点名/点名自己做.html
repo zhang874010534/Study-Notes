@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>胡大大</title>
+    <style>
+        h1{
+            text-align: center;
+        }
+        body{
+            background-color: mediumturquoise;
+        }
+        .name{
+            float: left;
+            width:100px;
+            background-color: beige;
+            margin-left: 10px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        #box{
+            width: 1000px;
+            clear: both;
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+        #btn{
+            width: 100px;
+            margin-left: 700px;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+<h1>点名系统</h1>
+<div id="box" class="box"></div>
+<input type="button" value="点名" id="btn">
+<script src="common.js"></script>
+<script>
+    var arr=["胡温娴","胡温娴","胡温娴","胡温娴","胡温娴","胡温娴","胡温娴",
+        "胡温娴","胡温娴","胡温娴","胡温娴","胡温娴","胡温娴","胡温娴","胡温娴",
+        "胡温娴","胡温娴","胡温娴","胡温娴","胡温娴","胡温娴","胡温娴","胡温娴","胡温娴"
+        ,"胡温娴", "胡温娴","胡温娴","胡温娴","胡温娴","胡温娴","胡温娴","胡温娴","胡温娴",
+        "胡温娴","胡温娴","胡温娴"];
+    var boxE=document.getElementById("box");
+    for (let i = 0; i <arr.length ; i++) {
+        var divE=document.createElement("div");
+        divE.innerText=arr[i];
+        divE.className="name";
+        boxE.appendChild(divE);
+    }
+    my$("btn").onclick=function () {
+        if (this.value==="点名"){
+            timeId=setInterval(function () {
+                for (let i = 0; i <arr.length ; i++) {
+                    boxE.children[i].style.backgroundColor="";
+                }
+                var random=parseInt(Math.random()*arr.length);
+                boxE.children[random].style.backgroundColor="green";
+            },100);
+            this.value="停止";
+        }else {
+            //清除计时器
+            clearInterval(timeId);
+            this.value="点名";
+        }
+    };
+</script>
+</body>
+</html>

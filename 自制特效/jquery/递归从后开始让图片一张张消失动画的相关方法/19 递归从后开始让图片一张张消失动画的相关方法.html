@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <style>
+        img{
+        }
+        ul{
+            list-style: none;
+        }
+        ul li{
+            float: left;
+            margin-left: 10px;
+        }
+    </style>
+    <script src="jquery-1.12.1.min.js"></script>
+    <script>
+        $(function () {
+            $("#btn1").click(function () {
+                $("ul>li:last").hide(500,function f1() {
+                    $(this).prev().hide(1000,f1);
+                    // $(this).prev().hide(1000,arguments.callee);
+                });
+            });
+            $("#btn2").click(function () {
+
+            });
+        })
+    </script>
+</head>
+<body>
+<input type="button" value="隐藏" id="btn1">
+<ul>
+    <li><img src="1.png" alt=""></li>
+    <li><img src="1.png" alt=""></li>
+    <li><img src="1.png" alt=""></li>
+    <li><img src="1.png" alt=""></li>
+</ul>
+
+</body>
+</html>

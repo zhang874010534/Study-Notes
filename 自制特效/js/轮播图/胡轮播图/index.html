@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>胡大大</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            width: 300px;
+        }
+
+        .box {
+            width: 300px;
+            height: 400px;
+            margin: 100px auto;
+            border: 3px solid #ccc;
+            padding: 5px;
+
+        }
+
+        .inner {
+            width: 300px;
+            height: 399px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .inner ul {
+            width: 1200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .inner ul li {
+            float: left;
+        }
+
+        .square {
+            position: absolute;
+            top: 360px;
+            right: 10px;
+            z-index: 99;
+
+        }
+
+        .square span {
+            display: inline-block;
+            float: left;
+            text-align: center;
+            line-height: 15px;
+            margin-right: 5px;
+            width: 15px;
+            height: 15px;
+            border: 1px solid red;
+            cursor: pointer;
+        }
+
+        .current {
+            background-color: #ff6a5e;
+            color: aliceblue;
+        }
+
+        #focusD {
+            display: none;
+            width: 300px;
+            position: absolute;
+
+        }
+
+        #focusD span {
+            display: inline-block;
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #cccccc;
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            background-color: #cccccc;
+            opacity: 0.7;
+            bottom: 200px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        #right {
+            right: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div class="box" id="box">
+    <!--相框-->
+    <div class="inner">
+        <ul>
+            <li><a href="#"><img src="00.jpg" alt=""></a></li>
+            <li><a href="#"><img src="01.jpg" alt=""></a></li>
+            <li><a href="#"><img src="psb.jpg" alt=""></a></li>
+        </ul>
+        <div class="square">
+
+        </div>
+    </div>
+    <div id="focusD"><span id="left">&lt;</span> <span id="right">&gt;</span></div>
+</div>
+<script src="common.js"></script>
+<script>
+    //最外面div
+    var box = my$("box");
+    //获取相框
+    var inner = box.children[0];
+    //获取相框宽度
+    var imgWidth = inner.offsetWidth;
+    //获取ul
+    var ulObj = inner.children[0];
+    //ul里的li
+    var list = ulObj.children;
+    //获取square
+    var square = inner.children[1];
+
+    var index = 0;
+    //创建小按钮
+    for (let i = 0; i < list.length; i++) {
+        var spanObj = document.createElement("span");
+        square.appendChild(spanObj);
+        spanObj.innerHTML = i + 1;
+    }
+    //克隆ul里的第一个li
+    ulObj.appendChild(ulObj.children[0].cloneNode(true));
+    //自动播放
+    var timeId=setInterval(clickHandle,1000);
+    //鼠标进入
+    box.onmouseover = function () {
+        // console.log(timeId);
+
+        my$("focusD").style.display = "block";
+        clearInterval(timeId);
+    };
+    //鼠标离开
+    box.onmouseout = function () {
+        timeId=setInterval(clickHandle,1000);
+        my$("focusD").style.display = "none";
+    };
+    //获取span
+    var spanObjs = inner.children[1].children;
+    //注册小按钮事件
+    for (let i = 0; i < spanObjs.length; i++) {
+        //循环的时候保存索引值到自定义属性
+        spanObjs[i].setAttribute("index", i);
+        //注册鼠标经过事件
+        spanObjs[i].onmouseover = function () {
+            //移除类样式
+            for (let j = 0; j < spanObjs.length; j++) {
+                spanObjs[j].removeAttribute("class");
+            }
+            this.className = "current";
+
+            index = this.getAttribute("index");
+            animate(ulObj, -index * imgWidth);
+        };
+    }
+    //让一开始的1按钮有样式
+    spanObjs[0].className = "current";
+    //左右焦点
+    my$("right").onclick = clickHandle;
+    function clickHandle() {
+        //无缝效果
+        if (index === list.length - 1) {
+            index = 0;
+            ulObj.style.left = 0 + "px";
+        }
+        index++;
+        animate(ulObj, -index * imgWidth);
+        //清楚所有小按钮样式
+        for (let j = 0; j < spanObjs.length; j++) {
+            spanObjs[j].removeAttribute("class");
+        }
+        //到达克隆图片时让第一个span按钮变色
+        if (index === list.length - 1) {
+            spanObjs[0].className = "current";
+        } else {
+            spanObjs[index].className = "current";
+        }
+
+    }
+    my$("left").onclick = function () {
+        if (index===0){
+            index = list.length-1;
+            ulObj.style.left=-index*imgWidth+"px";
+        }
+        index--;
+        animate(ulObj, -index * imgWidth);
+        for (let j = 0; j < spanObjs.length; j++) {
+            spanObjs[j].removeAttribute("class");
+        }
+        spanObjs[index].className = "current";
+
+    };
+
+    //自动播放
+    // var current=0;
+    // function f1() {
+    //     current-=5;
+    //     if (current<-900){
+    //         current=0;
+    //         ulObj.style.left=0+"px";
+    //     }else
+    //         ulObj.style.left=current+"px";
+    // }
+    // var timeId=setInterval(f1,25);
+
+
+</script>
+
+</body>
+</html>

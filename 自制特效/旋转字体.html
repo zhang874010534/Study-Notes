@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="//at.alicdn.com/t/font_1322442_bilvx3fltxu.js"></script>
+		<style>
+			body{
+				
+				perspective: 1000px;
+			}
+			.icon {
+				width: 1em;
+				height: 1em;
+				vertical-align: -0.15em;
+				fill: currentColor;
+				overflow: hidden;
+			}
+			svg{
+				font-size: 600px;
+				border: 1px solid red;
+				transform: rotateY(60deg);
+			}
+			#demo{
+				transform-origin: center;
+				margin: 0 auto;
+				width: 600px;
+				height: 600px;
+				border: 1px solid red;
+				position: relative;
+				animation: shepi 5s infinite linear;
+				transform-style: preserve-3d;
+			}
+			@keyframes shepi{
+				from {
+					-webkit-transform: rotateY(0deg)
+				}
+				
+				to {
+					-webkit-transform: rotateY(-360deg)
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="demo">
+			<svg class="icon" aria-hidden="true">
+			    <use xlink:href="#icon-jingzi"></use>
+			</svg>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<p>{{a.a}}</p>
+			<div>{{b}}</div>
+			<input type="text" v-model="a">
+		</div>
+		<script src="./mvvm.js"></script>
+		<script> 
+			let shuai=new ShuaiBi({
+				el:"#app",
+				data:{
+					a:{a:'是a'},
+					b:'是b'
+				}
+			})
+		</script>
+	</body>
+	
+</html>

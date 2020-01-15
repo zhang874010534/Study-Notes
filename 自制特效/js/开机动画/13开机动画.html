@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>胡大大</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 257px;
+            overflow: hidden;
+
+        }
+
+        #closeButton {
+            position: absolute;
+            right: 0;
+            display: inline-block;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+
+        }
+
+        img {
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+<div id="box" class="box">
+    <span id="closeButton"></span>
+    <div class="hd"><img src="0-1.png" alt=""></div>
+    <div class="bd" id="bottomPart">
+        <img src="0-2.png" alt="">
+    </div>
+</div>
+<script src="common.js"></script>
+<script>
+    my$("closeButton").onclick = function () {
+        animateS(my$("bottomPart"),{"height":0},function () {
+            animateS(my$("box"),{"width":0});
+        })
+    }
+</script>
+</body>
+</html>

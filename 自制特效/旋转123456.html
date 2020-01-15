@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JS Bin</title>
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px
+			}
+
+			body {
+				background-color: #000
+			}
+
+			div {
+				-webkit-perspective: 800;
+				-webkit-transform-style: preserve-3d;
+				position: absolute;
+				top: 30%;
+				left: 50%;
+			}
+
+			ul {
+				position: absolute;
+				left: 0px;
+				top: 0px;
+				-webkit-transform: translate(-50%, -50%);
+				width: 200px;
+				height: 200px;
+				-webkit-transform-style: preserve-3d
+			}
+
+			li {
+				list-style-type: none;
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				right: 0px;
+				bottom: 0px;
+				width: 200px;
+				height: 200px;
+				font-size: 100px;
+				text-align: center;
+				line-height: 200px;
+				opacity: 0.3;
+				-webkit-transition: -webkit-transform 2s, opacity 2s;
+				border: 2px solid #C09;
+				box-shadow: 1px 1px 10px #C09;
+				-webkit-backface-visibility: visible;
+				color: #fff
+			}
+
+			.ani {
+				-webkit-animation: rotaY 5s infinite linear;
+			}
+
+			@-webkit-keyframes rotaY {
+				from {
+					-webkit-transform: rotateY(0deg)
+				}
+
+				to {
+					-webkit-transform: rotateY(360deg)
+				}
+			}
+
+			@-webkit-keyframes rotaX {
+				from {
+					-webkit-transform: rotateX(0deg)
+				}
+
+				to {
+					-webkit-transform: rotateX(-360deg)
+				}
+			}
+
+			@-webkit-keyframes rotaZ {
+				from {
+					-webkit-transform: rotateZ(0deg)
+				}
+
+				to {
+					-webkit-transform: rotateZ(-360deg)
+				}
+			}
+
+			.r1 {
+				-webkit-transform: translateZ(100px)
+			}
+
+			.r2 {
+				-webkit-transform: rotateY(90deg) translateZ(100px)
+			}
+
+			.r3 {
+				-webkit-transform: rotateY(180deg) translateZ(100px)
+			}
+
+			.r4 {
+				-webkit-transform: rotateY(-90deg)translateZ(100px)
+			}
+
+			.r5 {
+				-webkit-transform: rotateX(90deg) translateZ(100px)
+			}
+
+			.r6 {
+				-webkit-transform: rotateX(-90deg) translateZ(100px)
+			}
+		</style>
+	</head>
+	<body>
+
+	</body>
+</html>
+<div>
+	<ul class="ani">
+		<li class="r1">1</li>
+		<li class="r2">2</li>
+		<li class="r3">3</li>
+		<li class="r4">4</li>
+		<li class="r5">5</li>
+		<li class="r6">6</li>
+	</ul>
+</div>

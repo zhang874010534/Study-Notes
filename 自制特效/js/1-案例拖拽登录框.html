@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>胡大大</title>
+    <style>
+
+        .login-header{
+            width: 500px;
+            margin: auto;
+            text-align: center;
+        }
+        .login-header a{
+            text-decoration:none;
+            color: black;
+
+
+        }
+        .login{
+            background-color: white;
+            width: 500px;
+            height: 300px;
+            border: 2px solid black;
+            position: absolute;
+            margin-top: 50px;
+            margin-left: 50px;
+            left: 510px;
+            top: 200px;
+            display: none;
+        }
+        .login-title{
+
+            text-align: center;
+            padding-top: 20px;
+            cursor: move;
+        }
+        .login-close{
+            display: inline-block;
+            text-decoration: none;
+            line-height: 40px;
+            text-align: center;
+            color: black;
+            width: 40px;
+            height: 40px;
+            border: 1px solid beige;
+            background-color: white;
+            border-radius: 20px;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+        }
+        label{
+            display: inline-block;
+            text-align: right;
+            width: 90px;
+        }
+        .login-input label{
+            margin-top: 20px;
+        }
+        .login-input input{
+            width: 320px;
+            height: 30px;
+
+        }
+        .login-bg{
+            opacity: 0.5;
+            background-color: black;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="login-header"><a href="javascript:" id="link">登录框</a></div>
+<!--登录框-->
+<div id="login" class="login">
+    <div id="title" class="login-title">登录会员
+        <span><a id="closeBtn" class="login-close" href="javascript:">关闭</a></span>
+    </div>
+    <div class="login-input-content">
+        <div class="login-input">
+            <label for="username">用户名：</label>
+            <input type="text" id="username" class="list-input" placeholder="请输入用户名">
+        </div>
+        <div class="login-input">
+            <label for="username">登录密码：</label>
+            <input type="text" id="userPassword" class="list-input" placeholder="请输入登录密码">
+        </div>
+    </div>
+</div>
+<!--遮挡层-->
+<div id="bg" class="login-bg"></div>
+<script src="common.js"></script>
+<script>
+    my$("link").onclick=function (e) {
+        my$("login").style.display="block";
+        my$("bg").style.display="block";
+        e.stopPropagation()
+    };
+    my$("closeBtn").onclick=function () {
+        my$("login").style.display="none";
+        my$("bg").style.display="none";
+    };
+    my$("title").onmousedown=function (e) {
+        //记录鼠标到对象边缘的距离
+        var spaceX=e.clientX-my$("login").offsetLeft;
+        var spaceY=e.clientY-my$("login").offsetTop;
+        document.onmousemove=function (e) {
+            var x=e.clientX-spaceX;
+            var y=e.clientY-spaceY;
+            my$("login").style.left=x-50+"px";
+            my$("login").style.top=y-50+"px";
+        }
+    };
+    document.onmouseup=function () {
+        document.onmousemove=null;
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{ type: 'Buffer', data: [ 104, 101, 108, 108, 111 ] }
+
+
+const copy = JSON.parse(json, (key, value) => {
+    // console.log(key);
+    // console.log('---------key-------');
+    // console.log(value);
+    // console.log('----------value--------');    
+    return value && value.type === 'Buffer' ?
+        Buffer.from(value.data) :
+        value;
+});
+
+//value最后还会是对象本身,所以可以用value.type
+
+type
+---------key-------
+Buffer
+----------value--------
+0
+---------key-------
+104
+----------value--------
+1
+---------key-------
+101
+----------value--------
+2
+---------key-------
+108
+----------value--------
+3
+---------key-------
+108
+----------value--------
+4
+---------key-------
+111
+----------value--------
+data
+---------key-------
+[ 104, 101, 108, 108, 111 ]
+----------value--------
+
+---------key-------
+{ type: 'Buffer', data: [ 104, 101, 108, 108, 111 ] }
+----------value--------
+
