@@ -1,0 +1,23 @@
+### 通用
+
+1. Chinese(Simplified) 中文简体
+2. Beautify 格式化文档
+3. Image preview 导入图片的时候鼠标放上去可以看见图片 来确定路径是否正确
+4. Live Server 在浏览器中打开实时更新
+5. One Dark pro 主题
+6. Setting Sync 自动同步到github
+7. vscode-icons 
+
+### Vue
+
+- Vetur Vue tooling for VS Code 目前就知道可以识别vue文件
+
+### React
+
+- Simple React Snippets   react模版
+
+  - | Snippet | Renders                          |
+    | ------- | -------------------------------- |
+    | `imrc`  | Import React / Component         |
+    | `ccc`   | Class Component With Constructor |
+

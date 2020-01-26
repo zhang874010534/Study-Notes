@@ -1,4 +1,4 @@
-// function time(item){
+ // function time(item){
 // 	setTimeout(()=>{
 // 		item && item()
 // 	},1000)
