@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //构造函数模式 实例对象constructor指向Person
+        function Person(age){
+            this.age=age
+        }
+
+        var person=new Person(20)
+        console.log(person);
+        console.log(person.constructor==Person);
+        //工厂模式
+        function Dog(age){
+            var o=new Object()
+            o.age=age
+            return o
+        }
+        var dog=Dog(20)
+        console.log(dog);
+        
+    </script>
+</body>
+</html>

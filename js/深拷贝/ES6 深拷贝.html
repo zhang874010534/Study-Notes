@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var arr=[1,2,3,4,5]
+        var [...arr2]=arr
+        arr2[1]=6666
+        console.log(arr);
+        console.log(arr2);
+
+        var obj={
+            name:"diandiang",
+            age:22
+        }
+        var {...obj2}=obj
+        obj2.age=33333
+        console.log(obj);
+        console.log(obj2);
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="demo">
+
+    <script>
+        var inputb = document.getElementById('demo')
+        var setId = null
+        inputb.onkeyup = function (e) {
+            if (!setId) {
+                setId = setTimeout(function () {
+                    console.log(e.target.value);
+                    setId=null
+                }, 1000)
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
