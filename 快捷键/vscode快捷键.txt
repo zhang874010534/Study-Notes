@@ -1,5 +1,5 @@
-ctrl+enter 锟斤拷锟斤拷一锟斤拷锟斤拷锟斤拷
-ctrl+d 选取锟斤拷一锟斤拷匹锟斤拷锟斤拷
-shift+alt+锟铰硷拷头锟斤拷锟狡碉拷前锟斤拷
-ctrl+shift+pgup 锟狡讹拷选锟筋卡 ctrl+pgup锟斤拷锟叫伙拷锟斤拷一锟斤拷选锟筋卡
-ctrl+w 锟斤拷锟皆帮拷选锟筋卡锟截憋拷
+ctrl+enter 在下一行输入
+ctrl+d 向外选中单词并选择相同的词
+shift+alt+方向键  复制
+ctrl+shift+pgup 移动选项卡 ctrl+pgup 切换选项卡
+ctrl+w 关闭选项卡
