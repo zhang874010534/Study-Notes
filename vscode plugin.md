@@ -11,6 +11,7 @@
 ### Vue
 
 - Vetur Vue tooling for VS Code 目前就知道可以识别vue文件
+- Vue 2 Snippets  vue代码提示
 
 ### React
 
