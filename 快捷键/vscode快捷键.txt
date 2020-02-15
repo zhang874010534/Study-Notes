@@ -3,3 +3,6 @@ ctrl+d 向外选中单词并选择相同的词
 shift+alt+方向键  复制
 ctrl+shift+pgup 移动选项卡 ctrl+pgup 切换选项卡
 ctrl+w 关闭选项卡
+ctrl+| 复制当前选项卡
+shift+click Shift + Click once on the folding indicator to first fold the inner ranges. Shift + Click again (when all inner ranges are already folded) will fold the parent. Shift + Click again unfolds all.
+ctrl+shift+[ 折叠

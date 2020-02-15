@@ -7,10 +7,23 @@
 5. One Dark pro 主题
 6. Setting Sync 自动同步到github
 7. vscode-icons 
+8. Path Intellisense 路劲自动补全
 
 ### Vue
 
 - Vetur Vue tooling for VS Code 目前就知道可以识别vue文件
+
+  - ```
+    "vetur.format.defaultFormatterOptions": {
+            "prettier": {
+                "semi": false, // 格式化不加分号
+                "singleQuote":true // 单引号 
+            }
+        },
+    ```
+
+    
+
 - Vue 2 Snippets  vue代码提示
 
 ### React
