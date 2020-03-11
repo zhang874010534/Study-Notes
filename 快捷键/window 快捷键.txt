@@ -5,3 +5,4 @@ shift+enter 在新的浏览器打开并搜索
 ctrl+tab 浏览器选项卡切换
 shift+滚轮  alt+滚轮  滚动底部滚动栏
 ctrl+win+d创建一个虚拟桌面 ctrl+win+方向键左右可以切换
+ctrl+t 浏览器创建新的选项卡

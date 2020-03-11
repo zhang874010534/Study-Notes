@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- <script>
+    function quickSort(arr, i, j) {
+      let pivot = i //上一个位置
+      let pivotArr = arr[pivot]
+      // 从右往左
+      while (arr[j] >= pivotArr) {
+        j--
+      }
+      change(pivot, j)
+      // quickSort(arr,)
+    }
+
+    // 交换位置
+    function change(i, j) {
+      console.log(arr[i], arr[j])
+      let temp = arr[j]
+      arr[j] = arr[i]
+      arr[i] = temp
+
+    }
+
+    let arr = [36, 3, 29, 43, 30, 20, 41, 37, 24, 42] // 需要操作的数组
+    quickSort(arr, 0, arr.length-1)
+  </script> -->
+  <script>
+    function quick(arr){
+      // 结束条件  数组中只有一个值了
+      if(arr.length<=1) return arr;
+      // 讲数组中的第一个值当成基准点
+      let pivotVal=arr.splice(0,1)
+      // 准备左右两个数组
+      let leftArr=[]
+      let rightArr=[]
+      for (let i = 0; i < arr.length; i++) {
+        let item=arr[i]
+        item<pivotVal?leftArr.push(item):rightArr.push(item)
+      }
+      return quick(leftArr).concat(pivotVal,quick(rightArr))
+
+    }
+    let arr=[12,8,15,16,1,24]
+    console.log(quick(arr))
+  </script>
+</body>
+
+</html>
