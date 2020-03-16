@@ -28,7 +28,6 @@
 
 ### Element UI
 
-- vscode-element-helper Element UI 代码提示
 - Element UI Snippets   Element UI 代码片段
 
 ### React
