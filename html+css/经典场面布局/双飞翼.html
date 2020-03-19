@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    /* left 往左边移动 container的宽度就到最左边了 right  margin-left 负自身宽度 */
+    .container {
+      width: 100%;
+      background-color: pink;
+      height: 400px;
+      float: left;
+    }
+
+    .center {
+      margin-left: 200px;
+      margin-right: 150px;
+      height: 400px;
+      background-color: red;
+    }
+
+    .ff {
+      float: left;
+    }
+
+    .left {
+      width: 200px;
+      height: 300px;
+      background-color: green;
+      margin-left: -100%;
+    }
+
+    .right {
+      width: 150px;
+      height: 300px;
+      background-color: green;
+      margin-left: -150px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="center"></div>
+  </div>
+  <div class="left ff"></div>
+  <div class="right ff"></div>
+</body>
+
+</html>

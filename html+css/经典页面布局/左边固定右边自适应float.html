@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .left{
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      /* 一定是要浮动的不然下面的right上不来 宽度太大了 */
+      float: left;
+    }
+    .right{
+      height: 150px;
+      background-color: green;
+      /* 上来了又会产生重叠问题  */
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="left"></div>
+  <div class="right"></div>
+</body>
+</html>

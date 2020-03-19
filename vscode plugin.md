@@ -39,3 +39,6 @@
     | `imrc`  | Import React / Component         |
     | `ccc`   | Class Component With Constructor |
 
+### SVG
+
+- SVG   .svg文件代码提示 SVG Language Support

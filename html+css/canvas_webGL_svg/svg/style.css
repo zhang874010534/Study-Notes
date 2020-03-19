@@ -1,0 +1,120 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222f3e;
+  height: 100vh;
+}
+
+.upload-button{
+  width: 180px;
+  height: 60px;
+  background-image: linear-gradient(160deg,#0093e9,#80d0c7);
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 147, 233, 0.28);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.checkmark{
+  opacity: 0;
+}
+.progress-bar{
+  position: absolute;
+  height: 2px;
+  background-image: linear-gradient(45deg,#85ffbd,#fffb7d);
+  bottom: 0;
+  left: 0;
+  border-radius: 4px;
+}
+
+.uploading .middle-line{
+  stroke-dasharray: 4 3;
+  animation: .8s linear dashLoop infinite;
+}
+
+.uploading circle{
+  animation: 1.5s linear blink infinite;
+}
+.uploading .progress-bar{
+  animation: 5s linear progress;
+}
+
+.uploaded .arrow-up{
+  animation: 1.5s linear arrowTransform forwards;
+}
+
+.uploaded .checkmark{
+  opacity: 1;
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  animation: 1s linear checkMarkTransform forwards 0.5s;
+}
+
+.uploaded .middle-line{
+  transition: .3s linear;
+  opacity: 0;
+}
+@keyframes dashLoop{
+  from{
+    stroke-dashoffset: 0;
+  }
+  to{
+    stroke-dashoffset: 7;
+  }
+}
+
+
+@keyframes blink{
+  from{
+    opacity: 1;
+  }
+  50%{
+    opacity: 0.5;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
+
+
+@keyframes arrowTransform{
+  from{
+    stroke-dasharray: 50;
+    stroke-dashoffset: 0;
+  }
+  to{
+    stroke-dasharray: 50;
+    stroke-dashoffset: -50;
+  }
+}
+@keyframes checkMarkTransform{
+  from{
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+  }
+  to{
+    stroke-dasharray: 50;
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes progress{
+  from{
+    width: 0;
+  }
+  to{
+    width: 100%;
+  }
+}
+
