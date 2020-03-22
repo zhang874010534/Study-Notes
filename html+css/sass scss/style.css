@@ -1,0 +1,43 @@
+@charset "UTF-8";
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+  没有压缩可以看见
+*/
+/*!
+  压缩了也可以看见
+*/
+.container {
+  background-color: red;
+}
+
+.container:hover {
+  background-color: green;
+  border: 1px solid red;
+  border-left: 0;
+  border-right: 0;
+}
+
+.container .containertext {
+  background-color: blue;
+}
+
+.container .left {
+  background-color: yellowgreen;
+}
+
+.demo, .right {
+  padding: 0px;
+}
+
+.demo a, .right a {
+  font-weight: bold;
+}
+
+.right {
+  padding-left: 0;
+}
+/*# sourceMappingURL=style.css.map */

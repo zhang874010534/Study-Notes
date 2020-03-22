@@ -1,0 +1,64 @@
+$primary-color:red;
+@import "base";
+
+/*
+  没有压缩可以看见
+*/
+
+/*!
+  压缩了也可以看见
+*/
+
+// 类似于js的函数
+@mixin alert($backgroundColor) {
+  background-color: $backgroundColor;
+}
+
+.container {
+  background-color: $primary-color;
+
+  &:hover {
+    background-color: green;
+
+    border: 1px solid red {
+      left: 0;
+      right: 0;
+    }
+  }
+
+  // 引用&的地方会去引用父选择器
+  & &text {
+    background-color: blue;
+  }
+
+  .left {
+    // 使用mixin
+    @include alert(yellowgreen);
+  }
+}
+
+.demo {
+  padding: 0px;
+
+  a {
+    font-weight: bold;
+  }
+}
+
+// 继承
+.right {
+  @extend .demo;
+  padding-left: 0;
+}
+
+// scss里的函数
+$colors:(demo:red,white:#fff);
+@function color($key){
+  @if not map-has-key($colors, $key ){
+    @warn "没有这个#{$key}";
+  }
+  @return map-get($colors,$key)
+}
+body{
+  background-color: color(qewewq);
+}
