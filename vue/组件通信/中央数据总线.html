@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+  <div id="app">
+    <com1></com1>
+    <com2></com2>
+  </div>
+
+  <template id="com1">
+    <div>
+      我是组件1
+      {{com1Data}}
+      <!-- 组件1向组件2发送信息 -->
+      <button @click="sendMsg">按钮</button>
+    </div>
+  </template>
+  <template id="com2">
+    <div>
+      我是组件2
+      {{com2Data}}
+    </div>
+  </template>
+  <script>
+    // 中央数据总线
+    var eventBus = new Vue()
+    var vm = new Vue({
+      el: '#app',
+      data() {
+        return {
+        }
+      },
+      components: {
+        com1: {
+          template: '#com1',
+          data() {
+            return {
+              com1Data: '我是组件1的数据'
+            }
+          },
+          methods: {
+            sendMsg() {
+              // 触发
+              eventBus.$emit('inceptMsg',this.com1Data)
+            }
+          },
+        },
+        com2: {
+          template: '#com2',
+          data() {
+            return {
+              com2Data: ''
+            }
+          },
+          mounted() {
+            // 监听
+            eventBus.$on('inceptMsg', (data) => {
+              this.com2Data = data
+            })
+          },
+        }
+      }
+    })
+
+  </script>
+</body>
+
+</html>

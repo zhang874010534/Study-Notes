@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+  
+<body>
+  <button id="demo">按钮</button>
+  <script>
+    Function.prototype.myApply = function (content = window) {
+      // 将add方法放在obj对象的obj.fn 上面 这样子add方法里的this就是指向obj
+      // 下面这个this指的是add方法
+      content.fn = this
+      let result;
+      if (arguments[1])
+        result = content.fn(...arguments[1])
+      else
+        result = content.fn()
+      // 究极渣男obj,用完add就把它抛弃了
+      delete content.fn
+      return result
+    }
+
+    function add() {
+      let sum = 0;
+      arguments = Array.prototype.slice.myApply(arguments)
+      arguments.forEach(item => {
+        sum += item;
+      });
+      return this.x + this.y + sum
+    }
+    let obj = {
+      x: 1,
+      y: 2
+    }
+    console.log(add.myApply(obj, [3, 4])) //10
+
+  </script>
+
+</body>
+
+</html>

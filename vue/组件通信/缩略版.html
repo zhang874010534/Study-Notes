@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <component-a :demo="msg" @parent-method="fly"></component-a>
+  </div>
+  
+  <template id="component-a">
+    <div>
+      <button @click="sonClick">按钮</button>
+      {{demo}}
+    </div> 
+  </template>
+  <script>
+    let componentA={
+      props:['demo'],
+      template:'#component-a',
+      data(){
+        return {
+          sonMsg:'子组件的数据'
+        }
+      },
+      methods: {
+        sonClick(){
+          this.$emit('parent-method',this.sonMsg)
+        }
+      },
+    }
+    var vm =new Vue({
+      el:'#app',
+      data(){
+        return {
+          msg:'我是父组件数据'
+        }
+      },
+      methods: {
+        fly(val){
+          console.log(val)
+          console.log('我是父组件的方法')
+        }
+      },
+      components:{
+        'component-a':componentA
+      }
+    })
+  </script>
+</body>
+
+</html>

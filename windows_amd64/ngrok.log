@@ -1,1 +1,3 @@
-[2020/02/29 21:08:29 CST] [EROR] (ngrok/log.Error:120) Error while checking for update: Post https://api.equinox.io/1/Updates: net/http: TLS handshake timeout
+[2020/03/28 12:01:59 CST] [EROR] (ngrok/log.(*PrefixLogger).Error:91) [pxy:34e980fc] Server failed to write StartProxy: EOF
+[2020/03/28 12:03:09 CST] [EROR] (ngrok/log.(*PrefixLogger).Error:91) [pxy:5bf8dd8] Server failed to write StartProxy: EOF
+[2020/03/28 12:05:05 CST] [EROR] (ngrok/log.(*PrefixLogger).Error:91) [pxy:6b5eda4d] Server failed to write StartProxy: EOF

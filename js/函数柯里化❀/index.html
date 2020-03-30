@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 实际上就是把add函数的x，y两个参数变成了先用一个函数接收x然后返回一个函数去处理y参数。
+
+    // 普通的函数
+    function add(x,y){
+      return x+y
+    }
+    // 柯里化✿
+    function curry(x){
+      return function(y){
+        return x+y
+      }
+    }
+    
+    console.log(curry(1)(2)) //3
+  </script>
+</body>
+
+</html>
