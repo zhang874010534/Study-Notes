@@ -8,3 +8,5 @@ shift+click Shift + Click once on the folding indicator to first fold the inner 
 ctrl+shift+[ 折叠
 ctrl+b 隐藏左边栏
 ctrl+1或者2可以切换整个编辑器
+
+小程序中view{$}*100 可以变出100个view emmet语法
