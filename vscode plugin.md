@@ -1,7 +1,6 @@
 ### 通用
 
 1. Chinese(Simplified) 中文简体
-2. Beautify 格式化文档
 3. Image preview 导入图片的时候鼠标放上去可以看见图片 来确定路径是否正确
 4. Live Server 在浏览器中打开实时更新
 5. One Dark pro 主题
@@ -10,10 +9,12 @@
 8. Path Intellisense 路劲自动补全
 9. Highlight Matching Tag    高亮对应的 HTML 标签 以及 标识出对应的各种括号。
 10. Auto Rename Tag   自动修改匹配的 HTML 标签。
+11. GitLens   **详细的 Git 提交日志**。
+12. Regex Previewer   **实时预览正则表达式的效果**。
 
 ### Vue
 
-- Vetur Vue tooling for VS Code 目前就知道可以识别vue文件
+- Vetur Vue tooling for VS Code 可以识别vue文件 格式化vue
 
   - ```
     "vetur.format.defaultFormatterOptions": {
@@ -26,7 +27,7 @@
 
     
 
-- Vue 2 Snippets  vue代码提示
+- Vue 2 Snippets  vue代码片段
 
 ### Element UI
 

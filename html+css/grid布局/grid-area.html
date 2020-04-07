@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #container {
+     display: grid;
+     grid-template-areas: 
+     "header header header"
+     "aside main main"
+     "footer footer footer";
+    }
+    header{
+      grid-area: header;
+    }
+    main{
+      grid-area: main;
+    }
+    aside{
+      grid-area: aside;
+    }
+    footer{
+      grid-area: footer;
+    }
+
+    .item {
+      font-size: 2em;
+      text-align: center;
+      border: 1px solid #e5e4e9;
+    }
+
+    .item-1 {
+      background-color: #ef342a;
+    }
+
+    .item-2 {
+      background-color: #f68f26;
+    }
+
+    .item-3 {
+      background-color: #4ba946;
+    }
+
+    .item-4 {
+      background-color: #0376c2;
+    }
+
+    .item-5 {
+      background-color: #c077af;
+    }
+
+    .item-6 {
+      background-color: #f8d29d;
+    }
+
+    .item-7 {
+      background-color: #b5a87f;
+    }
+
+    .item-8 {
+      background-color: #d0e4a9;
+    }
+
+    .item-9 {
+      background-color: #4dc7ec;
+    }
+  </style>
+</head>
+
+<body>
+  <span>foo</span>
+  <div id="container">
+    <header class="item item-1">header</header>
+    <aside class="item item-2">aisde</aside>
+    <main class="item item-3">main</main>
+    <footer class="item item-4">footer</footer>
+  </div>
+  <span>bar</span>
+  <script>
+    const product={
+      category:null
+    }
+    console.log(product.category?.id)//undefined
+    // console.log(product.category.id)//报错
+
+    let demo=product? product.category?product.category.id:"":""
+    let demo=product?.category?.id
+    console.log(demo)
+
+    
+  </script>
+</body>
+
+</html>
