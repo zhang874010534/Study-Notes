@@ -9,6 +9,7 @@
 8. Path Intellisense 路劲自动补全
 9. Highlight Matching Tag    高亮对应的 HTML 标签 以及 标识出对应的各种括号。
 10. Auto Rename Tag   自动修改匹配的 HTML 标签。
+10. Prettier - Code formatter  格式化工具
 11. GitLens   **详细的 Git 提交日志**。
 12. Regex Previewer   **实时预览正则表达式的效果**。
 
@@ -48,7 +49,7 @@
 
 ### SASS
 
-- Live Sass Compiler Compile Sass or Scss to CSS at realtime with live browser reload
+- [Live Sass Compiler](https://github.com/ritwickdey/vscode-live-sass-compiler/blob/master/docs/settings.md) Compile Sass or Scss to CSS at realtime with live browser reload
 
 ### 微信小程序
 
