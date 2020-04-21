@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 闭包是一个函数，并且可以访问到另外一个函数的作用域，创建闭包的常见方式，就是在一个函数内部创建另一个函数
+    {
+      var a=2
+    }
+    function demo(){
+      let n=1
+      return function sum(){
+        console.log(++n)
+      }
+      sum()
+    }
+    let sum=demo()
+    // sum() //2
+    // sum() //3
+    let sum2=demo()
+    // sum2() //2
+    // sum2() //3
+    // console.log(window.a)
+  </script>
+</body>
+</html>

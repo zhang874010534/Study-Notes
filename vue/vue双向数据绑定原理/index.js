@@ -16,9 +16,9 @@ class Dep{
 		this.subs.push(sub)
 	}
 	//判断是否添加订阅者
-	depend(){
-		if
-	}
+	// depend(){
+	// 	if
+	// }
 	
 	//通知订阅者更新
 	notify(){
