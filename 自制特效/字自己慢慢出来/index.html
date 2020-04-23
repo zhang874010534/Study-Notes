@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <pre id="demo"></pre>
+  <script>
+    let demo = document.querySelector('#demo')
+    let i = 0
+    let str = `*{
+    transition: all .5s;
+}
+/*白色伤眼睛，来点暗色系的背景吧！*/
+html{
+    background: #333034;
+}
+/*让我们给它加一个边框吧*/
+#code{
+    border: 2px solid #00FF1B;
+    padding: 20px;
+}
+/*代码看不清楚？来点高亮吧！*/
+.token.selector{
+    color: #a6e22e;
+}
+.token.property{
+    color: #f92672;
+}
+.token.punctuation{
+    color: #f8f8f2;
+}
+.token.function{
+    color: red;
+}
+#code{
+    color: #f8f8f2;
+}`
+    setInterval(() => {
+      demo.innerHTML +=str[i]
+      i++
+    }, 200);
+  </script>
+</body>
+
+</html>
