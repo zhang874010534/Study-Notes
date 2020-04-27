@@ -5,15 +5,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    body{
+      text-align: center;
+    }
+    img{
+      width: 962px;
+    }
+  </style>
 </head>
-
 <body>
   <!-- 宏任务一般包括：整体代码script，setTimeout，setInterval。
   微任务：Promise，process.nextTick -->
-  <!-- setTimeout确实是宏任务也执行了但是执行了不代表马上console.log
-  宏任务执行完成后执行所有的微任务
+  <!-- setTimeout确实是宏任务执行了之后放到了宏任务的eventqueue里面，然后代码继续
+  往下检查看有没有微任务，检测到Promise的then函数把他放入了微任务序列
+  等到主线进程的所有代码执行结束后，先执行微任务再执行宏任务
   所以执行了promise里的.then 之后setTimeout里的才有反应
   -->
+  <img src="https://img-blog.csdn.net/2018041120124254?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xjMjM3NDIzNTUx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="">
+  <img src="https://img-blog.csdn.net/20180411202638415?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xjMjM3NDIzNTUx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="">
   <script>
     setTimeout(function () {
       console.log(1);
