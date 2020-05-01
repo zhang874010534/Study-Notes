@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <script>
+    function deepClone(obj) {
+      if (typeof obj !== "object" || obj === null) return obj;
+      if (obj instanceof RegExp) {
+        return new RegExp(obj)
+      }
+      if (obj instanceof Date) {
+        return new Date(obj)
+      }
+      let newObj = new obj.constructor
+      for (let key in obj) {
+        newObj[key] = deepClone(obj[key])
+      }
+      return newObj;
+    }
+    let obj = {
+      a: 1,
+      b: [1, 2],
+      c: { demo: 1 },
+      d: /\d/,
+      e:()=>{
+        console.log("e")
+      },
+      f:true
+    }
+    // let arr=['a',{demo:1}]
+    // let arr2 = deepClone(arr)
+    let obj2=deepClone(obj)
+    obj2.a=2
+    obj2.f=false
+    obj2.e=1
+    console.log(obj)
+    console.log(obj2)
+    let obj3={
+      a:1,
+      b:2
+    }
+  </script>
+</body>
+
+</html>
