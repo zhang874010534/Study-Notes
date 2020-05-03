@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title></title>
-		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
-		<style>
-		divP{
-			background-color: rgb(0,230,255);
-		}
-		</style>
-	</head>
-	<body>
-		<div id="app">
-			<demo>
-				<h1>我是没有名字的h1</h1>
-				<!-- 这是以前的具名插槽 -->
-				<h1 slot="h11">我是h11</h1>
-				<!-- 这是2.6的具名插槽 -->
-				<template v-slot:h22>我是template</template>
-				<!-- default里的title是子组件的title:'abc'  用{{title}}
-				 把它弄出来-->
-				 <!-- 这是2.6的作用域插槽  以前叫slot-scope default是默认值 如果写了内容代表具名插槽名字-->
-				<template v-slot:default="title">{{title}}</template>
-			</demo>
-		</div>
-		
-		<script>
-			Vue.component('demo',{
-				data(){
-					return {
-						title:'abc'
-					}
-				},
-				template:`
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      divP {
+        background-color: rgb(0, 230, 255);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <demo>
+        <h1>我是没有名字的h1</h1>
+
+        <!-- 这是以前的具名插槽 -->
+        <h1 slot="h11">我是h11</h1>
+
+        <!-- 这是2.6的具名插槽 -->
+        <template v-slot:h22>我是template</template>
+
+        <!-- 这是2.6的作用域插槽  以前叫slot-scope default是默认值 如果写了内容代表具名插槽名字-->
+        <!-- title对应子组件的name名字"title"  slotProps是包含所有插槽 prop 的对象 -->
+        <template v-slot:title="slotProps"><h1>{{slotProps}}</h1></template>
+      </demo>
+    </div>
+
+    <script>
+      Vue.component('demo', {
+        data() {
+          return {
+            title1: 'abc'
+          };
+        },
+        // 远古版本 slot是对应name slot-scope对应要绑定的值 现在直接绑定
+        //  <h1 slot="header" slot-scope="slotProps"></h1>
+        template: `
 					<div>
 						<slot>ddd</slot>
 						<slot name="h11"></slot>
 						<slot name="h22"></slot>
-						<slot :title='title'></slot>
+						<slot name="title" :title='title1' demo='123'></slot>
 					</div>
 				`
-				
-			})
-			var vm=new Vue({
-				el:'#app',
-				data:{
-					
-				},
-				
-			})
-		</script>
-	</body>
+      });
+      var vm = new Vue({
+        el: '#app',
+        data: {}
+      });
+    </script>
+  </body>
 </html>

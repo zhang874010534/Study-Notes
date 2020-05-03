@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style></style>
+  </head>
+
+  <body>
+    <div class="" id="app">
+      {{demo}}
+      <button @click="btn">按钮</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      let obj = {};
+      // obj = new Proxy(obj, {
+      //   get(target, prop) {
+      //     con sole.log('get');
+      //     return target[prop];
+      //   },
+      //   set(target, prop, value) {
+      //     console.log('set');
+      //     target[prop] = value;
+      //   }
+      // });
+      let obj2=new Proxy({},{
+        get(target,prop){
+          return target[prop]
+        },
+        set(target, prop, value) {
+          console.log('set');
+          target[prop] = value;
+        }
+      })
+    </script>
+  </body>
+</html>

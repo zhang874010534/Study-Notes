@@ -27,6 +27,7 @@
       components: {
         // 结论：经过演示，发现，子组件中，默认无法访问到 父组件中的 data 上的数据 和 methods 中的方法
         com1: {
+          components: {},
           data() { // 注意： 子组件中的 data 数据，并不是通过 父组件传递过来的，而是子组件自身私有的，比如： 子组件通过 Ajax ，请求回来的数据，都可以放到 data 身上；
             // data 上的数据，都是可读可写的;
             return {
@@ -34,13 +35,12 @@
               content: 'qqq'
             }
           },
+          props: ['parentmsg'], // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
           template: '<h1 @click="change">这是子组件 --- {{ parentmsg }}</h1>',
           // 注意： 组件中的 所有 props 中的数据，都是通过 父组件传递给子组件的
           // props 中的数据，都是只读的，无法重新赋值
-          props: ['parentmsg'], // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
           directives: {},
           filters: {},
-          components: {},
           methods: {
             change() {
               this.parentmsg = '被修改了'
