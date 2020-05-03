@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div class="" id="app">
+    {{demo}}
+    <button @click="btn">按钮</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    function Foo() {
+      demo=function(){
+        console.log(1)
+      }
+      return this
+    }
+    Foo.demo=function(){
+      console.log(3)
+    }
+    function demo(){
+      console.log(4)
+    }
+    Foo.prototype.demo = function () {
+      console.log(5)
+    }
+    console.dir(Foo)
+    demo()
+    Foo().demo()
+    new Foo.demo()
+    demo()
+    new Foo().demo()
+    new new Foo().demo()
+  </script>
+</body>
+
+</html>

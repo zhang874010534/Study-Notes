@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div class="" id="app">
+    {{demo}}
+    <button @click="btn">按钮</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    // let a={
+    //   i:0,
+    //   toString(){
+    //     return ++this.i;
+    //   }
+    // }
+
+    // let i=0
+    // Object.defineProperty(window,"a",{
+    //   get(){
+    //     return ++i;
+    //   }
+    // })
+    let a=[1,2,3]
+    a.toString=a.shift
+    if(a==1&& a==2 && a==3){
+      console.log("ok")
+    }
+  </script>
+</body>
+
+</html>
