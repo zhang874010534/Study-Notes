@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style></style>
+  </head>
+
+  <body>
+    <script>
+      let arr = [1, 2, 3, [1, 2, 3, [1, 2, 3]]];
+      // 方法1
+      // 不传参数或者传入1  就是扁平化一层
+      // arr=arr.flat(Infinity)
+
+      // 方法2
+      // arr=arr.toString().split(',').map(item=>Number(item))
+
+      // 方法3
+      // arr=JSON.stringify(arr).replace(/(\[|\])/g,'')
+
+      // 方法4 concat能拆一层
+      // while(arr.some(item=>Array.isArray(item))){
+      //   arr=[].concat(...arr)
+      // }
+      console.log(arr);
+    </script>
+  </body>
+</html>
