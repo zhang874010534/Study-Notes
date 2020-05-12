@@ -5,6 +5,7 @@
 - [vue-table-with-tree-grid](https://github.com/MisterTaki/vue-table-with-tree-grid)  A table (with tree-grid) component for Vue.js 2.0
 - [vue-quill-editor](https://github.com/surmon-china/vue-quill-editor)  富文本编辑器 editor component
 - [nprogress](https://github.com/rstacruz/nprogress) 顶部进度条 slim progress bars
-- [vue-lazyload](https://github.com/hilongjw/vue-lazyload) 图片懒加载
+- [vue-lazyload](https://www.npmjs.com/package/vue-lazyload) 图片懒加载
 - [vue-awesome-swiper](https://github.surmon.me/vue-awesome-swiper) 轮播图
+- vue-cli-plugin-element    vuecli插件 可以按需导入elementui组件
 

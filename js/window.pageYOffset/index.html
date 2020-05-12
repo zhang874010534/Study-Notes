@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .demo2 {
+        width: 1000px;
+        height: 200px;
+        background-color: skyblue;
+      }
+      .demo {
+        width: 1000px;
+        height: 2000px;
+        background-color: pink;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="demo2"></div>
+    <div class="demo"></div>
+    <script>
+      // 现在不直接操作dom了  直接:class="{'is-fixed':isfixed}" 判断类添不添加就可以了
+      window.addEventListener('scroll', () => {
+        let top =
+          window.pageYOffset ||
+          document.documentElement.scrollTop ||
+          document.body.scrollTop;
+        console.log(top);
+        if (top >= 200) {
+          document.getElementsByClassName('demo2')[0].style.position = 'fixed';
+          document.getElementsByClassName('demo')[0].style.paddingTop = '200px';
+        } else {
+          document.getElementsByClassName('demo2')[0].style.position = '';
+          document.getElementsByClassName('demo')[0].style.paddingTop = '';
+        }
+      });
+      // 还要记得在destroyed里 window.removeEventListener('scroll',this.initHeight) 监听的时候也用这个方法 不然清除不掉
+    </script>
+  </body>
+</html>
