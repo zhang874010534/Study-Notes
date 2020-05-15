@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      function Person(age, name) {
+        this.age = age;
+        this.name = name;
+      }
+      function _new() {
+        //1.拿到传入的参数中的第一个参数，即构造函数名Func
+        var Func = [].shift.call(arguments);
+        //2.创建一个空对象obj,并让其继承Func.prototype
+        // var obj = Object.create(Func.prototype);
+        var obj=Object.create(Func.prototype)
+        //第二步也可以这样写
+        // var obj = {}
+        // obj.__proto__ = Func.prototype
+        //3.执行构造函数，并将this指向创建的空对象obj
+        Func.apply(obj,arguments)
+        return obj
+      }
+      let a = _new(Person, 1, '你好');
+      console.log(a)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html{
+        font-size: 10px;
+      }
+      body{
+        font-size: calc( 0.02 * 16rem);
+      }
+      div{
+        width: calc( 0.02 * 100rem);
+        height: calc( 0.02 * 100rem);
+        /* width: rem(100); */
+        background-color: pink;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>啊</div>
+    <script>
+      document.documentElement.style.fontSize=document.documentElement.clientWidth/7.5 +'px'
+      </script>
+    </body>
+</html>

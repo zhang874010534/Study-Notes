@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // let obj = {
+      //   show() {
+      //     console.log(super.toString());
+      //   }
+      // };
+      // obj.show();
+
+      class F {
+        constructor() {
+          this.webName = '蚂蚁部落';
+        }
+      }
+      class C extends F {
+        constructor() {
+          super();
+        }
+        func() {
+          // 其实 super(…) 做的事情就是生成一个 this
+          // 这个super.address就是等于父类constructor 里的this.address
+          super.address = '青岛市南区';
+        }
+      }
+      let c = new C();
+      c.func();
+      console.log(c);
+      console.log(c.hasOwnProperty('address'));
+      console.log(c.address);
+
+
+      
+      // class F {
+      //   static func(msg) {
+      //     console.log('父类静态方法', msg);
+      //   }
+      //   func(msg) {
+      //     console.log('父类实例方法', msg);
+      //   }
+      // }
+      // class C extends F {
+      //   static func(msg) {
+      //     super.func(msg);
+      //   }
+      //   func(msg) {
+      //     super.func(msg);
+      //   }
+      // }
+      // C.func('蚂蚁部落');
+      // let c = new C();
+      // c.func('蚂蚁部落');
+    </script>
+  </body>
+</html>
