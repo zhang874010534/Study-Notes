@@ -3,14 +3,17 @@
   <head>
     <title>Vue Component Blog Post Example</title>
     <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   </head>
   <body>
     <div id="app">
       <button @click="currentTab='tab-posts'">0</button>
       <button @click="currentTab='tab-archive'">1</button>
+      <button @click="demo">1</button>
       <keep-alive>
         <component :is="currentTab"></component>
       </keep-alive>
+      <router-view></router-view>
     </div>
 
     <script>
@@ -71,10 +74,50 @@
         template: '<div>Archive component</div>'
       });
 
+      const Foo = { template: '<div>foo</div>' };
+      const Bar = { template: '<div>bar</div>' };
+
+      // 2. 定义路由
+      // 每个路由应该映射一个组件。 其中"component" 可以是
+      // 通过 Vue.extend() 创建的组件构造器，
+      // 或者，只是一个组件配置对象。
+      // 我们晚点再讨论嵌套路由。
+      const routes = [
+        { path: '/', component: Bar },
+        { path: '/user', name: 'user', component: Foo }
+      ];
+
+      // 3. 创建 router 实例，然后传 `routes` 配置
+      // 你还可以传别的配置参数, 不过先这么简单着吧。
+      const router = new VueRouter({
+        routes // (缩写) 相当于 routes: routes
+      });
+      router.beforeResolve((to, from, next) => {
+        /* 必须调用 `next` */
+        if(to.path==='/user'){
+          console.log(1111111111)
+        }
+        next()
+      });
+
       new Vue({
         el: '#app',
         data: {
           currentTab: 'tab-posts'
+        },
+        mounted() {
+          // this.demo();
+        },
+        router,
+        methods: {
+          demo() {
+            this.$router.push({
+              name: 'user',
+              params: {
+                userId: 123
+              }
+            });
+          }
         }
       });
     </script>
