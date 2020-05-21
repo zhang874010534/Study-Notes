@@ -8,4 +8,6 @@
 - [vue-lazyload](https://www.npmjs.com/package/vue-lazyload) 图片懒加载
 - [vue-awesome-swiper](https://github.surmon.me/vue-awesome-swiper) 轮播图
 - vue-cli-plugin-element    vuecli插件 可以按需导入elementui组件
+- [qrcode](https://www.npmjs.com/package/qrcode) 将文本转换成base64的二维码图片
+- [vue-infinite-scroll](https://www.npmjs.com/package/vue-infinite-scroll) 滚动加载  滚动的时候执行一个方法
 
