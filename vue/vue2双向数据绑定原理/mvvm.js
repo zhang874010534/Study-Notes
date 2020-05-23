@@ -1,9 +1,8 @@
+// 以前写的
 //首先页面加载 实例化对象shuai 疯狂触发observe这时候data里的变量都可以被观测
 //Compile执行 页面中的node节点也都添加进了文档碎片并且生成了
 // 一个一个watcher 数据获取时候触发get绑定watcher 
 // 数据被修改时候触发notify通知watcher更新也就是触发自身的update函数
-
-
 function ShuaiBi(options={}){
 	//将属性挂载在$option上
 	this.$options=options;
@@ -130,7 +129,7 @@ function Watcher(vm,RegExp,fn){
 	let arr=RegExp.split('.');
 	arr.forEach(function(k){
 		val=val[k]
-	})
+	}) 
 	
 	Dep.target=null 
 	this.val=val //数据等下给update用
