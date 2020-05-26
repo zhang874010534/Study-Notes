@@ -18,13 +18,14 @@
     // 最新的
     // 面试回答：首先关键的点在于Object.defineProperty他可以使一个对象上的属性变得可以被监听
     // 在new Vue的时候首先是调用Observe处理data 使得数据可以被监听
-    // 之后是Compile Compile做的事情是比如正则匹配一下html里的{{}} 执行new Watcher
-    // new Watcher的时候会调用Watcher构造函数所对应的原型上的get方法获取data里的数据
+    // 之后是Compile Compile做的事情是先将html里的内容变成fragment代码片段
+    // 之后比如正则匹配一下html里的{{}} 执行new Watcher
+    // 初始化Watcher的时候会调用Watcher构造函数所对应的原型上的get方法获取data里的数据
     // 数据被获取那么执行对应的get方法这个是Object.defineProperty定义的get
     // 执行dep.addSub(Dep.target) 将watcher实例添加进Dep仓库
     // 当data里的数据被更新之后触发set函数执行dep.notify() 执行watcher的update方法更新视图
     // update方法会判断之前的value值和新的data里的值是否一致 不一致才会更新
-    // 里面执行的回调函数是compile在new Watcher的时候传进来的真正包含更新逻辑的函数
+    // 里面执行的回调函数是compile在new Watcher的时候传进来的真正包含更新逻辑的函数 
     // https://juejin.im/post/5e71e7066fb9a07cab3ab804#heading-4
   </script>
   <script>
