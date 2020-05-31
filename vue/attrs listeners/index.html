@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style></style>
+  </head>
+  <body>
+    <div id="app">
+      
+      <p>A组件里 c的数据是:{{cData}}</p>
+      <bb :a-data='aData' @set-data='setData'></bb>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <template id="bb">
+      <div>
+        <p>我是B</p>
+        <cc v-bind="$attrs" v-on="$listeners"></cc>
+      </div>
+    </template>
+    <template id="cc">
+      <div>
+        <p>我是C</p>
+        <p>
+          {{aData}}
+        </p>
+        <button @click="set">c的按钮</button>
+      </div>
+    </template>
+    <script>
+      document.querySelector
+      Vue.component('bb', {
+        template: '#bb'
+      });
+      Vue.component('cc', {
+        props: {
+          aData: String
+        },
+        template: '#cc',
+        data() {
+          return {
+            cData:'我是c的数据'
+          }
+        },
+        methods: {
+          set(){
+            this.$emit('set-data',this.cData)
+          }
+        },
+      });
+      let vm = new Vue({
+        el: '#app',
+        data() {
+          return {
+            aData: '我是a的数据被放到了c里',
+            cData:''//存c的数据
+          }
+        },
+        methods: {
+          setData(val){
+            this.cData=val
+          }
+        },
+      });
+    </script>
+  </body>
+</html>
