@@ -66,5 +66,54 @@ demo({ first: 1 });
 
 ```
 
+```typescript
+let a: number | string = 123;//或者
+a = '123';
 
+```
+
+```typescript
+interface   {
+  name:number;
+}
+let obj: Person = {
+  name: 1
+};
+```
+
+### 数组和元组
+
+```typescript
+// 数组
+let arr: (number | string)[] = [1, '2', 3];
+let stringArr: string[] = ['1', '2'];
+let undefinedArr: undefined[] = [undefined, undefined];
+
+//type alias 类型别名
+type User = {
+  name: string;
+  age: number;
+};
+class Teacher {
+  name: string;
+  age: number;
+}
+
+let objectArr: Teacher[] = [
+  {
+    name: 'dd',
+    age: 22
+  }
+];
+
+// 元组 tuple 一个数组长度固定，数组中的每一项类型固定，就可以用元组来约束
+let teacherInfo:[string,string,number]=['dd','male',22]
+// 比如读取一个excel文件的数据
+let teacherList:[string,string,number][]=[
+  ['dd','male',22],
+  ['dd','male',22],
+  ['dd','male',22]
+]
+
+```
 
