@@ -184,3 +184,77 @@ console.log(t.getName())
 
 ```
 
+### 类中的访问类型和构造器
+
+```typescript
+//public 默认的 类内外
+//private 内
+//protected 内、继承
+class Person {
+  // private name:string
+  // public name:string
+  protected name: string;
+}
+class Teacher extends Person {
+  sayHi() {
+    this.name;
+  }
+}
+let person = new Person();
+// console.log(person.name='dd')
+
+class Animal {
+  // private name: string;
+  constructor(public name: string) {
+    // this.name = name;
+  }
+}
+class Dog extends Animal{
+  constructor(public age:number){
+    super('dd')
+  }
+}
+let dog = new Dog(22);
+console.log(dog);//Dog { name: 'dd', age: 22 }
+
+```
+
+### 类的静态属性getter、setter
+
+```typescript
+// 保护私有属性一般用_来表示 然后通过get来处理后返回
+class Person {
+  constructor(private _name: string) {}
+  // 获取
+  get name() {
+    return this._name + 'qq';
+  }
+  // 设置
+  set name(name: string) {
+    this._name = name;
+  }
+}
+let person = new Person('dd');
+person.name = 'teer';
+console.log(person.name);
+```
+
+### js设计模式 单例模式
+
+```typescript
+class Demo {
+  private static instance: Demo;
+  constructor(public name: string) {}
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new Demo('dd');
+    }
+    return this.instance;
+  }
+}
+
+let demo1 = Demo.getInstance();
+let demo2 = Demo.getInstance();
+console.log(demo1 === demo2); //true
+```
+
