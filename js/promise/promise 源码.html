@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style></style>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      //new Promise的resolve和reject要做的事情就是通过setTimeout宏任务遍历数组并触发函数将值传递给函数
+
+      // new promise 的resolve因为肯定是pending状态要做的就是执行一个宏任务循环遍历一个数组并执行里面的函数将值传给这个函数
+      //这个数组是存储着.then成功的方法,是在.then的时候存入的，.then也会new一个promise，然后将自己传入的函数包裹在一个函数里存入数组，等待resolve的宏任务来执行
+      // 第一次new Promise 执行了reject，reject要做的事情就是通过setTimeout宏任务遍历数组并触发函数将值传递给函数(这个函数是包裹着.then传入的参数)
+      //他在2次.then之后才会执行
+      //第一次.then将函数存入了第一个promise实例的数组中,第二次.then将函数存入了第二个promise实例的数组中
+      //第一次的.then会执行return new promise 存入的数组是最开始的resolve触发的宏任务来执行
+      //如果有返回值并且并不是promise 那么就执行一个resolve 这个resolve是为了触发第二个.then的resolveArr数组
+      class MyPromise {
+        constructor(executor) {
+          this.status = 'pending'; // 初始化状态为pending
+          this.value = undefined; // 初始化返回的成功的结果或者失败的原因
+          this.resolveArr = []; // 初始化then中成功的方法
+          this.rejectArr = []; // 初始化then中失败的方法
+          console.log(2);
+          // 定义change方法，因为我们发现好像resolve和reject方法共同的地方还挺多🤔
+          let change = (status, value) => {
+            if (this.status !== 'pending') return; // 状态一旦改变，就不会再变
+            this.status = status;
+            this.value = value;
+
+            // 根据状态判断要执行成功的方法或失败的方法
+            let fnArr =
+              status === 'resolved' ? this.resolveArr : this.rejectArr;
+            console.log(fnArr[0]);
+            // fnArr中的方法依次执行
+            fnArr.forEach((item) => {
+              if (typeof item !== 'function') return;
+              item(this.value);
+            });
+          };
+          // 这里是resolve方法，成功后执行，将状态改变为resolved，并且将结果返回
+          let resolve = (result) => {
+            // 如果数组中有值，则立即改变状态
+            if (this.resolveArr.length > 0) {
+              change('resolved', result);
+            }
+            // 如果没值，则延后改变状态
+            let timer = setTimeout((_) => {
+              change('resolved', result);
+              clearTimeout(timer);
+            }, 0);
+          };
+
+          // 这里是reject方法，异常时执行，状态改为rejected，并且将失败的原因返回
+          let reject = (reason) => {
+            // 如果数组中有值，则立即改变状态
+            if (this.rejectArr.length > 0) {
+              change('rejected', reason);
+            }
+            // 如果没值，则延后改变状态 在.then都结束了才执行的
+            let timer = setTimeout((_) => {
+              change('rejected', reason);
+              clearTimeout(timer);
+            }, 0);
+          };
+
+          // try、catch捕获异常，如果错误，执行reject方法
+          try {
+            executor(resolve, reject);
+          } catch (err) {
+            reject(err);
+          }
+        }
+
+        then(resolveFn, rejectFn) {
+          // 如果传入的两个参数不是函数，则直接执行返回结果
+
+          if (typeof resolveFn !== 'function') {
+            resolveFn = (result) => {
+              return result;
+            };
+          }
+
+          if (typeof rejectFn !== 'function') {
+            rejectFn = (reason) => {
+              return MyPromise.reject(reason);
+            };
+          }
+
+          return new MyPromise((resolve, reject) => {
+            console.log(1);
+            this.resolveArr.push((result) => {
+              try {
+                let x = resolveFn(result); // 获取执行成功方法返回的结果
+
+                // 如果x是一个promise实例，则继续调用then方法 ==> then链的实现
+                if (x instanceof MyPromise) {
+                  x.then(resolve, reject);
+                  return;
+                }
+
+                // 不是promise实例，直接执行成功的方法
+                resolve(x);
+              } catch (err) {
+                reject(err);
+              }
+            });
+
+            this.rejectArr.push((reason) => {
+              try {
+                let x = rejectFn(reason);
+
+                if (x instanceof MyPromise) {
+                  x.then(resolve, reject);
+                  return;
+                }
+
+                resolve(x);
+              } catch (err) {
+                reject(err);
+              }
+            });
+          });
+        }
+      }
+
+      // 3、链式调用
+      // 顺序就是
+      // new promise
+      // .then new promise
+      // .then new promise
+      // reject触发第一个.then的数组(是存在第一个promise上) 又执行了一个resolve
+      // resolve又触发第二个.then的数组(是存在第二个promise上，也就是第一个.then的promise)
+      let a = new MyPromise((resolve, reject) => {
+        reject('失败了，我好委屈，呜呜呜～～'); //设置一个宏任务为了触发存储着.then参数(函数)的数组
+        resolve('已经失败了～～～');
+      })
+        .then(
+          //会new 一个promise 将自己这个参数存入一个数组
+          (res) => {
+            console.log(res);
+            return '第一个.then的返回值';
+          },
+          (err) => {
+            console.log(err, 'error'); // 失败了，我好委屈，呜呜呜～～ error
+            return '我要发奋图强，不会被困难所击倒，我要成功！！！';
+          }
+        )
+        .then(
+          (res1) => {
+            console.log(res1, '经过不懈努力，我终于在第二次成功了～'); // 我要发奋图强，不会被困难所击倒，我要成功！！！  经过不懈努力，我终于在第二次成功了～
+          },
+          (err1) => {
+            console.log(err1, '第二次失败');
+          }
+        );
+    </script>
+  </body>
+</html>

@@ -90,6 +90,7 @@ let stringArr: string[] = ['1', '2'];
 let undefinedArr: undefined[] = [undefined, undefined];
 
 //type alias 类型别名
+type Person=string //还可以这么写 而interface就不行
 type User = {
   name: string;
   age: number;
@@ -114,6 +115,72 @@ let teacherList:[string,string,number][]=[
   ['dd','male',22],
   ['dd','male',22]
 ]
+
+```
+
+### interface接口
+
+```typescript
+interface Person {
+  // readonly name: string;//只读
+  name: string;
+  age?: number; //可有可无
+  [propName: string]: any; //加了这个下面多一个sex也没关系了 键名是string 类型是any
+  say(): string; //一个方法 需要返回string类型
+}
+// 继承
+interface Teacher extends Person {
+  teach(): string;
+}
+const getPersonName = (person: Person) => {
+  return person.name;
+};
+const setPersonName = (person: Person, name: string): void => {
+  person.name = name;
+};
+getPersonName({
+  name: 'dd',
+  sex: 'male',
+  say() {
+    return 'hello';
+  }
+});
+// 应用
+class User implements Person {
+  name = 'dd';
+  say() {
+    return 'hello';
+  }
+}
+
+// 定义函数类型
+interface SayHi {
+  (word: string): string;
+}
+
+let say: SayHi = (word) => {
+  return word;
+};
+
+```
+
+### 类的定义和继承
+
+```typescript
+class Person {
+  name='dd';
+  getName() {
+    return this.name;
+  }
+}
+
+class Teacher extends Person{
+  getName(){
+    return super.getName()+'lee'//重写了父类方法，通过super可以再次调用父类的方法
+  }
+}
+let t=new Teacher()
+console.log(t.getName())
 
 ```
 
