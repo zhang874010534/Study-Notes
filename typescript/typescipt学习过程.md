@@ -27,7 +27,14 @@ demo({ x: 1 });
 1. npm i typescript -g
 2. tsc xxx.ts      //tsc  typescript compile的缩写  将ts转化成js
 3. npm i ts-node -g  
-4. ts-node xxx.ts 可以直接编译并运行
+4. ts-node xxx.ts //可以直接编译并运行
+
+- tsc --init    //ts配置文件
+- tsc -w 监听模式下运行tsc 类似于热更新
+- nodemon app.js //自动用node执行app.js
+  - 所以可以tsc -w监听ts文件变化 自动生成js文件,nodemon监听js文件变化自动运行
+
+- concurrently npm:dev:*       ===   npm run dev:build   + npm run dev:start
 
 ### 类型注解和类型推断
 
@@ -48,7 +55,6 @@ let a=demo(data) 因为注解了所以ts能推断出return的是一个number类�
 function demo(): void {//没有返回值
   console.log('hello');
 }
-
 ```
 
 ```typescript
@@ -68,18 +74,40 @@ demo({ first: 1 });
 
 ```typescript
 let a: number | string = 123;//或者
-a = '123';
-
+a = '123'
 ```
 
 ```typescript
-interface   {
-  name:number;
+// 定义函数类型
+interface SayHi {
+  (word: string): string;
 }
-let obj: Person = {
-  name: 1
+
+let say: SayHi = (word) => {
+  return word;
 };
+
+//对象里的函数
+interface Person {
+  say(word:string): string; //一个方法 需要返回string类型
+}
+let person: Person = {
+  say(word) {
+    return word;
+  }
+};
+interface Animal {
+  say: (word: string) => string;
+}
+let animal:Animal={
+  say(word){
+    return word
+  }
+}
+
 ```
+
+
 
 ### 数组和元组
 
@@ -163,6 +191,39 @@ let say: SayHi = (word) => {
 };
 
 ```
+
+```typescript
+// interface简化ts代码
+interface Person {
+  name: string;
+  age: number;
+}
+interface Teacher extends Person {
+  teachAge: number;
+}
+interface Student extends Person {
+  learnAge: number;
+}
+
+let teacher = {
+  name: 'dd',
+  age: 30,
+  teachAge:2
+};
+let student = {
+  name: 'gg',
+  age: 22,
+  learnAge:2
+};
+
+let getUserName = (user: Person) => {//简化的部分在这里
+  console.log(user.name);
+};
+getUserName(teacher);
+getUserName(student);
+```
+
+
 
 ### 类的定义和继承
 
@@ -256,5 +317,44 @@ class Demo {
 let demo1 = Demo.getInstance();
 let demo2 = Demo.getInstance();
 console.log(demo1 === demo2); //true
+```
+
+### [抽象类](https://www.tslang.cn/docs/handbook/classes.html)
+
+```typescript
+// 抽象类做为其它派生类的基类使用
+abstract class Animal {
+  constructor(public name: string) {}
+  abstract sayHi(): string;//抽象类中的抽象方法不包含具体实现并且必须在派生类中实现
+}
+
+class Dog extends Animal {
+  constructor(name: string) {
+    super(name);
+  }
+  sayHi() {//在子类中必须有sayHi 因为抽象父类定义了抽象方法
+    return 'hello';
+  }
+}
+
+let dog = new Dog('dd');
+console.log(dog.sayHi());//hello
+```
+
+### [tsconfig.json配置](https://www.tslang.cn/docs/handbook/tsconfig-json.html)
+
+```typescript
+{
+    "exclude": ["./demo2.ts"],//除了这个文件都编译
+    "compilerOptions":{
+        "allowJs": true,/* 允许编译js文件,Allow javascript files to be compiled. */
+        "checkJs": true,//允许在写js文件的时候有代码检测
+        "sourceMap": true, //生产.map文件
+        "outDir": "./build",//编译输出目录
+        "removeComments": true,/* Do not emit comments to output. */
+        "noImplicitAny": true,//不能有隐式的any
+        "strictNullChecks": true,//null校验，就是不能将null赋值给其他类型
+    }
+}
 ```
 
