@@ -354,7 +354,67 @@ console.log(dog.sayHi());//hello
         "removeComments": true,/* Do not emit comments to output. */
         "noImplicitAny": true,//不能有隐式的any
         "strictNullChecks": true,//null校验，就是不能将null赋值给其他类型
+            
+         /* Additional Checks */
+        "noUnusedLocals": true, //变量声明但是没使用，会警告
+        "noUnusedParameters": true, //未使用参数警告
     }
 }
 ```
+
+### [联合类型(Union Types)和类型保护(Type Guards)](https://www.tslang.cn/docs/handbook/advanced-types.html)
+
+> 联合类型    值可以为不同类型的情况
+
+##### 类型断言 类型保护
+
+```typescript
+function trainAnimal(animal: Bird | Dog) {
+  if (animal.fly) {
+    (<Bird>animal).birdSay();
+  } else {
+    (animal as Dog).dogSay();
+  }
+}
+```
+
+##### in的类型保护
+
+```typescript
+function trainAnimal2(animal: Bird | Dog) {
+  if ('birdSay' in animal) {
+    console.log(animal.birdSay());
+  } else {
+    animal.dogSay();
+  }
+}
+```
+
+##### typeof 类型保护
+
+```typescript
+function concat(first: string | number, second: string | number) {
+  if (typeof first === 'string' || typeof second === 'string') {
+    return `${first}${second}`;
+  }
+  return first + second;
+}
+```
+
+##### instanceof 类型保护
+
+```typescript
+class NumberObj {
+  constructor(public count:number){
+  }
+}
+function add(first: object | NumberObj, second: object | NumberObj) {
+  if (first instanceof NumberObj && second instanceof NumberObj) {
+    return first.count + second.count;
+  }
+  return 0;
+}
+```
+
+
 
