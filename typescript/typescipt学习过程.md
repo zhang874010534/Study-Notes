@@ -28,12 +28,12 @@ demo({ x: 1 });
 2. tsc xxx.ts      //tsc  typescript compile的缩写  将ts转化成js
 3. npm i ts-node -g  
 4. ts-node xxx.ts //可以直接编译并运行
+5. yarn add parcel@next --dev  //parcel ./src/index.html 直接运行html，html里可以直接引入ts文件
 
 - tsc --init    //ts配置文件
-- tsc -w 监听模式下运行tsc 类似于热更新
+- tsc -w 监听模式(watch)下运行tsc 类似于热更新
 - nodemon app.js //自动用node执行app.js
   - 所以可以tsc -w监听ts文件变化 自动生成js文件,nodemon监听js文件变化自动运行
-
 - concurrently npm:dev:*       ===   npm run dev:build   + npm run dev:start
 
 ### 类型注解和类型推断
@@ -181,9 +181,10 @@ class User implements Person {
   }
 }
 
-// 定义函数类型
+// 定义函数类型 函数重载SayHi可以传string类型也可以传number类型 在写.d.ts文件(类型定义文件)的时候可以使用
 interface SayHi {
   (word: string): string;
+  (name: number): number
 }
 
 let say: SayHi = (word) => {
@@ -416,5 +417,164 @@ function add(first: object | NumberObj, second: object | NumberObj) {
 }
 ```
 
+### Enum 枚举类型
 
+```typescript
+enum Status {
+  online=1,
+  offline=2,
+  delete=3
+}
+console.log(Status)//{  '1': 'online',  '2': 'offline',  '3': 'delete',  online: 1,  offline: 2,  delete: 3}
+// let Status={
+//   online:0,
+//   offline:1,
+//   delete:2
+// }
+
+function getResult(status: number) {
+  if (status === Status.online) {
+    return 'on';
+  } else if (status === Status.offline) {
+    return 'off';
+  } else if (status === Status.delete) {
+    return 'delete';
+  }
+}
+console.log(getResult(1))
+```
+
+### 泛型
+
+> 在用的时候再指定具体的类型
+
+##### 函数中
+
+```typescript
+//generic 泛型
+// 我希望传string的时候另外一个也要得是string
+function join<T>(first: T, second: T) {
+  return `${first}${second}`;
+}
+join<string>('1', '1');
+
+//还可以这样子
+function join2<T,P>(first: T, second: P) {
+  return `${first}${second}`;
+}
+join2<number,string>(1, '1');
+
+function join3<T>(first: T[]) {
+  return first;
+}
+// 上下这俩是一样的
+function join4<T>(first: Array<T>) {
+  return first;
+}
+join3<string>(['1']);
+
+```
+
+##### 类中
+
+```typescript
+interface Item {
+  name: string;
+}
+class DataManager<T extends Item> {
+  constructor(private data: T[]) {}
+  getItem(index: number): string {
+    return this.data[index].name;
+  }
+}
+let data = new DataManager([
+  {
+    name: 'dd'
+  }
+]);
+console.log(data.getItem(0));
+
+//如果想要约束传入的泛型范围可以
+class DataManager2<T extends string|number>{
+  constructor(private data: T[]) {}
+  getItem(index: number):T {
+    return this.data[index];
+  }
+}
+```
+
+### [命名空间](https://www.tslang.cn/docs/handbook/namespaces.html)
+
+> 随着更多验证器的加入，我们需要一种手段来组织代码，以便于在记录它们类型的同时还不用担心与其它对象产生命名冲突。 因此，我们把验证器包裹到一个命名空间内，而不是把它们放在全局命名空间下。
+
+```typescript
+namespace Components{
+  export class Header{
+    constructor(){
+      let div=document.createElement('div')
+      div.innerHTML='Header'
+      document.body.appendChild(div)
+    }
+  }
+}
+/// <reference path="components.ts" />
+namespace Home{
+  //暴露出来 编译出的js里会多一句 Home.Page=Page
+  export class Page{
+    constructor(){
+      new Components.Header()
+    }
+  }
+}
+
+//然后再页面里调用 new Home.Page()
+```
+
+### 描述文件.d.ts编写
+
+```typescript
+// 定义全局变量
+// declare var $: (param: () => void) => void;
+// 定义全局函数
+declare function $(params: () => void): void {
+};
+declare function $(params: string): { html: (html: string) => {} };
+
+// 既要是对象又要是函数，就得这个样子
+declare namespace ${
+  namespace fn{
+    function init(){
+      
+    }
+  }
+}
+
+// 使用interface来实现函数重载
+interface html{
+  html(param: string):html
+}
+interface jQuery {
+  (params: () => void): void;
+  (selector:string):html
+}
+
+```
+
+##### [模块](https://www.tslang.cn/docs/handbook/modules.html)
+
+```typescript
+declare module 'jquery' {
+  function $(params: () => void): void {}
+  function $(params: string): { html: (html: string) => {} };
+
+  // 既要是对象又要是函数，就得这个样子
+  namespace $ {
+    namespace fn {
+      function init() {}
+    }
+  }
+  //export default $ //页面搜'默认导出'
+  export = $; //TypeScript提供了export =语法  定义一个模块的导出对象
+}
+```
 
