@@ -475,7 +475,7 @@ join3<string>(['1']);
 
 ```
 
-##### 类中
+##### 类中 
 
 ```typescript
 interface Item {
@@ -502,6 +502,32 @@ class DataManager2<T extends string|number>{
   }
 }
 ```
+
+##### [索引类型查询操作符](https://www.tslang.cn/docs/handbook/advanced-types.html)
+
+> 首先是 `keyof T`， **索引类型查询操作符**。 对于任何类型 `T`， `keyof T`的结果为 `T`上已知的公共属性名的联合
+
+```typescript
+interface Person {
+  name: string;
+  age: number;
+}
+// 类似于type T='name' 那么key就是'name'  Person['name']就是string
+class Teacher {
+  constructor(private info: Person) {}
+  getInfo<T extends keyof Person>(key: T): Person[T] {
+    return this.info[key];
+  }
+}
+let teacher = new Teacher({
+  name: 'dd',
+  age: 20
+});
+
+console.log(teacher.getInfo('name'));
+```
+
+
 
 ### [命名空间](https://www.tslang.cn/docs/handbook/namespaces.html)
 
