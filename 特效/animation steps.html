@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #d{
+      width: 20px;
+      height: 100px;
+      background-color: skyblue;
+      position: absolute;
+      left: 50%;
+      top: 30%;
+      transform: translate(-50%);
+      transform-origin: bottom;
+      animation: rotate 60s steps(60,end) infinite;
+    }
+    @keyframes rotate {
+      from{
+        transform: rotate(0);
+      }to{
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="d"></div>
+</body>
+</html>
