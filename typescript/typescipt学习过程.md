@@ -359,6 +359,10 @@ console.log(dog.sayHi());//hello
          /* Additional Checks */
         "noUnusedLocals": true, //变量声明但是没使用，会警告
         "noUnusedParameters": true, //未使用参数警告
+            
+        /* Experimental Options */
+        "experimentalDecorators": true,/* Enables experimental support for ES7 decorators. */
+        "emitDecoratorMetadata": true,/* Enables experimental support for emitting typemetadata for decorators. */
     }
 }
 ```
@@ -602,5 +606,38 @@ declare module 'jquery' {
   //export default $ //页面搜'默认导出'
   export = $; //TypeScript提供了export =语法  定义一个模块的导出对象
 }
+```
+
+### [类的装饰器](https://www.tslang.cn/docs/handbook/decorators.html)
+
+```typescript
+// 类的装饰器
+// 装饰器本身是一个函数
+// 类装饰器接受的参数是一个构造函数
+// 装饰器用@符号来使用
+
+// 这个不规范!!!!! 帮助理解
+function decorator(flag: boolean) {
+  if (flag === true) {
+    return function (constructor: any) {
+      //接受的参数是这个构造函数
+      constructor.prototype.getName = () => {
+        console.log('dd');
+      };
+      console.log(1);
+    };
+  } else {
+    return function (constructor: any) {};
+  }
+}
+
+@decorator(true)
+class Test {}
+
+let test = new Test();
+(test as any).getName();
+
+
+
 ```
 
