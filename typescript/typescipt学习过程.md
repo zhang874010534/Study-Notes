@@ -421,7 +421,7 @@ function add(first: object | NumberObj, second: object | NumberObj) {
 }
 ```
 
-### Enum 枚举类型
+### [Enum 枚举类型](https://www.tslang.cn/docs/handbook/enums.html)
 
 ```typescript
 enum Status {
@@ -448,7 +448,7 @@ function getResult(status: number) {
 console.log(getResult(1))
 ```
 
-### 泛型
+### [泛型](https://www.tslang.cn/docs/handbook/generics.html)
 
 > 在用的时候再指定具体的类型
 
@@ -608,7 +608,9 @@ declare module 'jquery' {
 }
 ```
 
-### [类的装饰器](https://www.tslang.cn/docs/handbook/decorators.html)
+### [装饰器](https://www.tslang.cn/docs/handbook/decorators.html)
+
+##### 类装饰器
 
 ```typescript
 // 类的装饰器
@@ -636,8 +638,99 @@ class Test {}
 
 let test = new Test();
 (test as any).getName();
+```
 
+```typescript
+// 类装饰器工厂
+function decorator() {
+  return function <T extends new (...args: any[]) => any>(constructor: T) {
+    return class extends constructor {
+      name = 'teer';
+      getName() {
+        return this.name;
+      }
+    };
+  };
+}
+// 这返回的就已经是装饰过的类，所以后面代码可以提示
+let Test = decorator()(
+  class {
+    name: string;
+    constructor(name: string) {
+      this.name = name;
+    }
+  }
+);
 
+let test = new Test('dd');
+console.log(test.getName()); //这样子就有代码提示了
+```
 
+##### 方法装饰器
+
+[Object.defineProperty](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties)
+
+```typescript
+// target 对于实例成员是类的原型对象,对于静态成员来说是类的构造函数，
+// descriptor类似于原生方法Object.defineProperty里的descriptor
+function getNameDecorator(target: any,key:string,descriptor:PropertyDescriptor) {
+  
+}
+class Test {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+  // 不加static target就是指向prototype 加了就是指向构造函数
+  @getNameDecorator
+  static getName() {
+    return '123'
+  }
+}
+```
+
+##### 访问器装饰器
+
+```typescript
+function visitDecorator(
+  target: any,
+  key: string,
+  descriptor: PropertyDescriptor
+) {
+  // 在这边进行装饰
+}
+class Test {
+  constructor(private _name: string) {}
+  get name() {
+    return this._name;
+  }
+  @visitDecorator
+  set name(name: string) {
+    this._name = name;
+  }
+}
+let test = new Test('dd');
+test.name = 'qq';
+console.log(test.name);
+
+```
+
+##### 属性装饰器
+
+```typescript
+function propertyDecorator(target:any,key:string):any{
+  // 他是没有属性描述符的
+  // 创建一个descriptor并返回，会去替换原来的descriptor，从而实现修改
+  let descriptor:PropertyDescriptor={
+    writable:false
+  }
+  return descriptor
+}
+class Test{
+  @propertyDecorator
+  name:string='dd'
+}
+let test=new Test()
+console.log(test.name)
 ```
 

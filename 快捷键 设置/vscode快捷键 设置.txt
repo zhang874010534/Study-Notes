@@ -7,6 +7,7 @@ ctrl+\ 拆分编辑器  是复制
 ctrl+alt+→ 向右拆分编辑器是移动不是复制
 shift+click Shift + Click once on the folding indicator to first fold the inner ranges. Shift + Click again (when all inner ranges are already folded) will fold the parent. Shift + Click again unfolds all.
 ctrl+shift+[ 折叠
+ctrl+shift+→ 向右选中单词
 ctrl+b 隐藏左边栏
 ctrl+1或者2可以切换整个编辑器
 
