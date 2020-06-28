@@ -668,7 +668,7 @@ console.log(test.getName()); //这样子就有代码提示了
 
 ##### 方法装饰器
 
-[Object.defineProperty](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties)
+[Object.defineProperty](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
 
 ```typescript
 // target 对于实例成员是类的原型对象,对于静态成员来说是类的构造函数，
@@ -688,6 +688,46 @@ class Test {
   }
 }
 ```
+
+###### 方法装饰器实战
+
+> 把重复的try catch去掉，全部整合到装饰器里
+
+```typescript
+let userInfo: any = undefined;
+function catchError(msg: string) {
+  return function (
+    target: any,
+    key: string,
+    descriptor: PropertyDescriptor
+  ) {
+    let fn = descriptor.value;
+    // 不能用target[key]来修改 虽然看起来也是原型上的方法，我怀疑这是个假的原型
+    descriptor.value = function () {
+      try {
+        fn();
+      } catch (error) {
+        console.log(msg);
+      }
+    };
+  };
+}
+class Test {
+  @catchError('name错误')
+  getName() {
+    return userInfo.name;
+  }
+  @catchError('age错误')
+  getAge() {
+    return userInfo.age;
+  }
+}
+let test = new Test();
+test.getName();// name错误
+test.getAge();// age错误
+```
+
+
 
 ##### 访问器装饰器
 
@@ -732,5 +772,39 @@ class Test{
 }
 let test=new Test()
 console.log(test.name)
+```
+
+```typescript
+function propertyDecorator(target:any,key:string):any{
+  target[key]='gg'// 这里修改的是prototype原型上的属性，所以和实例化对象这个操作没关系
+}
+class Test{
+  @propertyDecorator
+  name='dd' //他是在constructor上的，所以只是为了实例化对象
+}
+let test=new Test()
+
+console.log(Test.prototype)
+console.log((test as any).__proto__.name)// 'gg'
+```
+
+##### 参数装饰器
+
+```typescript
+/**
+ * 
+ * @param target 对于静态成员来说是类的构造函数，对于实例成员是类的原型对象。
+ * @param key 成员的名字。
+ * @param paramIndex 参数在函数参数列表中的索引。
+ */
+function propertyDecorator(target:any,key:string,paramIndex:number):any{
+  console.log(target,paramIndex)
+}
+class Test{
+  getInfo(@propertyDecorator name:string){
+
+  }
+}
+let test=new Test()
 ```
 
