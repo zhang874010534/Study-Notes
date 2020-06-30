@@ -1,4 +1,4 @@
-### typescript的一些优势
+### 	typescript的一些优势
 
 ##### 在开发过程中，就发现潜在的问题
 
@@ -192,6 +192,8 @@ let say: SayHi = (word) => {
 };
 
 ```
+
+
 
 ```typescript
 // interface简化ts代码
