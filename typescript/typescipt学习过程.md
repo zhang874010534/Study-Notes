@@ -670,7 +670,7 @@ console.log(test.getName()); //这样子就有代码提示了
 
 ##### 方法装饰器
 
-[Object.defineProperty](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
+[Object.defineProperty](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty) 可以参考一下这个2个很像
 
 ```typescript
 // target 对于实例成员是类的原型对象,对于静态成员来说是类的构造函数，

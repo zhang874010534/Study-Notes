@@ -11,3 +11,7 @@
 - [qrcode](https://www.npmjs.com/package/qrcode) 将文本转换成base64的二维码图片
 - [vue-infinite-scroll](https://www.npmjs.com/package/vue-infinite-scroll) 滚动加载  滚动的时候执行一个方法
 
+### React
+
+- [echarts-for-react](https://github.com/hustcc/echarts-for-react)  一个简单的 echarts(v3.0 & v4.0) 的 react 封装。
+
