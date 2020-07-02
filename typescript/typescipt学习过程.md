@@ -538,6 +538,8 @@ console.log(teacher.getInfo('name'));
 ### [命名空间](https://www.tslang.cn/docs/handbook/namespaces.html)
 
 > 随着更多验证器的加入，我们需要一种手段来组织代码，以便于在记录它们类型的同时还不用担心与其它对象产生命名冲突。 因此，我们把验证器包裹到一个命名空间内，而不是把它们放在全局命名空间下。
+>
+> 命名空间是位于全局命名空间下的一个普通的带有名字的JavaScript对象。 这令命名空间十分容易使用。 它们可以在多文件中同时使用，并通过 `--outFile`结合在一起。 命名空间是帮你组织Web应用不错的方式，你可以把所有依赖都放在HTML页面的 `<script>`标签里。
 
 ```typescript
 namespace Components{
@@ -579,6 +581,10 @@ declare namespace ${
       
     }
   }
+  // 不加export也可以在外面被.出来
+  interface CourseItem {
+      title: string;
+  }
 }
 
 // 使用interface来实现函数重载
@@ -594,7 +600,12 @@ interface jQuery {
 
 ##### [模块](https://www.tslang.cn/docs/handbook/modules.html)
 
+> 像命名空间一样，模块可以包含代码和声明。 不同的是模块可以 *声明*它的依赖。
+>
+> /// <reference path="myModules.d.ts" />
+
 ```typescript
+/// <reference path="myModules.d.ts" />
 declare module 'jquery' {
   function $(params: () => void): void {}
   function $(params: string): { html: (html: string) => {} };
