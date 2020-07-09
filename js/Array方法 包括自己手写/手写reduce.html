@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function myReduce(arr, demo) {
+        let value = arr[0];
+        for (let i = 1, len = arr.length; i < len; i++) {
+          value = demo(value, arr[i]);
+        }
+        return value;
+      }
+      function demo(pre, crt) {
+        return pre + crt;
+      }
+      let arr = [1, 2, 3];
+      let value = myReduce(arr, demo);
+      console.log(value);
+    </script>
+  </body>
+</html>
