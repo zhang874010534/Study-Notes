@@ -7,7 +7,7 @@ initComputed=> new Watcher=>defineComputed=>createComputedGetter
 1. 首先初始化computed,获取到计算属性里的函数,计算属性本质上就是一个函数return了一个值，为什么不用method呢，因为method会每次都执行，而computed不会，只有在他依赖的值改变的时候才会重新执行（computed存在一个dirty值，只有dirty值为true的时候才会重新执行watcher实例的evaluate,从而重新执行watcher实例的get)
 2. 紧接着初始化watcher，将vm实例，计算属性的函数传入,
 3. 将计算属性挂载在vm实例上，也是通过Object.defineProperty挂载,第三个参数对象对应的getter通过createComputedGetter函数生成
-4. 判断watcher.dirty是否为true 为true说明他依赖的数据更新了，那么执行watcher.evaluate更新数据，设置watcher.value为最新的值
+4. 判断watcher.dirty是否为true 为true说明他依赖的数据更新了，那么执行watcher.evaluate更新数据，设置watcher.value为最新的值（每一次数据更新触发watcher.update函数都会让wathcer上的dirty变成true）
 5. evaluate调用了watcher.get()方法，get 调用dep的pushTarget方法讲自己挂载在Dep.target上，之后执行了getter也就是最开始拿到的那个计算属性函数
 6. 之后判断Dep.target上是否有值，有就调用watcher.depend()执行watcher的依赖收集方法然后执行dep.depend()=> Dep.target.addDep(this)=>*dep*.addSub(this)=>this.subs.push(*sub*)
 7. 也就是watcher.depend=>dep.depend=>watcher.addDep=>dep.addSub=>dep.subs.push
@@ -212,6 +212,22 @@ addDep (dep: Dep) {
 ```javascript
 addSub (sub: Watcher) {
     this.subs.push(sub)//subs就是存放订阅者的地方
+  }
+```
+
+##### watcher上的update()
+
+```js
+  update() {
+    /* istanbul ignore else */
+    if (this.lazy) {
+      //lazy是true 说明是计算属性用了这个watcher
+      this.dirty = true;
+    } else if (this.sync) {
+      this.run();
+    } else {
+      queueWatcher(this);
+    }
   }
 ```
 
