@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- https://cn.vuejs.org/v2/api/#model -->
+    <!-- v-model是v-bind 和v-on的语法糖 比如默认prop接受的是value
+    event接受的是input事件 我希望prop接受的是demo值 event接受的是play方法
+    以前的v-on:input做的事情其实也就是让this.demo=$event.target.value
+    我只要触发play事件 传入value值就可以了 -->
+    <!-- <compoent1 v-bind="demo" v-on:input="demo=$event.target.value"></compoent1> -->
+    <div id="app">
+      {{demo}}
+      <component1 v-model="demo"></component1>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <template id="component1">
+      <input
+        type="text"
+        :value="demo"
+        @input="$emit('play',$event.target.value)"
+      />
+    </template>
+    <script>
+      let vm = new Vue({
+        el: '#app',
+        components: {
+          component1: {
+            template: '#component1',
+            data() {
+              return {};
+            },
+            model: {
+              prop: 'demo',
+              event: 'play'
+            },
+            props: {
+              demo: String
+            }
+          }
+        },
+        data() {
+          return {
+            demo: '名字'
+          };
+        }
+      });
+    </script>
+  </body>
+</html>
