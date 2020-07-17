@@ -1,0 +1,6 @@
+### Object.defineProperty缺点
+
+1. 深度监听，需要递归到底，一次性计算量大
+2. 无法监听新增属性/删除属性(需要Vue.set Vue.delete)
+3. 无法原生监听监听数组，需要特殊处理（也就是用原生的Array.prototype通过Object.create()创建一个新的对象 也就是一个原型在这个基础上进行修改）
+
