@@ -8,8 +8,9 @@
   </head>
   <body>
     <div id="app">
+      
       <p>A组件里 c的数据是:{{cData}}</p>
-      <bb :a-data="aData" @set-data="setData"></bb>
+      <bb :a-data='aData' @set-data='setData'></bb>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <template id="bb">
@@ -28,7 +29,7 @@
       </div>
     </template>
     <script>
-      document.querySelector;
+      document.querySelector
       Vue.component('bb', {
         template: '#bb'
       });
@@ -39,28 +40,28 @@
         template: '#cc',
         data() {
           return {
-            cData: '我是c的数据'
-          };
+            cData:'我是c的数据'
+          }
         },
         methods: {
-          set() {
-            this.$emit('set-data', this.cData);
+          set(){
+            this.$emit('set-data',this.cData)
           }
-        }
+        },
       });
       let vm = new Vue({
         el: '#app',
         data() {
           return {
             aData: '我是a的数据被放到了c里',
-            cData: '' //存c的数据
-          };
+            cData:''//存c的数据
+          }
         },
         methods: {
-          setData(val) {
-            this.cData = val;
+          setData(val){
+            this.cData=val
           }
-        }
+        },
       });
     </script>
   </body>

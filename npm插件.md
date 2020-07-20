@@ -11,6 +11,10 @@
 - [qrcode](https://www.npmjs.com/package/qrcode) 将文本转换成base64的二维码图片
 - [vue-infinite-scroll](https://www.npmjs.com/package/vue-infinite-scroll) 滚动加载  滚动的时候执行一个方法
 
+##### 开发环境
+
+- vue-cli-plugin-element  用vue ui 安装     elementui的按需导入直接在一个文件夹里操作不用自己操作webpack
+
 ### React
 
 - [echarts-for-react](https://github.com/hustcc/echarts-for-react)  一个简单的 echarts(v3.0 & v4.0) 的 react 封装。
