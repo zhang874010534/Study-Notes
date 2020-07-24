@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function reactive(data) {
+        // 不是对象就返回(数组也是对象)
+        if (typeof data !== 'object' || data === null) {
+          return data;
+        }
+        return new Proxy(data, {
+          get(target, key, receiver) {
+            let result = Reflect.get(target, key, receiver);
+            // 只输出本身有的属性(非原型)  不然会输出push 这个没有必要的key
+            if (Reflect.ownKeys(target).includes(key)) {
+              console.log('get', key, receiver);
+            }
+            return reactive(result);
+          },
+          set(target, key, val, receiver) {
+            // 在设置完值后,还会自动去设置length为4 这其实是没有必要的
+            if (target[key] === val) {
+              return true;
+            }
+            // 判断是否是已经存在的key
+            if (Reflect.ownKeys(target).includes(key)) {
+              console.log('已有的key', key);
+            } else {
+              console.log('新增的key', key);
+            }
+
+            let result = Reflect.set(target, key, val, receiver); // 其实就是去设置了一下target[key]=val
+            console.log('set', key, val);
+            return result;
+          },
+          deleteProperty(target, key) {
+            let result = Reflect.deleteProperty(target, key);
+            console.log(result); //true
+            return result; //是否删除成功
+          }
+        });
+      }
+
+      let data = {
+        name: '法外狂徒',
+        age: 20,
+        info: {
+          city: 'wenzhou'
+        }
+      };
+      let proxyData = reactive(data);
+    </script>
+  </body>
+</html>
