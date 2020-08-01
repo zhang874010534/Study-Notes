@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      .show {
+        display: inline-block;
+      }
+
+      .bigImage {
+        width: 310px;
+        height: 310px;
+        border: 1px solid black;
+      }
+      .empty {
+        width: 100px;
+        height: 100px;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .image {
+        display: inline-block;
+        vertical-align: top;
+        padding-top: 3px;
+      }
+      .dragImage {
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        line-height: 100px;
+      }
+      @keyframes move {
+        from {
+          margin-top: 100px;
+        }
+        to {
+          margin-top: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="show">
+      <div class="bigImage">
+        <div class="empty"></div>
+      </div>
+    </section>
+    <section class="image">
+      <div draggable="true" class="dragImage" style="border: 1px solid red;">
+        1
+      </div>
+      <div draggable="true" class="dragImage" style="border: 1px solid red;">
+        2
+      </div>
+      <div draggable="true" class="dragImage" style="border: 1px solid red;">
+        3
+      </div>
+    </section>
+    <script>
+      let empty = document.querySelector('.empty');
+      let image = document.querySelector('.image');
+      let target, oldTarget;
+      document.addEventListener('dragstart', function (e) {
+        // 清楚动画
+        for (const key of image.children) {
+          key.style.animation = null;
+        }
+        // 留下上一个节点
+        oldTarget = target ? target : '';
+        e.target.style.border = '1px dotted skyblue';
+        empty.style.border = '1px solid skyblue';
+        target = e.target;
+      });
+      document.addEventListener('dragend', function (e) {
+        e.target.style.border = '1px solid red';
+        empty.style.border = 'none';
+      });
+      // 去掉默认事件 不然不让drop
+      empty.addEventListener(
+        'dragover',
+        function (event) {
+          event.preventDefault();
+        },
+        false
+      );
+      // 有bug
+      // document.addEventListener(
+      //   'drapover',
+      //   function (event) {
+      //     event.preventDefault();
+      //   },
+      //   false
+      // );
+      empty.addEventListener('drop', function (e) {
+        if (empty.firstChild) {
+          empty.removeChild(empty.firstChild);
+        }
+        // 添加动画
+        target.nextElementSibling.style.animation = 'move .5s forwards';
+        empty.appendChild(target);
+        if (oldTarget) {
+          image.appendChild(oldTarget);
+        }
+      });
+    </script>
+  </body>
+</html>
