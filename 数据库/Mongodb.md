@@ -18,3 +18,4 @@ C:\mongodb\bin\mongod --dbpath c:\data\db
 - show dbs 查看全部数据库
 - use xxx  使用某数据库
 - show collections 查看集合
+

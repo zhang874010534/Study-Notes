@@ -109,4 +109,5 @@
  + 会把远程分支的数据得到:(*注意本地-要初始一个仓储!*)
 
 - `git clone [地址]`
+- git clone https://github.com.cnpmjs.org/xxx.git
  + 会得到远程仓储相同的数据,如果多次执行会覆盖本地内容。
