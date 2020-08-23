@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 为对象、类、函数等创建私有属性
+      const name = Symbol();
+      const obj2 = {
+        [name]: 'symbol',
+        testPrivate() {
+          console.log(this[name]);
+        }
+      };
+
+      obj2.testPrivate();
+
+      // 定义toString标签；
+      console.log(obj2.toString());
+      obj2[Symbol.toStringTag] = 'xx';
+      console.log(obj2.toString()); //[object xx]
+    </script>
+  </body>
+</html>
