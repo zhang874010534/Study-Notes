@@ -17,7 +17,7 @@ demo();//这个会报错
 function demo(data: { x: Number }) {
   return data.x;//这个x会自动提示  因为传入的参数肯定有
 }
-demo({ x: 1 });
+demo({ x: 1});
 ```
 
 ##### 语义化更强,看形参就大概知道传入的是什么
