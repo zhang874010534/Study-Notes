@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function add() {
+        // 第一次执行时，定义一个数组专门用来存储所有的参数
+        let arr = Array.prototype.slice.call(arguments);
+
+        // 在内部声明一个函数，利用闭包的特性保存arr并收集所有的参数值
+        let fn = function () {
+          arr.push(...Array.from(arguments));
+          return fn;
+        };
+
+        // 利用toString隐式转换的特性，当最后执行时隐式转换，并计算最终的值返回
+        fn.toString = function () {
+          return arr.reduce(function (a, b) {
+            return a + b;
+          });
+        };
+        return fn;
+      }
+      console.log(add(1)(2)(3));
+      console.log(add(1, 2, 3)(4));
+      console.log(add(1)(2)(3)(4)(5));
+      // 只有在对该函数取值时，才会进行类型转换，才会调用toString返回相加的值
+      // 否则只是调用则返回函数而不是相加值
+    </script>
+  </body>
+</html>
