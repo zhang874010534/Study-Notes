@@ -1,4 +1,5 @@
 let express = require('express');
+let fs = require('fs');
 var bodyParser = require('body-parser');
 let app = express();
 
@@ -7,6 +8,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+app.get('/', (req, res) => {
+  fs.readFile('./demo.json', (err, data) => {
+    res.send(data.toString());
+  });
+});
 app.get('/api/isLogin', (req, res) => {
   res.send({
     data: {
