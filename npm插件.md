@@ -19,6 +19,7 @@
 
 - [echarts-for-react](https://github.com/hustcc/echarts-for-react)  一个简单的 echarts(v3.0 & v4.0) 的 react 封装。
 - [react-transition-group](https://github.com/reactjs/react-transition-group) 动画插件
+- [redux-thunk](https://github.com/reduxjs/redux-thunk) lets you write async logic that interacts with the store.
 
 ### 通用
 
