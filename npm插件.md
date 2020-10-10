@@ -19,7 +19,10 @@
 
 - [echarts-for-react](https://github.com/hustcc/echarts-for-react)  一个简单的 echarts(v3.0 & v4.0) 的 react 封装。
 - [react-transition-group](https://github.com/reactjs/react-transition-group) 动画插件
+- [redux](https://github.com/reduxjs/redux) a predictable state container for JavaScript apps
+- [react-redux](https://github.com/reduxjs/react-redux) Official React bindings for redux. Performant and flexible.
 - [redux-thunk](https://github.com/reduxjs/redux-thunk) lets you write async logic that interacts with the store.
+- [redux-saga](https://github.com/redux-saga/redux-saga) is a library that aims to make application side effects (i.e. asynchronous things like data fetching and impure things like accessing the browser cache) easier to manage, more efficient to execute, easy to test, and better at handling failures.
 
 ### 通用
 
