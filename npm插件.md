@@ -23,8 +23,13 @@
 - [react-redux](https://github.com/reduxjs/react-redux) Official React bindings for redux. Performant and flexible.
 - [redux-thunk](https://github.com/reduxjs/redux-thunk) lets you write async logic that interacts with the store.
 - [redux-saga](https://github.com/redux-saga/redux-saga) is a library that aims to make application side effects (i.e. asynchronous things like data fetching and impure things like accessing the browser cache) easier to manage, more efficient to execute, easy to test, and better at handling failures.
+- [immutable](https://github.com/immutable-js/immutable-js)  Immutable data cannot be changed once created  
+  - [fromjs](https://immutable-js.github.io/immutable-js/docs/#/fromJS)  Deeply converts plain JS objects and arrays to Immutable Maps and Lists.
+  - [getIn](https://immutable-js.github.io/immutable-js/docs/#/getIn)    console.log(nested2.getIn([ 'a', 'b', 'd' ])); 
+- [redux-immutable](https://github.com/gajus/redux-immutable)  is used to create an equivalent function of Redux combineReducers that works with immutable.js state 就是最外层的state希望让他也变成immutable对象
 
 ### 通用
 
 - [moment](https://momentjs.com/)  时间格式化工具
+- [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware)  Node.js proxying made simple
 

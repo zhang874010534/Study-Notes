@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   fs.readFile('./demo.json', (err, data) => {
+    console.log(data.name);
     res.send(data.toString());
   });
 });
