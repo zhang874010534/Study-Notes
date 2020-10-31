@@ -76,8 +76,8 @@ Store.prototype._withCommit = function _withCommit (fn) {
 
 就是我们设置了严格模式 那么有个函数每次数据修改的时候都会执行(enableStrictMode) 当我是store.commit正常通过mutaition修改vuex里的数据的时候 在这个mutation方法触发的瞬间一个叫store._committing的值会暂时变成true 
 
-方法执行完store.committing会再次变成false
+方法执行完store._committing会再次变成false
 
-所以如果不通过commit触发mutation上的方法 这个store.committing就一直是false 那么每次修改数据的时候enableStrictMode 都会报错
+所以如果不通过commit触发mutation上的方法 这个store._committing就一直是false 那么每次修改数据的时候enableStrictMode 都会报错
 
 简单讲就是一个变量是true 才不会报错 然后只有commit触发vuex里的mutation方法的时候这个变量才能是true

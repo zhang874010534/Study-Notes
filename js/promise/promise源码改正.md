@@ -1,6 +1,6 @@
 https://segmentfault.com/q/1010000022163687 观念更正  MutationObserver
 
-https://juejin.im/post/6844904088963022856#heading-1  promise源码可供参考,  .then微任务模拟用的setTimeout宏任务(**错误做法**)
+https://juejin.im/post/6844904088963022856#heading-1  promise源码可供参考,  .then微任务模拟用的setTimeout宏任务
 
 https://blog.csdn.net/XuM222222/article/details/88582131 promise.then()中的函数是在resolve()被推出微任务的，还是在then的时候被推入微任务的？
 

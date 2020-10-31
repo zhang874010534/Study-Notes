@@ -1,0 +1,2 @@
+command i 触发建议 
+shift+option(i)+下   往下复制 
