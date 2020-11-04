@@ -1,2 +1,3 @@
 command i 触发建议 
 shift+option(i)+下   往下复制 
+ctrl + - 回到上一次编辑的地方
