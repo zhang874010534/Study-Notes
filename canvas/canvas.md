@@ -11,4 +11,6 @@
 #### CanvasRenderingContext2D
 
 - [beginPath](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/beginPath)() 通过清空子路径列表开始一个新路径的方法。 当你想创建一个新的路径时，调用此方法。
+- [arc](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/arc) (x, y, radius, startAngle, endAngle, anticlockwise)  绘制圆弧
+- [clearRect](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/clearRect)(x, y, width, height)   擦除之前绘制的所有内容的方法
 
