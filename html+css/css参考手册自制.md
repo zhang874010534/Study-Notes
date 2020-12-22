@@ -23,3 +23,8 @@
 > steps()是一个timing function，允许我们将动画或者过渡分割成段，而不是从一种状态持续到另一种状态的过渡。这个函数有两个参数——第一个参数是一个正值，指定我们希望动画分割的段数
 >
 >    animation: keyframe 2s  [steps](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function#steps())(number_of_steps, direction)
+
+##### [border-image](https://developer.mozilla.org/zh-CN/docs/Web/CSS/border-image)
+
+> 可以拿来解决图片拉伸问题  CSS属性允许在元素的边框上绘制图像
+
