@@ -19,3 +19,4 @@ ctrl+k  ctrl+3 折叠到3级  这个很常用
 //设置
 word suparators 执行单词相关的导航或操作时作为单词分隔符的字符。
 format on save
+workbench enable preview 点击文件是预览
