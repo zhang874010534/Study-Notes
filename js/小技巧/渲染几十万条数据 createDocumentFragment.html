@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+  </style>
+</head>
+
+<body>
+  <!-- document.createDocumentFragment() -->
+  <!-- 创建一个虚拟的节点对象，先讲需要创建的dom元素添加进fragment，再讲fragment添加到页面，减少页面渲染dom的次数 -->
+
+  <!-- window.requestAnimationFrame(); -->
+  <!-- 用frame去执行上面的创建和添加的操作， frame会一帧一帧执行，将一帧内的重绘和回流集中起来一次性做 -->
+  <!-- 一帧一帧的调用就不会阻塞，不然一直都在添加dom，渲染dom，会使整个页面瘫痪，js是单线程的 -->
+  <ul></ul>
+  <script>
+    // 总数
+    let total=100000;
+    // 每次
+    let once=20;
+    // 次数
+    let count= Math.ceil( total / once );
+    // 已经渲染的次数
+    let countRender=0;
+    let ul=document.querySelector('ul')
+    function add(){
+      
+      let fragment=document.createDocumentFragment();
+      for (let i  = 0; i < once; i++) {
+        let li=document.createElement('li');
+        li.innerHTML=Math.random()*10000;
+        fragment.appendChild(li);
+      }
+      ul.appendChild(fragment);
+      countRender++;
+      loop();
+    }
+    function loop(){
+      if(countRender < count){
+        window.requestAnimationFrame(add);
+      }
+    }
+
+  </script>
+</body>
+
+</html>
