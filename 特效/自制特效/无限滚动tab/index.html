@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <div id="app">
+    <div class="carousel">
+      <ul 
+      :style="ulMoveStyle"
+      @touchmove="touchmove" @touchstart="touchstart" 
+      @touchend="touchend">
+        <li v-for="(item, index) in msgList" :key="index">{{item}}</li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    let app = new Vue({
+      el: '#app',
+      computed:{
+        ulMoveStyle(){
+          return {
+            transform: `translateX(${this.transformX + this.move}px)`
+          }
+        }
+      },
+      data() {
+        return {
+          msgList:['第一阶段','第二阶段','第三阶段'],
+          startX:0,
+          endX:0,
+          move:0,
+          transformX:0,
+          canAdd:true
+        }
+      },
+      methods: {
+        touchstart(e){
+          this.startX = e.targetTouches[0].clientX;
+        },
+        touchmove(e){
+          let width=  document.body.clientWidth;
+
+          if(Math.abs(this.move) < width / 3 ){
+            // 后来位置减去开始位置
+            this.move = e.targetTouches[0].clientX - this.startX;
+            this.endX = e.targetTouches[0].clientX;
+          }
+
+          // 控制添加
+          if(this.canAdd){
+            this.canAdd = false;
+          }else{
+            return ;
+          }
+
+          // 实际添加的操作
+          if(this.move < 0){
+            this.msgList.push( this.msgList.slice(0,1)[0])
+          }else{
+            // 第一项不是原来的那个了 所以要向左移动一些
+            this.transformX = -width / 3;
+            this.msgList.unshift(this.msgList.slice(this.msgList.length - 1)[0]);
+          }
+        },
+        touchend(e){
+          let width = document.body.clientWidth;
+
+          // 删除看不见的项 一直让数组保持在3个
+          if(this.move < 0){
+            this.msgList.shift();
+          }else if(this.move > 0){
+            this.msgList.pop();
+          }
+          // 调整位置  因为项少了 位子会不对
+          this.transformX = 0;
+          this.move = 0
+
+          this.canAdd = true;
+        },
+      },
+    })
+  </script>
+</body>
+</html>

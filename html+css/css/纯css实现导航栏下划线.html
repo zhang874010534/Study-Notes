@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    ul {
+
+    }
+
+    li {
+      position: relative;
+      float: left;
+      list-style: none;
+      padding: 10px;
+      line-height: 30px;
+      border-bottom: 0px solid #000;
+      cursor: pointer;
+    }
+
+    li::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 0;
+      height: 100%;
+      border-bottom: 2px solid #000;
+      transition: all 0.3s linear;
+    }
+
+    li:hover::before {
+      left: 0;
+      width: 100%;
+    }
+    li:hover ~ li::before{
+      left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <ul>
+    <li>不可思议的CSS</li>
+    <li>导航栏</li>
+    <li>光标小下划线跟随</li>
+    <li>PURE CSS</li>
+    <li>Nav Underline</li>
+  </ul>
+</body>
+
+</html>

@@ -2,3 +2,4 @@ command i 触发建议
 shift+option(i)+下   往下复制 
 ctrl + - 回到上一次编辑的地方
 command + p go to file
+options + command + 左 Terminal focus previous pane  左右切换上面的窗格 
