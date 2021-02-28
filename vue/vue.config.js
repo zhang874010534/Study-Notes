@@ -6,8 +6,8 @@ module.exports = {
     disableHostCheck: true,
     proxy: {
       '/mock': {
-        target: 'https://staging.bunanapp.com',
-        // target: 'https://api.bunanapp.com',
+        target: 'https://staging.qq.com',
+        // target: 'https://api.qq.com',
         pathRewrite: {
           '/mock': ''
         }
@@ -21,5 +21,18 @@ module.exports = {
         .use(require('compression-webpack-plugin'));
     });
     config.plugins.delete('prefetch');
+
+    // https://github.com/vuejs/babel-plugin-transform-vue-jsx
+    // https://github.com/ElemeFE/element/issues/14379
+    config.module
+      .rule('thejs')
+      .test(/\.js$/)
+      .include
+        .add(path.resolve('src'))
+        .add(path.resolve('node_modules/element-ui/packages'))
+        .end()
+      .use('babel-loader')
+        .loader('babel-loader')
+        .end()
   }
 };
