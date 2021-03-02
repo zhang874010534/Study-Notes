@@ -18,6 +18,10 @@
 
 1. ##### video默认自带阴影可以用object-fit:cover 来让内容填满video框
 
+##### [object-position](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-position)
+
+> 规定了[可替换元素](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Replaced_element)的内容在其内容框中的位置
+
 **[steps ](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function#steps())** [参考2](https://segmentfault.com/a/1190000007042048)   [animation steps.html](..\特效\animation steps.html)
 
 > steps()是一个timing function，允许我们将动画或者过渡分割成段，而不是从一种状态持续到另一种状态的过渡。这个函数有两个参数——第一个参数是一个正值，指定我们希望动画分割的段数
