@@ -32,3 +32,7 @@
 
 > 可以拿来解决图片拉伸问题  CSS属性允许在元素的边框上绘制图像
 
+##### [scroll-behavior](https://developer.mozilla.org/zh-CN/docs/Web/CSS/scroll-behavior)  chrome 61+
+
+> 可以让滚动框实现平稳的滚动，而不是突兀的跳动
+
