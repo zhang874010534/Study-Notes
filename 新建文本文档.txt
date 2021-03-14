@@ -2,3 +2,5 @@
 删除自己的文件(小飞机、笔记)
 vscode
 http://192.168.121.241/profile/notifications 关通知
+
+xlsx 导出excel
