@@ -35,4 +35,6 @@
 - [moment](https://momentjs.com/)  时间格式化工具
 - [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware)  Node.js proxying made simple
 - [lottie](https://airbnb.io/lottie/#/) json动效
+- crypto-js  加密函数库
+- `lodash` -- 工具库
 
