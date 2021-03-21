@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      canvas{
+        border: 1px solid skyblue;
+        margin: 0 auto;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script>
+      let WIDTH = 1024;
+      let HEIGHT = 600;
+      let ball={ x:700,y:100,r:20,g:2,vx:-4, vy: -10, color:'#005588'}
+      /** @type {HTMLCanvasElement} */
+      let canvas = document.querySelector('#canvas');
+      canvas.width = WIDTH;
+      canvas.height = HEIGHT;
+      let context=canvas.getContext('2d')
+      
+      setInterval(() => {
+        render()
+        update()
+      },50);
+      function render(){
+        context.fillStyle='#005588'
+        context.clearRect(0 , 0 ,context.canvas.width,context.canvas.height)
+        context.beginPath()
+        context.arc(ball.x,ball.y,ball.r,0, 2*Math.PI)
+        context.closePath()
+        context.fill()
+      }
+      function update(){
+        ball.x+=ball.vx
+        ball.y+=ball.vy
+        ball.vy+=ball.g
+        if(ball.y > canvas.height- ball.r){
+          ball.y =canvas.height- ball.r
+          ball.vy=(-ball.vy)*0.5
+        }
+        console.log(ball.y)
+      }
+    </script>
+  </body>
+</html>
