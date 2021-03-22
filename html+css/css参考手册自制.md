@@ -36,3 +36,27 @@
 
 > 可以让滚动框实现平稳的滚动，而不是突兀的跳动
 
+#### 单行文本省略
+
+````CSS
+{
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+````
+
+#### 多行文本省略
+
+````CSS
+{
+    width: 200px;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+````
+
