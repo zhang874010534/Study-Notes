@@ -114,6 +114,8 @@ export default {
                             this.$emit('upload-success', res)
                         },
                         progress: res => {
+                            let percent = parseFloat(res.total.percent.toFixed(2));
+                            this.$emit('set-progress',percent);
                             this.uploadFiles[fileKey] = res.total
                         },
                         fail: res => {
