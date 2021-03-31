@@ -51,3 +51,6 @@
 - crypto-js  加密函数库
 - `lodash` -- 工具库
 
+### Node
+
+- nodemon 自动重启

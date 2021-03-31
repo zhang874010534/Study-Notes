@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>websocket</title>
+  <script src="./socket.io-3.1.2.js"></script>
+</head>
+<body>
+  <h1>echo text</h1>
+  <input type="text" id="send">
+  <button id="button">按钮</button>
+  <div id="recv"></div>
+  <script>
+    let socket = new io('ws://localhost:8848');
+
+    socket.on('enter',function(data){
+      showMessage(data,'enter')
+    })
+    socket.on('message',function(data){
+      showMessage(data,'message');
+    })
+    socket.on('leave',function(data){
+      showMessage(data,'leave');
+    })
+    function showMessage(str,type){
+      let div = document.createElement('div');
+      if(type =='enter'){
+        div.style.color = 'blue';
+      }else if(type == 'logout'){
+        div.style.color = 'pink'
+      }
+      div.innerHTML = str;
+      document.body.appendChild(div);
+    }
+    // websocket.onclose = function(){
+    //   console.log('close');
+    // }
+    // websocket.onmessage = function(e){
+    //   console.log(e);
+    //   let res = JSON.parse(e.data);
+    //   // document.querySelector('#recv').innerHTML = e.data;
+    // }
+    
+    document.querySelector('#button').onclick = function(){
+      let txt = document.querySelector('#send').value;
+      socket.emit('message',txt);
+      console.log('send txt')
+    }
+  </script>
+</body>
+</html>

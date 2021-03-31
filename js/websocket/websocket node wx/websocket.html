@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>websocket</title>
+</head>
+<body>
+  <h1>echo text</h1>
+  <input type="text" id="send">
+  <button id="button">按钮</button>
+  <div id="recv"></div>
+  <script>
+    let websocket = new WebSocket('ws://localhost:8848');
+    websocket.onopen = function () {
+      console.log('websocket open');
+      document.querySelector('#recv').innerHTML = 'connected';
+    }
+    websocket.onclose = function(){
+      console.log('close');
+    }
+    websocket.onmessage = function(e){
+      console.log(e);
+      let res = JSON.parse(e.data);
+      // document.querySelector('#recv').innerHTML = e.data;
+      let div = document.createElement('div');
+      if(res.type =='enter'){
+        div.style.color = 'blue';
+      }else if(res.type == 'logout'){
+        div.style.color = 'pink'
+      }
+      div.innerHTML = res.data;
+      document.body.appendChild(div);
+    }
+    document.querySelector('#button').onclick = function(){
+      let txt = document.querySelector('#send').value;
+      websocket.send(txt);
+      console.log('send txt')
+    }
+  </script>
+</body>
+</html>
