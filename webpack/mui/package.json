@@ -6,7 +6,7 @@
   "dependencies": {
     "@babel/runtime": "^7.7.2",
     "@babel/runtime-corejs2": "^7.7.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "mint-ui": "^2.2.13",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3"
