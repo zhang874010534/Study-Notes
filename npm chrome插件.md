@@ -54,3 +54,7 @@
 ### Node
 
 - nodemon 自动重启
+
+### Chrome
+
+- [page-web-skeleton](https://juejin.cn/post/6937939181356187662#comment) 生成骨架屏
