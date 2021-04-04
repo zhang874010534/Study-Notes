@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* https://developer.mozilla.org/zh-CN/docs/Web/CSS/border-image */
+    /* https://juejin.cn/post/6844904051822493710 */
+    .example{
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 500px;
+      height: 500px;
+      border-width: 30px;
+      border-style: solid;
+      border-image-source: url('./border-diamonds.png');
+      border-image-slice: 30 30 30 30;
+      /* stretch 默认 round repeat */
+      /* round平铺图像。当不能整数次平铺时，根据情况放大或缩小图像。 */
+      border-image-repeat: repeat; 
+      border-image-width: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="example">
+    123
+  </div>
+</body>
+</html>
