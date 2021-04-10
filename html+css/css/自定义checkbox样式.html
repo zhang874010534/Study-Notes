@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+  <style>
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      position: relative;
+    }
+
+    input[type="checkbox"]::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #fff;
+      width: 100%;
+      height: 100%;
+      border: 1px solid #d9d9d9
+    }
+
+    input[type="checkbox"]:checked::before {
+      content: "\2713";
+      background-color: #fff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 1px solid #e50232;
+      color: #e50232;
+      font-size: 20px;
+      line-height: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+    <div>{{ddg}}</div>
+    <!-- 可以v-model 绑定一个数组  选择的时候直接就添加进去了 -->
+    <input type="checkbox" value="ddg" v-model="ddg">
+    <input type="checkbox" value="ddg2" v-model="ddg">
+    <input type="checkbox" name="btn" id="btn1"><label for="btn1">按钮1</label>
+  </div>
+  <script>
+    // 创建一个vue的应用
+    const app = Vue.createApp({
+      data() {
+        return {
+          message: '4444',
+          ddg: []
+        }
+      },
+      mounted() {
+
+      },
+      methods: {
+        handleClick(e) {
+          e
+        },
+      },
+    })
+    // vue应用的根元素
+    const vm = app.mount('#root');
+  </script>
+</body>
+
+</html>

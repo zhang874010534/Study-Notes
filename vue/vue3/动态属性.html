@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="root">
+    <div>{{message}}</div>
+  </div>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          message:'4444',
+          name:'title111',
+          event:'mouseenter'
+        }
+      },
+      methods: {
+        handleClick(){
+          alert('click');
+        }
+      },
+      template:`
+        <div :[name]="message" @[event]="handleClick">123s</div>
+      `
+    
+    })
+    // vue应用的根元素
+    const vm = app.mount('#root');
+  </script>
+</body>
+</html>
