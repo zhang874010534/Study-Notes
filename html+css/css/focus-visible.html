@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		/* https://developer.mozilla.org/zh-CN/docs/Web/CSS/:focus-visible */
+		button:active{
+			background-color: pink;
+		}
+		button:focus{
+			outline: 2px solid red;
+		}
+		/* focus-visible  代表的就是浏览器默认的
+		也就是点击的时候不会吧focus状态留下来 按tab等方式（也就是键盘）是可以focus的
+		所以not  focus-visible 就是鼠标
+		让他outline 是none
+		*/
+		button:focus:not(:focus-visible){
+			outline: none;
+		}
+
+		/* 兼容性问题不要这么写 */
+		/* button:focus-visible{
+			outline: 2px solid red;
+		} */
+	</style>
+</head>
+
+<body>
+	<button>test2 </button>
+	<button>test2 </button>
+	<button>test2 </button>
+</body>
+
+</html>
