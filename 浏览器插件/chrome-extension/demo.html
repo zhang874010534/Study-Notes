@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+        <a onclick="showNotification();">点我看右下角信息</a>
+ 
+        <script>
+            function showNotification() {
+                window.Notification.permission = "granted";
+                alert(window.Notification.permission);
+                if(window.Notification) {
+                    if(window.Notification.permission == "granted") {
+                        var notification = new Notification('你有一条新信息', {
+                            body: "你好我是王小婷",
+ 
+                            icon: "img/1.jpg"
+                        });
+                        setTimeout(function() { notification.close(); }, 5000);
+                    } else {
+                        window.Notification.requestPermission();
+                    }
+                } else alert('你的浏览器不支持此消息提示功能，请使用chrome内核的浏览器！');
+            };
+        </script>
+    </body>
+</html>
+ 

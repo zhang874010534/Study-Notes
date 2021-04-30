@@ -1,0 +1,33 @@
+{
+  "name": "extension",
+  "manifest_version": 2,
+  "version": "1.1",
+  "description": "描述",
+  "icons":{
+    "48":"image/logo.png"
+  },
+  "browser_action": {
+    "default_icon": "image/logo.png",
+    "default_title": "bunan",
+    "default_popup": "popup.html"
+  },
+  "background":{
+    "page":"back.html"
+  },
+  "permissions":[
+    "tabs",
+    "*://*/*",
+    "http://*/*",
+    "declarativeContent",
+    "contextMenus",
+    "notifications"
+  ],
+  "content_scripts":[
+    {
+      "matches":["<all_urls>"],
+      "js":["js/juliang.js","js/axios.js","js/vue.min.js","js/utils.js","js/juliangAuthor.js"],
+      "css": ["css/juliang.css"],
+      "run_at":"document_start"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+/* juliang */
+.countdown-wrapper{
+  width: 200px;
+  height: 200px;
+  background-color: pink;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+}
+
+
+
+/* juliangAuthor */
+.author-wrapper{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 3000;
+}
+.author-content{
+  background-color: pink;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.send-button-juliang{
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  border: 1px solid #000;
+}
+.trigger-button-juliang{
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
