@@ -46,10 +46,13 @@
 <body>
   <div id="root">
     <div>{{ddg}}</div>
+    <div>{{message}}</div>
     <!-- 可以v-model 绑定一个数组  选择的时候直接就添加进去了 -->
     <input type="checkbox" value="ddg" v-model="ddg">
     <input type="checkbox" value="ddg2" v-model="ddg">
     <input type="checkbox" name="btn" id="btn1"><label for="btn1">按钮1</label>
+    <!-- 设置true-value 和false-value 可以修改默认的value -->
+    <input type="checkbox" v-model="message" true-value="hello" false-value="world" id="hello"><label>true-value</label>
   </div>
   <script>
     // 创建一个vue的应用

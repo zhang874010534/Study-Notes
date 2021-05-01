@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+  <style>
+  </style>
 </head>
+ 
 <body>
+  <!-- https://v3.cn.vuejs.org/guide/component-custom-events.html#v-model-%E5%8F%82%E6%95%B0 -->
   <div id="root">
-    <div>{{message}}</div>
-  </div>
+    <test v-model:demo="msg"></test>
+   </div>
   <script>
+    // 创建一个vue的应用
     const app = Vue.createApp({
-      data() {
+      data() {  
         return {
-          message:'4444',
-          name:'title111',
-          event:'mouseenter'
+          msg: '4444', 
         }
-      },
+      },  
+    })
+    
+    app.component('test',{
+      props:['demo'],
       methods: {
         handleClick(){
-          alert('click');
+          this.$emit('update:demo','3');
         }
       },
-      template:`
-        <div :[name]="message" @[event]="handleClick">123s</div>
-      `
-    
+      template:`<div @click="handleClick">{{demo}}</div>`
     })
     // vue应用的根元素
     const vm = app.mount('#root');
   </script>
 </body>
+
 </html>
