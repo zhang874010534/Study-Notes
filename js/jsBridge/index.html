@@ -15,12 +15,32 @@
     window.showWebDialog=(text)=>{
       window.alert(text)
     }
+
+    let id = 1;
+    let callbackMap = {}
+    window.JSSDK = {
+      getNativeEditTextValue(callback){
+        const callbackId = i++;
+        // 把函数存下来等待执行
+        callbackMap[callbackId] = callback;
+        window.NativeBridge.getNativeEditTextValue(callbackId);
+      },
+      receiveMessage(callbackId,value){
+        if(callbackMap[callbackId]){
+          callbackMap[callbackId](value);
+          delete callbackMap[callbackId]
+        }
+      }
+
+    }
+    
     document.addEventListener('DOMContentLoaded',(e)=>{
       const editText=document.querySelector('#editText')
       const showBtn=document.querySelector('#showBtn')
       showBtn.addEventListener('click',()=>{
         // window.alert('jsbridge://showNativeDialog?text='+editText.value);
-        window.NativeBridge.showNativeDialog(editText.value) 
+        // window.NativeBridge.showNativeDialog(editText.value)
+        window.JSSDK.getNativeEditTextValue(value => alert('native:' + value))
       })
     })
   </script>
