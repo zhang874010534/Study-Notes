@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 126是圆的周长 
+    起点是最右边的点
+    */
+    .loading-svg {
+      width: 60px;
+      height: 60px;
+      animation: loading-rotate 1.5s infinite ease-in-out;
+    }
+
+    .path {
+      stroke: #409eff;
+      stroke-width: 2;
+      stroke-dasharray: 1, 126;
+      stroke-dashoffset: 0;
+      animation: loading-css 1.5s ease-in-out infinite;
+    }
+
+    @keyframes loading-css {
+      0% {
+        stroke-dasharray: 1, 126;
+        /*实线部分1，虚线部分126*/
+        stroke-dashoffset: 0;
+      }
+
+      50% {
+        stroke-dasharray: 95, 126;
+        stroke-dashoffset: -31px;
+        /* 顺时针转 1/4*/
+      }
+
+      100% {
+        stroke-dasharray: 0, 120;
+        stroke-dashoffset: -126px;
+      }
+    }
+
+    @keyframes loading-rotate {
+      to {
+        transform: rotate(1turn); /* 旋转1圈 */
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <svg viewBox="0 0 50 50" class="loading-svg">
+    <circle cx="25" cy="25" r="20" fill="none" class="path"></circle>
+  </svg>
+</body>
+
+</html>
