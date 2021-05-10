@@ -58,3 +58,7 @@
 ### Chrome
 
 - [page-web-skeleton](https://juejin.cn/post/6937939181356187662#comment) 生成骨架屏
+
+### 工具
+
+- snipaste 截图工具
