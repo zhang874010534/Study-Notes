@@ -1,0 +1,58 @@
+body{background:#B7CBE8; font-size:14px; margin:0; line-height:1.5; color:#333; font-family:Arial, sans-serif;}
+a{color:#34538b; text-decoration:none;}a:hover{text-decoration:underline;}
+a img { border: 0; }
+input,select,textarea{font-size:100%;}
+#header{height:60px; padding:0 0 0 40px; background-color:#a0b3d6;}
+#header .logo{margin-top:12px; overflow:hidden; float:left;}
+.logo:empty{width:167px; height:43px; background: url(//cdn.zhangxinxu.com/php/image/zxx_home_logo.png) no-repeat;}
+#main{width:100%; background:#beceeb; overflow:hidden;}
+#main h1{line-height:40px; margin:0; text-align:center; font-size:18px; background:#c1d5eb; font-family:'kaiti','microsoft yahei'; text-shadow:0px 1px 0px #f2f2f2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+#body{padding:0; overflow:hidden;}
+#body .part{width:50%; min-height:400px; _height:400px; background:white;}
+#code{float:left; margin-left:-1px; margin-bottom:-999em; padding-bottom:999em;}
+#effect{float:right; margin-right:-1px; margin-bottom:-999em; padding-bottom:999em;}
+#body h3{line-height:30px; margin:0; font-size:15px; background:#f0f3f9; padding-left:10px; border-bottom:1px solid #ededed; color:#4e4e4e; text-shadow:0px 1px 0px white; font-family: 'microsoft yahei';}
+#footer{background: #B7CBE8; border-top: 3px solid #A7BFE8; line-height: 1.5; color: #333; font-size:12px; padding:15px 0; font-family:'Lucida Grande',Verdana, Sans-Serif; text-align:center; text-shadow: 0 1px hsla(0,0%,100%,.3);}
+#footer img{margin-bottom:-3px;}
+.show{padding-bottom:20px;}
+.show h5{font-size:13px; line-height:20px; padding:10px 0 2px 2px; margin:0 0 0 8px;}
+.demo{padding:10px; *zoom:1;}
+.demo:after{display:table; content:""; clear:both;}
+.demo .remind{color:gray;font-size:12px}
+pre{font:14px/1.3 Consolas, Monaco, monospace;padding:5px 10px;margin:0;white-space:pre-wrap;word-wrap:break-word}
+#ad,.bota {display:block!important; text-align:center; }
+.ad,.topa { height:60px; position: absolute; top: 0; right: 0; left: 250px; text-align:right; overflow:hidden; }
+@media screen and (max-width: 700px) {
+   .ad,.topa { display: none; }
+}
+.light{background:#f0f3f9;}
+.description{font-size:12px; color:gray;}
+#content{min-height:500px; _height:500px; background:white; border:solid #cad5eb; border-width:0 2px; font-family:'Lucida Grande',Verdana;}
+.article{font-family:Arial; padding:10px 0; font-size:12px; clear:both;}
+.article_new{ margin:-31px 10px 0 0; line-height: 20px; font-family:Arial; padding:5px 0; font-size:12px; clear:both; text-align:right;}
+.article_new a { display: inline-block; }
+.table{display:table;width:100%;table-layout:fixed;}
+.td{display:table-cell;}
+#back{line-height:40px;margin-top:-40px; position:absolute; right:20px; padding: 0 10px 0 13px; background-color: #fff; animation:tada 1s 1s; color: #cd0000; font-size:12px;}
+@keyframes tada{from{transform:scale3d(1, 1, 1)}10%, 20%{transform:scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg)}30%, 50%, 70%, 90%{transform:scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)}40%, 60%, 80%{transform:scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg)}to{transform:scale3d(1, 1, 1)}}
+@media screen and (max-width: 640px) {
+.M #body .part{width:auto;float:none;min-height:200px;margin:auto;padding:0}
+.M #back {right:0;top:10px;margin-top:0;}
+.M #header{padding-left:0;}
+.td{display:table;}
+video[width^="4"],video[width^="5"],video[width^="6"],video[width^="7"],video[width^="8"],video[width^="9"]{max-width:100%; height:auto;}
+img:not([width]),video:not([width]){max-width:100%; height:auto;}
+}
+.m-bota{height:100px;text-align: center;}
+@media print{
+	.ad,.topa,#back,#ad,.bota { display: none!important; }
+	#effect{margin-bottom:0; padding-bottom:0;}
+}
+body.preview #header,
+body.preview #main h1, 
+body.preview #main > a,
+body.preview #code,
+body.preview #footer,
+body.preview #effect > h3 { display: none; }
+body.preview #effect { width: auto; float: none; }
+body.preview{background:none;}

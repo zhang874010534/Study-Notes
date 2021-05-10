@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="./css/demo.css">
+<link rel="stylesheet" href="./css/hl.css">
+<style>
+.constr {
+	width: 800px;
+	margin: auto;
+}
+.list {
+	margin: 1em 0;
+}
+.area {
+	height: 3em;
+	position: relative;
+}
+.ball {
+	position: absolute;
+	width: 3em; height: 3em;
+	border-radius: 50%;
+	background-color: #34538b;
+}
+</style>
+</head>
+
+<body>
+<div id="main">
+	<h1>Tween.js动画算法使用示意实例页面 张鑫旭的</h1>
+    <div id="body" class="light">
+    	<div id="content" class="show">
+        	<h3>展示</h3>
+            <div class="demo">
+            	<ol id="container" class="constr">
+                	<li class="list">
+                    	<h4>Linear</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    
+                    <li class="list">
+                    	<h4>Quad.easeIn</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Quad.easeOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Quad.easeInOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    
+                    <li class="list">
+                    	<h4>Cubic.easeIn</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Cubic.easeOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Cubic.easeInOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    
+                    <li class="list">
+                    	<h4>Quart.easeIn</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Quart.easeOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Quart.easeInOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    
+                    <li class="list">
+                    	<h4>Sine.easeIn</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Sine.easeOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Sine.easeInOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    
+                    
+                    <li class="list">
+                    	<h4>Expo.easeIn</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Expo.easeOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Expo.easeInOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    
+                    <li class="list">
+                    	<h4>Circ.easeIn</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Circ.easeOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Circ.easeInOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    
+                    <li class="list">
+                    	<h4>Elastic.easeIn</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Elastic.easeOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Elastic.easeInOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    
+                    <li class="list">
+                    	<h4>Back.easeIn</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Back.easeOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Back.easeInOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    
+                    <li class="list">
+                    	<h4>Bounce.easeIn</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Bounce.easeOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                    <li class="list">
+                    	<h4>Bounce.easeInOut</h4>
+                    	<p class="area"><i class="ball"></i></p>
+                    </li>
+                </ol>
+                <br><br><br>
+               	<div class="constr">
+               	 	<h4>使用更易用的封装Math.animation()方法</h4>
+                    <div class="list">
+                        <h4>Bounce.easeInOut</h4>
+                        <p class="area"><i id="mathBall" class="ball"></i></p>
+                    </div>
+               	</div>
+            </div>
+            <h3>代码</h3>
+            <h5>JS代码：</h5>
+            <pre name="code" class="js">
+// zxx: 这里仅简单示意线性运动，完整代码（包括兼容性处理见demo页面源代码）
+// 一些数据
+// 当前时间
+var start = 0;
+// 初始值，因为一开始球在最左边，因此是0
+var begin = 0;
+// 容器宽度减去球的宽度
+var end = (800 - 42);
+// 持续时间
+var during = 100;
+
+// 运动
+var step = function() {
+    // 当前的运动位置
+    var left = Math.tween.Linear(start, begin, end, during);
+    // 位移
+    eleBall.style.transform = 'translateX(' + left + 'px)';
+    
+    // 时间递增
+    start++;
+    // 如果还没有运动到位，继续
+    if (start <= during) {
+         requestAnimationFrame(step);
+    } else {
+        // 动画结束，这里可以插入回调...
+        // callback()...
+    }
+};
+// 开始执行动画
+step();
+
+
+
+// 这是使用更容易使用的封装后的示例代码
+document.getElementById('mathBall').onclick = function () {
+    var ball = this;
+    Math.animation(0, 800 - 42, function (value) {
+        if (history.pushState) {
+            ball.style.transform = 'translateX(' + value + 'px)';
+        } else {
+            ball.style.left = value + 'px';    
+        }
+    }, 'Bounce.easeInOut', 600);    
+};
+            </pre>
+        </div>       
+    </div>
+</div>
+
+<script src="./js/tween.js"></script>
+<script>
+// 演示如何使用
+/*
+ * Tween.js
+ * t: current time（当前时间）；
+ * b: beginning value（初始值）；
+ * c: change in value（变化量）；
+ * d: duration（持续时间）。
+*/
+
+// requestAnimationFrame的兼容处理
+if (!window.requestAnimationFrame) {
+	requestAnimationFrame = function(fn) {
+		setTimeout(fn, 17);
+	};	
+}
+
+// 容器元素
+var eleContainer = document.getElementById('container');
+// 标题元素（同时作为方法关键字）
+var eleTitles = eleContainer.getElementsByTagName('h4');
+// 循环标题
+for (var indexTitle = 0; indexTitle < eleTitles.length; indexTitle += 1) {
+	(function(index) {
+		// 标题元素
+		var eleTitle = eleTitles[index];
+		// 标题对应的动画关键字
+		var arrKeyTween = eleTitle.innerHTML.split('.');
+		// 找到球元素
+		var eleBall = eleTitle.parentNode.getElementsByTagName('i')[0];
+			
+		// 是否正在运动
+		var isMoving = false;
+		
+		// 点击球触发运动
+		if (eleBall) {
+			eleBall.onclick = function () {
+				if (isMoving == true) {
+					return;	
+				}
+				
+				// 一些数据
+				// 当前时间
+				var start = 0;
+				// 初始值，因为一开始球在最左边，因此是0
+				var begin = 0;
+				// 容器宽度减去球的宽度
+				var end = (800 - 42);
+				// 持续时间
+				var during = 100;
+				
+				// 当前圆球对应的动画算法
+				var fnGetCurrentPosition;
+				
+				if (arrKeyTween.length == 1) {
+					fnGetCurrentPosition = Math.tween[arrKeyTween[0]];
+				} else if (arrKeyTween.length == 2) {
+					fnGetCurrentPosition = Math.tween[arrKeyTween[0]][arrKeyTween[1]];
+				}
+				
+				// 运动
+				var step = function() {
+					// 当前的运动位置
+					var left = fnGetCurrentPosition(start, begin, end, during);
+					// 高级浏览器使用transform位置，会更细腻
+					if (history.pushState) {
+						eleBall.style.transform = 'translateX(' + left + 'px)';
+					} else {
+						eleBall.style.left = left + 'px';	
+					}
+					
+					// 时间递增
+					start++;
+					
+					// 如果还没有运动到位，继续
+					if (start <= during) {
+						 requestAnimationFrame(step);
+					} else {
+						// 动画结束，这里可以插入回调...
+						// callback()...
+						
+						// 标记动画已结束，可以再次点击小球执行动画
+						isMoving = false;
+					}
+				};
+				// 开始执行动画
+				if (typeof fnGetCurrentPosition == 'function') {
+					isMoving = true;
+					step();
+				}
+			};	
+		}
+	})(indexTitle);
+}
+</script>
+<script src="./js/animation.js"></script>
+<script>
+// 测试
+document.getElementById('mathBall').onclick = function () {
+	var ball = this;
+	Math.animation(250, 800 - 42, function (value) {
+		if (history.pushState) {
+			ball.style.transform = 'translateX(' + value + 'px)';
+		} else {
+			ball.style.left = value + 'px';	
+		}
+	}, 'Bounce.easeInOut', 600);	
+};
+</script>
+
+
+<!-- 以下脚本是无关紧要 -->
+<script type="text/javascript" src="./js/hl_all.js"></script>
+<script type="text/javascript">
+	DlHighlight.HELPERS.highlightByName("code", "pre");
+</script>
+<div id="ad">
+	<script type="text/javascript">	google_ad_client = "pub-0090627341039040";google_ad_slot = "4686885989";google_ad_width = 728;google_ad_height = 90;</script><script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+    <script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-11205167-1']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+		var ga = document.createElement('script');
+		 ga.type = 'text/javascript';
+		 ga.async = true;
+		ga.src = '//www.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+</div>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?48d8e938d5365a4cb0fc9e65d945018e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>
