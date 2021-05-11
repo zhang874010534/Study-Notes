@@ -60,3 +60,40 @@
 }
 ````
 
+##### [scroll-behavior](https://developer.mozilla.org/zh-CN/docs/Web/CSS/scroll-behavior)  chrome 61+
+
+> 可以让滚动框实现平稳的滚动，而不是突兀的跳动
+
+#### 字体渐变
+
+```css
+{
+    color: transparent;
+    text-fill-color:transparent;// 网上的文章都用这个的 似乎不加只用color就够了
+    background-clip: text;
+    background: linear-gradient(to right, red, blue);
+}
+```
+
+#### [background-clip](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-clip)
+
+> 设置元素的背景（背景图片或颜色）是否延伸到边框、内边距盒子、内容盒子下面
+
+##### border-box
+
+背景延伸至边框外沿（但是在边框下层）。
+
+##### padding-box
+
+
+背景延伸至内边距（[`padding`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/padding)）外沿。不会绘制到边框处。
+
+##### content-box
+
+
+背景被裁剪至内容区（content box）外沿。
+
+##### text
+
+
+背景被裁剪成文字的前景色。

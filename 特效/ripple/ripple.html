@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .wrapper a{
+      width: 200px;
+      height: 60px;
+      display: inline-block;
+      background-color: red;
+      margin: 0 20px;
+      text-decoration: none;
+      color: #fff;
+      text-align: center;
+      line-height: 60px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 30px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.4);
+    }
+    .wrapper a:first-child{
+      background: linear-gradient(-90deg,#f5ce62,#e85a19);
+      position: relative;
+      overflow: hidden;
+    }
+    .wrapper a > span{
+      transform: translate(-50%,-50%);
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: ripple 0.6s linear;
+    }
+    @keyframes ripple {
+      0%{
+        width: 0px;
+        height: 0px;
+        opacity: 0.5;
+      }
+      100%{
+        width: 500px;
+        height: 500px;
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <a href="#">Click me</a>
+  </div>
+  <script>
+    const button = document.querySelector('a');
+    button.onclick = function(e){
+      let x = e.clientX - e.target.offsetLeft;
+      let y = e.clientY - e.target.offsetTop;
+      let ripple = document.createElement('span');
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      this.appendChild(ripple)
+      setTimeout(() => {
+        this.removeChild(ripple);
+      }, 600);
+    }
+  </script>
+</body>
+</html>
