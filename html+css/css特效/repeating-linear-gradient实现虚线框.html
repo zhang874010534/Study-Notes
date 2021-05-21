@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .dotted-line {
+      width: 800px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid transparent;
+      /* background:  repeating-linear-gradient(-70deg, green 0, green 3px, pink 0, pink .75em); */
+      background:  linear-gradient(white, white) padding-box,repeating-linear-gradient(-45deg, green 0, green .25em,  white 0, white .75em);
+      /* padding-box 设置元素的背景延伸至内边距（padding）外沿。不会绘制到边框处 */
+      /* 我的理解是 repeating-linear-gradient 在边框上留下了自己的一部分 */
+    }
+  </style>
+</head>
+
+<body>
+  <p class="dotted-line">庭院深深，不知有多深？杨柳依依，飞扬起片片烟雾，一重重帘幕不知有多少层。</p>
+
+</body>
+
+</html>
