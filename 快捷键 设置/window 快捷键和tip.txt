@@ -8,3 +8,4 @@ ctrl+win+d创建一个虚拟桌面 ctrl+win+方向键左右可以切换
 ctrl+t 浏览器创建新的选项卡
 
 控制面板 键盘 重复延迟
+https://www.ithome.com/0/502/592.htm window10重启后系统自动还原之前状态
