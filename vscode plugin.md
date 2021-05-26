@@ -30,6 +30,8 @@
 
     
 
+- Volar  Vetur升级版，支持vue3，用于为`.vue`单文件组件提供代码高亮以及语法支持
+
 - Vue 2 Snippets  vue代码片段
 
 ### Element UI
@@ -62,4 +64,3 @@
      输入空格会触发对应标签的属性补全
 
 3. wxapp-helper 选择创建wx组件，自动生成配套的文件，简直不要太爽
-   
