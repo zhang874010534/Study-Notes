@@ -1,3 +1,0 @@
-[2020/03/28 12:01:59 CST] [EROR] (ngrok/log.(*PrefixLogger).Error:91) [pxy:34e980fc] Server failed to write StartProxy: EOF
-[2020/03/28 12:03:09 CST] [EROR] (ngrok/log.(*PrefixLogger).Error:91) [pxy:5bf8dd8] Server failed to write StartProxy: EOF
-[2020/03/28 12:05:05 CST] [EROR] (ngrok/log.(*PrefixLogger).Error:91) [pxy:6b5eda4d] Server failed to write StartProxy: EOF
