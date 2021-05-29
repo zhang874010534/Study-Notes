@@ -353,7 +353,7 @@ XSS（cross-site scripting）跨域脚本攻击
 ```
 &：&amp;
 <：&alt;
->：&gt;
+>：&gt;    str.replace(/>/g, '&lt;');
 '：&#x27;
 "：&quot;
 /：&#x2F;
@@ -362,3 +362,5 @@ XSS（cross-site scripting）跨域脚本攻击
 
 1. Javascript：把所有非字母、数字的字符都转义成小于256的ASCII字符；
 2. URL：使用Javascript的encodeURIComponent()方法对用户的输入进行编码，该方法会编码如下字符：,    /    ?   :   @   &   =   +   $   #
+
+## [阮一峰的url编码](http://www.ruanyifeng.com/blog/2010/02/url_encoding.html)
