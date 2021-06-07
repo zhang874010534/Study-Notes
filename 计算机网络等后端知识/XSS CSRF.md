@@ -364,3 +364,4 @@ XSS（cross-site scripting）跨域脚本攻击
 2. URL：使用Javascript的encodeURIComponent()方法对用户的输入进行编码，该方法会编码如下字符：,    /    ?   :   @   &   =   +   $   #
 
 ## [阮一峰的url编码](http://www.ruanyifeng.com/blog/2010/02/url_encoding.html)
+
