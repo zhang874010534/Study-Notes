@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		.wrapper{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			display: flex;
+			width: 100%;
+			transition: all 1s linear;
+			background-color: red;
+		}
+		.item-img{
+			width: 40px;
+			margin-left: 5px;
+			object-fit: contain;
+		}
+		.item-img:last-child{
+			position: absolute;
+			left: 50%;
+			transform:translate(-100%) scale(2);
+			animation: move 1s linear forwards;
+		}
+		@keyframes move {
+			0%{
+				position: absolute;
+				transform:translate(-100%) scale(2);
+				left: 50%;
+				opacity: 0.8;
+			}
+			100%{
+				position: absolute;
+				transform:translate(-100%) scale(1);
+				left: 100%;
+				opacity: 1;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app">
+		<div class="wrapper" :style="`width:${list.length * 45}px`">
+			<img 
+				src="https://qn-static-cdn.bunanapp.com/FmnG-5jkYk0QmHPd8RAVBwLhs6Hs" alt="" class="item-img"
+				v-for="(item,index) in list" :key="index"
+			>
+		</div>
+	</div>
+	<script>
+		var app = new Vue({
+			el: '#app',
+			data: {
+				list:[],
+			},
+			mounted() {
+				setInterval(() => {
+					this.list.push('')
+				}, 1000);
+			},
+		})
+	</script>
+</body>
+
+</html>
