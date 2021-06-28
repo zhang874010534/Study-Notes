@@ -50,6 +50,7 @@
 - [lottie](https://airbnb.io/lottie/#/) json动效
 - crypto-js  加密函数库
 - `lodash` -- 工具库
+- [mammoth](https://github.com/mwilliamson/mammoth.js) [示例](https://jstool.gitlab.io/zh-cn/demo/preview-ms-word-docx-document-in-browser/)
 
 ### Node
 
