@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+  <style>
+  </style>
+</head>
+ 
+<body>
+  <!-- https://v3.cn.vuejs.org/guide/component-custom-events.html#%E5%AE%9A%E4%B9%89%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6 -->
+  <div id="root">
+    <test></test>
+    <async-component></async-component>
+   </div>
+  <script>
+    // 创建一个vue的应用
+    const app = Vue.createApp({
+      data() {  
+        return {
+          msg:'1123'
+        }
+      }, 
+      methods: {
+
+      },
+    })
+    
+    app.component('test',{
+      methods: {
+      },
+      template:`<div>123</div>`
+    })
+    app.component('async-component',Vue.defineAsyncComponent(()=>{
+      return new Promise((resolve)=>{
+        setTimeout(() => {
+          resolve({
+            template:`<div>async</div>`
+          });
+        }, 4000);
+      })
+    }))
+    // vue应用的根元素
+    const vm = app.mount('#root');
+  </script>
+</body>
+
+</html>
