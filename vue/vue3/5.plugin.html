@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>plugin</title>
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // plugin 插件, 也是把通用性的功能封装起来
+  const myPlugin = {
+    install(app, options) {
+      app.provide('name', 'zhangce');
+      app.directive('focus', {
+        mounted(el) {
+          el.focus();
+        }
+      })
+      app.mixin({
+        mounted(){
+          console.log('mixin')
+        }
+      })
+      app.config.globalProperties.$sayHello = 'hello world';
+    }
+  }
+
+  const app = Vue.createApp({
+    template: `
+      <my-title />
+    `
+  });
+
+  app.component('my-title', {
+    inject: ['name'],
+    mounted() {
+      console.log(this.$sayHello);
+    },
+    template: `<div>{{name}}<input v-focus /></div>`
+  })
+
+  app.use(myPlugin, { name: 'dell'});
+
+  const vm = app.mount('#root');
+</script>
+</html>
