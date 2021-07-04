@@ -36,6 +36,8 @@
 
 > 可以让滚动框实现平稳的滚动，而不是突兀的跳动
 
+##### [Column layouts](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Layout_cookbook/Column_layouts) chrome 50+  column布局
+
 #### 单行文本省略
 
 ````CSS
