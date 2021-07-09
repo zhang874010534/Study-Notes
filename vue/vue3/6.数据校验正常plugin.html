@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>plugin</title>
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        name:'zhangce'
+      }
+    },
+    rules:{
+      name:{
+        validate:name => name == 'zhangce',
+        do(){
+          console.log('数据错误111')
+        }
+      }
+    },
+    template: ` `
+  });
+  const validatorPlugin = (app, options)=>{
+    app.mixin({
+      created() {
+        let object = this.$options.rules;
+        for (const key in object) {
+          if (Object.hasOwnProperty.call(object, key)) {
+            const element = object[key];
+            this.$watch(key,(newVal)=>{
+              let result = element.validate(newVal);
+              if(!result){
+                element.do()
+              }else{
+                console.log('数据正确')
+              }
+            })
+          }
+        }
+      },
+    })
+  }
+
+  app.use(validatorPlugin);
+  const vm = app.mount('#root');
+</script>
+</html>
