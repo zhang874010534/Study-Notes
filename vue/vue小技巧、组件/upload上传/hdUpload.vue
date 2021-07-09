@@ -21,7 +21,7 @@ const MD5 = str => CryptoJS.MD5(str).toString().toUpperCase()
 
 export default {
     name: 'hdUpload',
-
+    
     props: {
         fileType: {
             type: String,
