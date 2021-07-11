@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>plugin</title>
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="root"></div> 
+</body>
+<script> 
+  const app = Vue.createApp({
+    data() {
+      return {
+      }
+    },
+    setup(props,context) {
+      const {reactive, toRef, toRefs} = Vue;
+      let obj = reactive({name: 'zhangce'});
+      setTimeout(() => {
+        obj.name = 'new zhangce'
+      }, 2000);
+      const {name} = toRefs(obj);
+      return {name}
+
+      // 一般不这么用 如果需要age直接就自己传了 let obj = reactive({name: 'zhangce', age: 18});
+      // const age = toRef(obj, 'age');
+      // setTimeout(() => {
+      //   age.value = '18'
+      // }, 2000);
+      // return {age}
+    },
+    template: `
+      <div>{{name}}</div>
+    `
+  });
+  const vm = app.mount('#root');
+</script>
+</html>

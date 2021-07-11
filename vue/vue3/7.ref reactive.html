@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>plugin</title>
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="root"></div> 
+</body>
+<script> 
+  const app = Vue.createApp({
+    data() {
+      return {
+      }
+    },
+    setup(props,context) {
+      // proxy 'zhangce' 就变成了proxy({value: 'dell'}) 响应式引用
+      // ref处理基础类型的数据
+      // let name = Vue.ref('zhangce');
+      // setTimeout(() => {
+      //   name.value = 'new zhangce'
+      // }, 2000);
+      const {reactive, readonly, toRef} = Vue;
+      let arr = reactive(['zhangce']);
+      const copy = readonly(arr);
+      setTimeout(() => {
+        arr[0] = 'new zhangce'
+        copy[0] = 'new zhangce';//会警告 因为是readonly
+      }, 2000);
+      return {
+        arr,
+        copy
+      }
+    },
+    template: `
+      <div>{{arr[0]}} </div>
+    `
+  });
+  const vm = app.mount('#root');
+</script>
+</html>

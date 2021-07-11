@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>plugin</title>
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="root"></div> 
+</body>
+<script> 
+  const app = Vue.createApp({
+    data() {
+      return {
+      }
+    },
+    methods: {
+      handleChange(){
+        alert(1234)
+      }
+    },
+    template: `
+      <child app='zhangce' @change="handleChange">
+        <div>1</div>
+        <div>2</div>
+      </child>
+    `
+  });
+  app.component('child',{
+    setup(props,context) {
+      const {attrs, slots, emit} = context;
+      // console.log(attrs);
+      // console.log(slots.default())
+      // return () => Vue.h('div',{},slots.default())
+      function handleClick(){ 
+        emit('change')
+      }
+      return {
+        handleClick
+      }
+    },
+    template:`<div @click="handleClick">1234</div>`
+  })
+  const vm = app.mount('#root');
+</script>
+</html>
