@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>plugin</title>
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+</head> 
+<body>
+  <div id="root"></div> 
+</body>
+<script> 
+  const app = Vue.createApp({
+    setup(props) {
+      const {ref, computed} = Vue; 
+      const count = ref(0);
+      function handleClick(){
+        count.value ++;
+      }
+      const countAddComputed = computed(()=>{
+        return count.value + '5'
+      })
+      return {
+        count,
+        handleClick,
+        countAddComputed
+      }
+    },
+    template: `
+      <div @click="handleClick">{{count}}</div>
+      <div>{{countAddComputed}}</div>
+    `
+  });
+  const vm = app.mount('#root');
+</script>
+</html>
