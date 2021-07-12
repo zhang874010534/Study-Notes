@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>plugin</title>
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+</head> 
+<body>
+  <div id="root"></div> 
+</body>
+<script> 
+  const app = Vue.createApp({
+    setup(props,context) {
+      let {ref, reactive, watch, watchEffect, toRefs} = Vue;
+      let nameObj = reactive({name:'zhangce',age: 18});
+
+      // A watch source can only be a getter/effect function, a ref, a reactive object, or an array of these types
+      // 所以要弄一个函数
+      // watch([() => nameObj.name,() => nameObj.age],([curName,curAge],[preName,preAge])=>{
+      //   console.log(curName,preName,curAge,preAge)
+      // })
+      
+      const stop = watchEffect(() => {
+        console.log(nameObj.name)
+        setTimeout(() => {
+          stop();
+        }, 5000);
+      })
+      let {name,age} = toRefs(nameObj);
+      return {
+        name,
+        age
+      }
+    },
+    template: `
+      <input v-model='name'/>
+      <input v-model='age'/>
+      <div>{{name}}</div>
+    `
+  });
+  const vm = app.mount('#root');
+  
+</script>
+</html>
