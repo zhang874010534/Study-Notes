@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>plugin</title>
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+</head> 
+<body>
+  <div id="root"></div> 
+</body>
+<script> 
+  const app = Vue.createApp({
+    setup(props,context) {
+      const {provide, ref, readonly} = Vue;
+      let name = ref('zhangce');
+      provide('name',readonly(name));
+      provide('change',(val) => {
+        name.value = val;
+      })
+      return {
+
+      }
+    },
+    template: `
+      <child></child>
+    `
+  });
+  app.component('child', {
+    setup(){
+      const {inject, ref, onMounted} = Vue;
+      // 第二个参数默认值
+      let name = inject('name','hello');
+      let change = inject('change');
+      let root = ref(null);
+      const handle = () => {
+        change('nihao')
+      }
+      onMounted(() => {
+        console.log(root)
+        
+      })
+      return {
+        name,
+        handle,
+        root
+      }
+    },
+    template:`<div @click="handle" ref="root">{{name}}</div>`
+  })
+  const vm = app.mount('#root');
+  
+</script>
+</html>
