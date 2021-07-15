@@ -50,7 +50,8 @@
 - [lottie](https://airbnb.io/lottie/#/) json动效
 - crypto-js  加密函数库
 - `lodash` -- 工具库
-- [mammoth](https://github.com/mwilliamson/mammoth.js) [示例](https://jstool.gitlab.io/zh-cn/demo/preview-ms-word-docx-document-in-browser/)
+- [mammoth](https://github.com/mwilliamson/mammoth.js) [示例](https://jstool.gitlab.io/zh-cn/demo/preview-ms-word-docx-document-in-browser/) 在网页中渲染 word 
+- [normalize.css](https://www.npmjs.com/package/normalize.css) 让不同的浏览器在渲染网页元素的时候形式更统一
 
 ### Node
 
