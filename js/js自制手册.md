@@ -16,3 +16,7 @@
 
 > 传入弧度 比如Math.PI 那就返回1.2246467991473532e-16   无限接近于0  。。。。。
 
+#### [navigator.storage.estimate()](https://developer.mozilla.org/zh-CN/docs/orphaned/Web/API/NavigatorStorage/storage)
+
+> 了解您的浏览器使用的大约多少空间用于本地存储。
+
