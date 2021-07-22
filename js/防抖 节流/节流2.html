@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" id="input">
+  <script>
+    //封装一个防抖的函数 
+    function throttle(fn, delay = 500) {
+      let timer = null;
+      return () => {
+        if (timer) {
+          return; 
+        }
+        fn();
+        timer = setTimeout(() => {
+          timer = null
+        }, delay)
+      }
+    }
+    //调用
+    const input = document.getElementById('input')
+    input.addEventListener('keyup', debounce(() => {
+      console.log(input.value)
+    }), false)
+  </script>
+
+</body>
+
+</html>
