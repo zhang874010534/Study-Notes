@@ -20,3 +20,7 @@
 
 > 了解您的浏览器使用的大约多少空间用于本地存储。
 
+#### [URLSearchParams](https://developer.mozilla.org/zh-CN/docs/Web/API/URLSearchParams)
+
+> 接口定义了一些实用的方法来处理 URL 的查询字符串
+
