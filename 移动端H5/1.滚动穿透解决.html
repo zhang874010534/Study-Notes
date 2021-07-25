@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* https://www.cnblogs.com/padding1015/p/10568070.html */
+    body{
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+    }
+    .div1{
+      background-color: palegoldenrod;
+      height: 2000px;
+    }
+    .div2{
+      position: fixed;
+      width: 100px;
+      height: 200px;
+      background-color: palegreen;
+      left: 50px;
+      top: 100px;
+      display: flex;
+      flex-wrap: wrap;
+      overflow-y: scroll;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="div1">
+    1234
+    1234
+    1234  
+  </div>
+  <div class="div2">
+    44
+    1234
+    1234
+    1234  
+    1234
+    1234
+    1234  
+    1234
+    1234
+    1234  1234
+    1234
+    1234  1234
+    1234
+    1234  1234
+    1234
+    1234  1234
+    1234
+    1234  1234
+    1234
+    1234  
+  </div>
+  <script>
+    let dom = document.querySelector('.div2');
+    let startY = 0;
+    dom.addEventListener('touchstart',(e) => {
+      startY = e.touches[0].pageY;
+      
+    })
+    dom.addEventListener('touchmove',(e) => {
+      let pageY = e.touches[0].pageY;
+      let up = pageY - startY < 0 ? true : false;
+      let sTop = dom.scrollTop;
+      let cHeight = dom.clientHeight;
+      let sHeight = dom.scrollHeight;
+      if(sTop == 0 && !up){
+        e.preventDefault();
+      }
+      if(sTop + 1 >= sHeight - cHeight && up){
+        e.preventDefault();
+      }
+      console.log(sTop,cHeight,sHeight)
+    })
+  </script>
+</body>
+
+</html>
