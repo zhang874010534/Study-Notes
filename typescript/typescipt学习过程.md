@@ -373,6 +373,14 @@ console.log(dog.sayHi());//hello
 
 > 联合类型    值可以为不同类型的情况
 
+##### type 联合类型
+
+```typescript
+type Name = string; // 基本类型
+type NameFun = () => string; // 函数
+type NameOrRFun = Name | NameFun; // 联合类型
+```
+
 ##### 类型断言 类型保护
 
 ```typescript
