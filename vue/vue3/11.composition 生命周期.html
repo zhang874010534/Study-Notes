@@ -13,7 +13,7 @@
   const app = Vue.createApp({
     setup(props,context) {
       const {onMounted, onRenderTracked, onRenderTriggered } = Vue;
-      // 每次渲染后重新收集依赖时触发
+      // 每次渲染后重新收集依赖时触发  beforeMount mounted 之间执行 以及beforeUpdate updated之间
       onRenderTracked(() => {
 
       })
