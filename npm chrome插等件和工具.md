@@ -22,7 +22,9 @@
 
   > https://skeletonreact.com/ 初略的绘制骨架屏 放到项目里再具体调整
 
-  
+- [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) 长列表组件 
+
+  > 局部加载解决列表过长的问题
 
 ##### 开发环境
 
@@ -42,6 +44,7 @@
   - [getIn](https://immutable-js.github.io/immutable-js/docs/#/getIn)    console.log(nested2.getIn([ 'a', 'b', 'd' ])); 
   - [merge](https://immutable-js.github.io/immutable-js/docs/#/merge) Returns a copy of the collection with the remaining collections merged in.
 - [redux-immutable](https://github.com/gajus/redux-immutable)  is used to create an equivalent function of Redux combineReducers that works with immutable.js state 就是最外层的state希望让他也变成immutable对象
+- [react-virtualized ](https://github.com/bvaughn/react-virtualized)长列表组件 
 
 ### 通用
 
