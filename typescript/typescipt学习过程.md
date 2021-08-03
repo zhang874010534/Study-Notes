@@ -1,4 +1,4 @@
-### 	typescript的一些优势
+### 	  typescript的一些优势
 
 ##### 在开发过程中，就发现潜在的问题
 
@@ -149,6 +149,7 @@ let teacherList:[string,string,number][]=[
 ### interface接口
 
 ```typescript
+// 1.定义对象
 interface Person {
   // readonly name: string;//只读
   name: string;
@@ -161,7 +162,7 @@ interface Teacher extends Person {
   teach(): string;
 }
 const getPersonName = (person: Person) => {
-  return person.name;
+  return person.name
 };
 const setPersonName = (person: Person, name: string): void => {
   person.name = name;
@@ -181,16 +182,25 @@ class User implements Person {
   }
 }
 
-// 定义函数类型 函数重载SayHi可以传string类型也可以传number类型 在写.d.ts文件(类型定义文件)的时候可以使用
+// 2.定义函数类型 函数重载SayHi可以传string类型也可以传number类型 在写.d.ts文件(类型定义文件)的时候可以使用
+// 一个参数
 interface SayHi {
-  (word: string): string;
+  (word: string): string,
   (name: number): number
 }
 
 let say: SayHi = (word) => {
   return word;
 };
+// 多个参数
+interface SayHi {
+  (a: string,b:number): string,
+}
 
+let say: SayHi = (a,b) => {
+  return a + b;
+};
+say('str',123)
 ```
 
 
@@ -487,6 +497,17 @@ function join4<T>(first: Array<T>) {
 }
 join3<string>(['1']);
 
+// 约束泛型 
+interface Length {
+  length: number
+}
+
+function echo<T extends Length>(params:T):T{
+  return params
+}
+echo({length:1})
+echo([1,2])
+echo('str')
 ```
 
 ##### 类中 
@@ -516,6 +537,21 @@ class DataManager2<T extends string|number>{
   }
 }
 ```
+
+##### interface中
+
+```typescript
+interface Animal<T,U> {
+  name:T,
+  age:U
+} 
+let dog:Animal<string,number> = {
+  name:'1234',
+  age:1234
+}
+```
+
+
 
 ##### [索引类型查询操作符](https://www.tslang.cn/docs/handbook/advanced-types.html)
 
@@ -829,3 +865,4 @@ class Test{
 let test=new Test()
 ```
 
+ 
