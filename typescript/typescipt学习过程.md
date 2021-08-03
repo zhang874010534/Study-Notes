@@ -236,7 +236,15 @@ getUserName(teacher);
 getUserName(student);
 ```
 
+### type
 
+```typescript
+type Name = string; // 基本类型
+type NameFun = (x: number) => string; // 
+type NameOrRFun = Name | NameFun; // 联合类型
+type direction = 'up' | 'down'
+let to:direction = 'up'
+```
 
 ### 类的定义和继承
 
@@ -379,6 +387,38 @@ console.log(dog.sayHi());//hello
 }
 ```
 
+### [交叉类型(Intersection Types)](https://www.tslang.cn/docs/handbook/advanced-types.html)
+
+#### 1.interface
+
+```typescript
+interface Radio {
+  switchRadio(trigger:boolean):void
+
+interface Batter {
+  check():void
+}
+class Car implements Radio{
+  switchRadio(trigger:boolean){
+
+  }
+}
+class Cellphone implements Radio,Batter{
+  switchRadio(trigger:boolean):void{
+    
+  }
+  check(){
+    
+  }
+}
+```
+
+#### 2.type
+
+```typescript
+
+```
+
 ### [联合类型(Union Types)和类型保护(Type Guards)](https://www.tslang.cn/docs/handbook/advanced-types.html)
 
 > 联合类型    值可以为不同类型的情况
@@ -387,7 +427,7 @@ console.log(dog.sayHi());//hello
 
 ```typescript
 type Name = string; // 基本类型
-type NameFun = () => string; // 函数
+type NameFun = () => string; // 
 type NameOrRFun = Name | NameFun; // 联合类型
 ```
 
@@ -492,6 +532,7 @@ function join3<T>(first: T[]) {
   return first;
 }
 // 上下这俩是一样的
+//Array是内置的interface
 function join4<T>(first: Array<T>) {
   return first;
 }
@@ -865,4 +906,17 @@ class Test{
 let test=new Test()
 ```
 
- 
+### [Utility Types(内置的工具type)](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+
+```typescript
+interface IPerson {
+  name:string,
+  age:number
+}
+let person:IPerson = {name:'abao',age:1234}
+type IPartial = Partial<IPerson>// 全体可有可无
+let person2:IPartial = { name:'abao'}
+type IOmit = Omit<IPerson,'name'>;//忽略
+let person3:IOmit = { age:124}
+```
+
