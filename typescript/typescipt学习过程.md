@@ -583,8 +583,8 @@ class DataManager2<T extends string|number>{
 
 ```typescript
 interface Animal<T,U> {
-  name:T,
-  age:U
+  name:T;
+  age:U;
 } 
 let dog:Animal<string,number> = {
   name:'1234',
