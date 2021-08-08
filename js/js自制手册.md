@@ -24,3 +24,7 @@
 
 > 接口定义了一些实用的方法来处理 URL 的查询字符串
 
+#### [Node.contains()](https://developer.mozilla.org/zh-CN/docs/Web/API/Node/contains)
+
+> 返回的是一个布尔值，来表示传入的节点是否为该节点的后代节点。
+
