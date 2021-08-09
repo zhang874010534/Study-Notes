@@ -56,6 +56,7 @@
 - [mammoth](https://github.com/mwilliamson/mammoth.js) [示例](https://jstool.gitlab.io/zh-cn/demo/preview-ms-word-docx-document-in-browser/) 在网页中渲染 word 
 - [normalize.css](https://www.npmjs.com/package/normalize.css) 让不同的浏览器在渲染网页元素的时候形式更统一
 - [anime.js](https://github.com/juliangarnier/anime/) 动画库
+- [mitt](https://github.com/developit/mitt) 事件的on off emit
 
 ### Node
 
