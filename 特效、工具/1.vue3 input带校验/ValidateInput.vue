@@ -9,7 +9,8 @@
   <div v-if="inputRef.error">{{inputRef.message}}</div>
 </template>
 <script lang="ts">
-import { defineComponent,PropType, reactive } from 'vue'
+import { computed, defineComponent,onMounted,PropType, reactive } from 'vue'
+import { emitter } from './ValidateForm.vue'
 interface RuleProp {
   type: 'required' | 'email';
   message: string
@@ -23,11 +24,22 @@ export default defineComponent({
   },
   setup(props,context) { 
     const inputRef = reactive({
-      val: props.modelValue ||'',
+      val: computed({
+        get:() => {
+          return props.modelValue ||''
+        },
+        set:(val) => {
+          context.emit('update:modelValue',val)
+        }
+      }),
       error: false, 
       message: ''
     })
-    const updateValue = (e:any) => {
+    
+    onMounted(() => {
+      emitter.emit('form-item-created',validateInput)
+    })
+    const updateValue = (e:Event) => {
       const targetValue = (e.target as HTMLInputElement).value
       inputRef.val = targetValue
       context.emit('update:modelValue',targetValue)
@@ -50,7 +62,9 @@ export default defineComponent({
           return passed
         })
         inputRef.error = !allPass
+        return allPass
       }
+      return true;
     }
     return {
       inputRef,
