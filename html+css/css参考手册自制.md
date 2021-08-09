@@ -6,7 +6,26 @@
 
 ##### [background-clip](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-clip)
 
-> 设置元素的背景（背景图片或颜色）是否延伸到边框、内边距盒子、内容盒子下面。
+> 设置元素的背景（背景图片或颜色）是否延伸到边框、内边距盒子、内容盒子下面
+
+1. ##### border-box
+
+   背景延伸至边框外沿（但是在边框下层）。
+
+2. ##### padding-box
+
+
+   背景延伸至内边距（[`padding`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/padding)）外沿。不会绘制到边框处。
+
+3. ##### content-box
+
+
+   背景被裁剪至内容区（content box）外沿。
+
+4. ##### text
+
+
+   背景被裁剪成文字的前景色。
 
 ##### [shape-outside](https://developer.mozilla.org/zh-CN/docs/Web/CSS/shape-outside) [参考2](https://www.cnblogs.com/pssp/p/5903285.html)
 
@@ -44,7 +63,7 @@
 
 ##### [mix-blend-mode](https://developer.mozilla.org/zh-CN/docs/Web/CSS/mix-blend-mode)
 
-> 属性描述了元素的内容应该与元素的直系父元素的内容和元素的背景如何混合
+> 属性描述了元素的内容应该与元素的直系父元素的内容和元素的背景如何混合t
 
 #### 单行文本省略
 
@@ -85,25 +104,8 @@
 }
 ```
 
-#### [background-clip](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-clip)
+#### [text-orientation](https://developer.mozilla.org/zh-CN/docs/Web/CSS/text-orientation)
 
-> 设置元素的背景（背景图片或颜色）是否延伸到边框、内边距盒子、内容盒子下面
+>
+> 设定行中字符的方向
 
-##### border-box
-
-背景延伸至边框外沿（但是在边框下层）。
-
-##### padding-box
-
-
-背景延伸至内边距（[`padding`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/padding)）外沿。不会绘制到边框处。
-
-##### content-box
-
-
-背景被裁剪至内容区（content box）外沿。
-
-##### text
-
-
-背景被裁剪成文字的前景色。
