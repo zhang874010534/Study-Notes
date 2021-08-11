@@ -58,6 +58,10 @@
 - [anime.js](https://github.com/juliangarnier/anime/) 动画库
 - [mitt](https://github.com/developit/mitt) 事件的on off emit
 
+### CSS
+
+- https://www.minimamente.com/css-infinite-photo-carousel/ 图片无限斜着滚动
+
 ### Node
 
 - nodemon 自动重启
