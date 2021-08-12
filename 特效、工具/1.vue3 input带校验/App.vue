@@ -3,6 +3,7 @@
     <validate-form @form-submit="formSubmit">
       <validate-input :rules="emailRules" v-model="params.email" placeholder="请输入邮箱地址"></validate-input>
       <validate-input :rules="passwordRules" v-model="params.password" placeholder="请输入密码"></validate-input>
+      <validate-input :rules="repeatPasswordRules" v-model="params.repeatPassword" placeholder="请输入密码"></validate-input>
       <template v-slot:submit>
         <button type="submit">自定义提交按钮</button>
       </template>
@@ -23,6 +24,11 @@ export default defineComponent({
     'validate-form':ValidateForm,
   },
   setup() {
+    const params = reactive({
+      email: '',
+      password: '',
+      repeatPassword: ''
+    })
     const emailRules: RulesProp = [
       { type:'required', message:'电子邮箱不能为空'},
       { type:'email', message:'邮箱错误'}
@@ -30,14 +36,22 @@ export default defineComponent({
     const passwordRules: RulesProp = [
       { type:'required', message:'密码不能为空'},
     ]
+    const repeatPasswordRules: RulesProp = [
+      { type: 'required', message: '重复密码不能为空' },
+      {
+        type: 'custom',
+        validator: () => {
+          return params.password === params.repeatPassword
+        },
+        message: '密码不相同'
+      }
+    ]
     const inputRef = ref(null)
-    const params = reactive({
-      email: '',
-      password: ''
-    })
+    
     const formSubmit = (boolean:boolean) => {
       params.email = ''
       params.password = ''
+      params.repeatPassword = ''
       console.log(boolean)
     }
     return {

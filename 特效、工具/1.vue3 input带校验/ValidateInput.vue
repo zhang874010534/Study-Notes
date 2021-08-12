@@ -18,8 +18,8 @@ interface RuleProp {
 export type RulesProp = RuleProp[];
 const emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
 export default defineComponent({
-  props:{
-    rules: Array as PropType<RulesProp>,
+  props:{ 
+    rules: Array as PropType<RulesProp>,  
     modelValue: String
   },
   setup(props,context) { 
@@ -36,9 +36,7 @@ export default defineComponent({
       message: ''
     })
     
-    onMounted(() => {
-      emitter.emit('form-item-created',validateInput)
-    })
+    
     const updateValue = (e:Event) => {
       const targetValue = (e.target as HTMLInputElement).value
       inputRef.val = targetValue
@@ -56,6 +54,9 @@ export default defineComponent({
             case 'email':
               passed = emailReg.test(inputRef.val)
               break;
+            case 'custom':
+              passed = rule.validator ? rule.validator() : true
+              break
             default: 
               break;
           }
@@ -66,6 +67,10 @@ export default defineComponent({
       }
       return true;
     }
+    
+    onMounted(() => {
+      emitter.emit('form-item-created',validateInput)
+    })
     return {
       inputRef,
       validateInput,
