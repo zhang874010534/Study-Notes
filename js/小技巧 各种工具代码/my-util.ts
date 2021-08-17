@@ -139,3 +139,18 @@ export function colorRgb(sColor,opacity){
     }
     return sColor;
 };
+
+export function handleFileChange(e: Event){
+    const currentTarget = e.target as HTMLInputElement
+    if (currentTarget.files) {
+        const formData = new FormData()
+        formData.append('file',currentTarget.files[0])
+        axios.post('/url',formData,{
+            headers: {
+                'Content-Type':'multipart/form-data'
+            }
+        }).then((res) => {
+            console.log(res)
+        })
+    }
+}
