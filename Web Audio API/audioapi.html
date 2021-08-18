@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button onclick="play()">播放</button>
+  <button onclick="pause()">暂停</button>
+  <input type="file" onchange="change(event)">
+  <div id="text"></div>
+  <script>
+    let audioContext = new AudioContext()
+    let source = audioContext.createBufferSource()
+    let audioBuffer = null
+    function change(e){
+      let dom = document.querySelector('#text')
+      dom.innerText = '读取中...'
+      let reader = new FileReader()
+      reader.readAsArrayBuffer(e.target.files[0])
+      reader.onload = (event) => {
+        audioContext.decodeAudioData(event.target.result,(data) => {
+          audioBuffer = data;
+          dom.innerText = '读取完毕...'
+          source.buffer = audioBuffer
+        });
+
+      }
+    }
+    let first = true;
+    function play(){
+      if(first){
+        source.start()
+        first = false
+      }
+      source.connect(audioContext.destination)
+    }
+    function pause(){
+      source.disconnect(audioContext.destination)
+    }
+  </script>
+</body>
+</html>
