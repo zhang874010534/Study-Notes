@@ -33,18 +33,37 @@
 ### React
 
 - [echarts-for-react](https://github.com/hustcc/echarts-for-react)  一个简单的 echarts(v3.0 & v4.0) 的 react 封装。
+
 - [react-router-dom](https://reactrouter.com/web/guides/quick-start)   DOM bindings for React Router
+
 - [react-transition-group](https://github.com/reactjs/react-transition-group) 动画插件
+
 - [redux](https://github.com/reduxjs/redux) a predictable state container for JavaScript apps
+
 - [react-redux](https://github.com/reduxjs/react-redux) Official React bindings for redux. Performant and flexible.
+
 - [redux-thunk](https://github.com/reduxjs/redux-thunk) lets you write async logic that interacts with the store.
+
 - [redux-saga](https://github.com/redux-saga/redux-saga) is a library that aims to make application side effects (i.e. asynchronous things like data fetching and impure things like accessing the browser cache) easier to manage, more efficient to execute, easy to test, and better at handling failures.
+
 - [immutable](https://github.com/immutable-js/immutable-js)  [docs](https://immutable-js.github.io/immutable-js/docs/#/) Immutable data cannot be changed once created  
   - [fromjs](https://immutable-js.github.io/immutable-js/docs/#/fromJS)  Deeply converts plain JS objects and arrays to Immutable Maps and Lists.
   - [getIn](https://immutable-js.github.io/immutable-js/docs/#/getIn)    console.log(nested2.getIn([ 'a', 'b', 'd' ])); 
   - [merge](https://immutable-js.github.io/immutable-js/docs/#/merge) Returns a copy of the collection with the remaining collections merged in.
+  
 - [redux-immutable](https://github.com/gajus/redux-immutable)  is used to create an equivalent function of Redux combineReducers that works with immutable.js state 就是最外层的state希望让他也变成immutable对象
-- [react-virtualized ](https://github.com/bvaughn/react-virtualized)长列表组件 
+
+- [react-virtualized ](https://github.com/bvaughn/react-virtualized)长列表组件
+
+- [typescript-plugin-css-modules ](https://github.com/mrmckeb/typescript-plugin-css-modules) 安装到dev，写react的css的时候有代码提示
+
+  vscode 的 setting.json 设置：
+
+  ```
+  "typescript.tsserver.pluginPaths": ["typescript-plugin-css-modules"]
+  ```
+
+- 
 
 ### 通用
 

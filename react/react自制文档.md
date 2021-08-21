@@ -1,3 +1,7 @@
+#### 创建一个react+ts的项目
+
+- npx create-react-app my-app --template typescript
+
 #### 高级指引
 
 - [代码分割](https://zh-hans.reactjs.org/docs/code-splitting.html) [简书文章](https://www.jianshu.com/p/d237ae305c9a)  路由懒加载 
