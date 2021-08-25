@@ -14,3 +14,7 @@
 - [arc](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/arc) (x, y, radius, startAngle, endAngle, anticlockwise)  绘制圆弧
 - [clearRect](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/clearRect)(x, y, width, height)   擦除之前绘制的所有内容的方法
 
+#### HTMLCanvasElement
+
+- [HTMLCanvasElement.captureStream()](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/captureStream)
+
