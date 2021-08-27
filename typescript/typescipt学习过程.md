@@ -706,6 +706,17 @@ declare module 'jquery' {
 }
 ```
 
+##### 常用.d.ts
+
+````tsx
+declare module "*.css" {
+  const css : {[key:string]:string}
+  export default css
+}
+````
+
+
+
 ### [装饰器](https://www.tslang.cn/docs/handbook/decorators.html)
 
 ##### 类装饰器
