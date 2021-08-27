@@ -57,6 +57,16 @@
 
 - [typescript-plugin-css-modules ](https://github.com/mrmckeb/typescript-plugin-css-modules) 安装到dev，写react的css的时候有代码提示
 
+  tsconfig.json文件种
+
+  ```
+  {
+   "compilerOptions": {
+    "plugins": [{ "name": "typescript-plugin-css-modules"}]
+   }
+  }
+  ```
+
   vscode 的 setting.json 设置：
 
   ```
