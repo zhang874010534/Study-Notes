@@ -387,17 +387,17 @@ console.log(dog.sayHi());//hello
 }
 ```
 
-### [交叉类型(Intersection Types)](https://www.tslang.cn/docs/handbook/advanced-types.html)
+### [交叉类型(Intersection Types)](https://www.tslang.cn/docs/handbook/advanced-types.html)  [英文文档](https://www.typescriptlang.org/docs/handbook/2/objects.html#intersection-types)
 
-#### 1.interface
+#### interface
 
 ```typescript
 interface Radio {
   switchRadio(trigger:boolean):void
-
+}
 interface Batter {
   check():void
-}
+
 class Car implements Radio{
   switchRadio(trigger:boolean){
 
@@ -413,11 +413,35 @@ class Cellphone implements Radio,Batter{
 }
 ```
 
-#### 2.type
+#### &
+
 
 ```typescript
+TypeScript 交叉类型是将多个类型合并为一个类型。 这让我们可以把现有的多种类型叠加到一起成为一种类型，它包含了所需的所有类型的特性。
+interface IPerson {
+  id: string;
+  age: number;
+}
 
+interface IWorker {
+  companyId: string;
+}
+
+type IStaff = IPerson & IWorker;
+
+const staff: IStaff = {
+  id: 'E1006',
+  age: 33,
+  companyId: 'EFT'
+};
+在上面示例中，我们首先为 IPerson 和 IWorker 类型定义了不同的成员，然后通过 `&` 运算符定义了 IStaff  交叉类型，所以该类型同时拥有 IPerson 和 IWorker 这两种类型的成员。
 ```
+
+```tsx
+class HeaderComponent extends React.Component<PropsType & WithTranslation, IState> {}
+```
+
+#### type
 
 ### [联合类型(Union Types)和类型保护(Type Guards)](https://www.tslang.cn/docs/handbook/advanced-types.html)
 
