@@ -73,7 +73,7 @@
   "typescript.tsserver.pluginPaths": ["typescript-plugin-css-modules"]
   ```
 
-- 
+- [react-i18next](https://react.i18next.com/guides/quick-start) react的i18n
 
 ### 通用
 
