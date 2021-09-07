@@ -1,5 +1,5 @@
 import React from "react";
-import { observer,ProviderProps, inject } from "mobx-react";
+import { observer,ProviderProps, inject} from "mobx-react";
 
 @inject('TestStore')
 @observer
