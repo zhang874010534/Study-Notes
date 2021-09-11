@@ -934,14 +934,14 @@ function propertyDecorator(target:any,key:string,paramIndex:number):any{
   console.log(target,paramIndex)
 }
 class Test{
-  getInfo(@propertyDecorator name:string){
+  getInfo(@ name:string){
 
   }
 }
 let test=new Test()
 ```
 
-### [Utility Types(内置的工具type)](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+### [Utility Types(内置的工具type)](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype) 
 
 ```typescript
 interface IPerson {
@@ -955,3 +955,24 @@ type IOmit = Omit<IPerson,'name'>;//忽略
 let person3:IOmit = { age:124}
 ```
 
+#### ReturnType
+
+> 获取函数返回值的类型
+
+```tsx
+import { createStore } from "redux";
+import languageReducer from "./language/languageReducer";
+
+const store = createStore(languageReducer);
+
+export type RootState = ReturnType<typeof store.getState>
+
+```
+
+#### Parameters
+
+> 获取函数参数的类型
+
+#### ConstructorParameters
+
+>  获取构造函数的参数类型
