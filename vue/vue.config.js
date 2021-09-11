@@ -21,7 +21,15 @@ module.exports = {
         .use(require('compression-webpack-plugin'));
     });
     config.plugins.delete('prefetch');
-
+    
+    config.resolve.alias
+      .set('@', resolve('src'))
+      .set('vue$', 'vue/dist/vue.esm.js')
+      .set('assets', resolve('src/assets'))
+      .set('common', resolve('src/common'))
+      .set('components', resolve('src/components'))
+      .set('views', resolve('src/views'))
+    
     // https://github.com/vuejs/babel-plugin-transform-vue-jsx
     // https://github.com/ElemeFE/element/issues/14379
     config.module
