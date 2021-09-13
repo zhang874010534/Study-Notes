@@ -14,12 +14,12 @@
     //封装一个防抖的函数
     function debounce(fn, delay = 500) {
       let timer = null;
-      return () => {
+      return function () {
         if (timer) {
           clearTimeout(timer)
         }
         timer = setTimeout(() => {
-          fn();
+          fn.call(this, arguments);
           timer = null
         }, delay)
       }
