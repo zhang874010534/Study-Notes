@@ -1,0 +1,1 @@
+看store.ts combineReducers
