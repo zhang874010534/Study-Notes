@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .filter-wrapper {
+      display: flex;
+      align-items: center;
+      filter: contrast(20);
+    }
+    .circle1 {
+      width: 100px;
+      height: 100px;
+      background-color: black;
+      border-radius: 50%;
+      animation: circle1 5s infinite linear;
+      filter: blur(5px);
+    }
+    .circle2 {
+      width: 60px;
+      height: 60px;
+      background-color: blue;
+      border-radius: 50%;
+      margin-left: 10px;
+      animation: circle2 5s infinite linear;
+      filter: blur(5px);
+    }
+    @keyframes circle1 {
+      0% {
+        transform: translate(0);
+      }
+      50% {
+        transform: translate(100px);
+      }
+      100% {
+        transform: translate(0);
+      }
+    }
+    @keyframes circle2 {
+      0% {
+        transform: translate(0);
+      }
+      50% {
+        transform: translate(-100px);
+      }
+      100% {
+        transform: translate(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="filter-wrapper">
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+  </div>
+</body>
+</html>
