@@ -78,14 +78,34 @@
 ### 通用
 
 - [moment](https://momentjs.com/)  时间格式化工具
+
 - [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware)  Node.js proxying made simple
+
 - [lottie](https://airbnb.io/lottie/#/) json动效
+
 - crypto-js  加密函数库
+
 - `lodash` -- 工具库
+
 - [mammoth](https://github.com/mwilliamson/mammoth.js) [示例](https://jstool.gitlab.io/zh-cn/demo/preview-ms-word-docx-document-in-browser/) 在网页中渲染 word 
+
 - [normalize.css](https://www.npmjs.com/package/normalize.css) 让不同的浏览器在渲染网页元素的时候形式更统一
+
 - [anime.js](https://github.com/juliangarnier/anime/) 动画库
+
 - [mitt](https://github.com/developit/mitt) 事件的on off emit
+
+- [eruda](https://github.com/liriliri/eruda) 移动端调试工具
+
+  ```typescript
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/eruda"></script> 
+  <script>eruda.init();</script>
+  ```
+
+
+- [js-audio-recorder](https://github.com/2fps/recorder) h5录音
+
+  > h5录音调研 https://www.jianshu.com/p/2199939b629d
 
 ### CSS
 
