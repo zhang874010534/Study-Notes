@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /**
+    * @param {number[]} nums
+    * @return {number}
+    */   
+    // [10, 9, 2, 5, 3, 7, 101, 18]
+    var lengthOfLIS = function(nums) {
+      let len = nums.length
+      let dp = new Array(len).fill(1)
+      let max = 1
+      let arr = []
+      for (let i = 0; i < len; i++) {
+        for (let j = 0; j < i; j++) {
+          if(nums[j] < nums[i]) {
+
+            arr.push(nums[i])
+            dp[i] = Math.max(dp[j] + 1, dp[i])
+          } 
+        }
+        max = Math.max(dp[i], max)
+      }
+      return max
+    };
+  </script>
+</body>
+</html>
