@@ -28,3 +28,6 @@
 
 > 返回的是一个布尔值，来表示传入的节点是否为该节点的后代节点。
 
+#### [document.scrollingElement](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/scrollingElement)
+
+> 能自己识别文档的滚动元素， 其在PC端等于`document.documentElement`, 其在移动端等于`document.body`
