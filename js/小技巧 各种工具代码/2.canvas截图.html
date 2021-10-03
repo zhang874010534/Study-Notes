@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    video {
+      width: 300px;
+      height: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <video src="./11.mp4" controls id="video" crossorigin="anonymous"></video>
+  </div>
+  <script>
+    function captureVideo(videoEl) {
+      let canvasEl;
+      let dataUrl;
+      try {
+        const cps = window.getComputedStyle(videoEl);
+        console.log(cps)
+        const width = +cps.getPropertyValue("width").replace("px", "");
+        const height = +cps.getPropertyValue("height").replace("px", "");
+
+        canvasEl = document.createElement("canvas");
+        canvasEl.style.cssText = `position:fixed;left:-9999px`;
+        canvasEl.height = height;
+        canvasEl.width = width;
+
+        document.body.appendChild(canvasEl);
+
+        const ctx = canvasEl.getContext("2d");
+        ctx.drawImage(videoEl, 0, 0, width, height);
+        // const image = canvas.toDataURL("image/png");
+        dataUrl = canvasEl.toDataURL();
+        document.body.removeChild(canvasEl);
+        canvasEl = null;
+        return dataUrl;
+      } finally {
+        if (canvasEl) {
+          document.body.removeChild(canvasEl);
+        }
+        if (dataUrl) {
+          return dataUrl;
+        }
+      }
+    }
+    function download(url) {
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "视频.png";
+      a.click();
+    }
+
+
+    function show(url) {
+      const img = document.createElement('img')
+      img.src = url
+      document.body.appendChild(img)
+    }
+
+    setTimeout(() => {
+      let dom = document.querySelector('#video')
+      let url = captureVideo(dom)
+      show(url)
+    }, 2000);
+  </script>
+</body>
+
+</html>
