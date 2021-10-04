@@ -25,7 +25,10 @@
 - [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) 长列表组件 
 
   > 局部加载解决列表过长的问题
+  
 - [vue-clamp](https://github.com/Justineo/vue-clamp) 多行文本截断 
+
+- [vue-draggable](https://github.com/SortableJS/Vue.Draggable) [中文文档](https://www.itxst.com/vue-draggable/vnqb7fey.html) [demo](https://sortablejs.github.io/Vue.Draggable/#/transition-example-2)
 
 ##### 开发环境
 

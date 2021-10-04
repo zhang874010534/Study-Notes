@@ -14,6 +14,7 @@
 12. Regex Previewer   **实时预览正则表达式的效果**。
 13. cssrem 将px转化成rem
 14. 驼峰翻译助手
+15. 别名路径跳转
 
 ### Vue
 
