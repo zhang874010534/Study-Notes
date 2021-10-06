@@ -28,7 +28,7 @@
   
 - [vue-clamp](https://github.com/Justineo/vue-clamp) 多行文本截断 
 
-- [vue-draggable](https://github.com/SortableJS/Vue.Draggable) [中文文档](https://www.itxst.com/vue-draggable/vnqb7fey.html) [demo](https://sortablejs.github.io/Vue.Draggable/#/transition-example-2)
+- [vue-draggable](https://github.com/SortableJS/Vue.Draggable) [中文文档](https://www.itxst.com/vue-draggable/vnqb7fey.html) [demo](https://sortablejs.github.io/Vue.Draggable/#/transition-example-2)  [知乎参数中文版](https://juejin.cn/post/6844904150350692366)
 
 ##### 开发环境
 
