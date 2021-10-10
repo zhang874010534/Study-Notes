@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .btns {
+    text-align: center;
+  }
+
+  .btns button {
+    margin: 0 1em;
+    outline: none;
+    border: none;
+    background: #579ef8;
+    color: #fff;
+    padding: 7px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btns button:hover {
+    opacity: 0.8;
+  }
+
+  .container {
+    width: 500px;
+    overflow: hidden;
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .item {
+    width: 50px;
+    height: 50px;
+    box-sizing: border-box;
+    text-align: center;
+    background: #eef5fe;
+    border: 1px solid #ddebfd;
+    line-height: 50px;
+    margin: 5px;
+  }
+</style>
+
+<body>
+  <div class="btns">
+    <button id="sort">随机排序</button>
+  </div>
+  <div class="container">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+    <div class="item">5</div>
+    <div class="item">6</div>
+    <div class="item">7</div>
+    <div class="item">8</div>
+    <div class="item">9</div>
+    <div class="item">10</div>
+    <div class="item">11</div>
+    <div class="item">12</div>
+    <div class="item">13</div>
+    <div class="item">14</div>
+    <div class="item">15</div>
+    <div class="item">16</div>
+    <div class="item">17</div>
+    <div class="item">18</div>
+    <div class="item">19</div>
+    <div class="item">20</div>
+    <div class="item">21</div>
+    <div class="item">22</div>
+    <div class="item">23</div>
+    <div class="item">24</div>
+    <div class="item">25</div>
+    <div class="item">26</div>
+    <div class="item">27</div>
+    <div class="item">28</div>
+    <div class="item">29</div>
+    <div class="item">30</div>
+    <div class="item">31</div>
+    <div class="item">32</div>
+    <div class="item">33</div>
+    <div class="item">34</div>
+    <div class="item">35</div>
+    <div class="item">36</div>
+    <div class="item">37</div>
+    <div class="item">38</div>
+    <div class="item">39</div>
+    <div class="item">40</div>
+    <div class="item">41</div>
+    <div class="item">42</div>
+    <div class="item">43</div>
+    <div class="item">44</div>
+    <div class="item">45</div>
+    <div class="item">46</div>
+    <div class="item">47</div>
+    <div class="item">48</div>
+    <div class="item">49</div>
+    <div class="item">50</div>
+  </div>
+
+  <script>
+    const container = document.querySelector('.container')
+    function change() {
+      const childrens = [...container.children]
+      for (let i = 0, l = childrens.length; i < l; i++) {
+        const children = childrens[i]
+        const j = Math.floor(Math.random() * l)
+        if (i !== j) {
+          // 获取当前dom的下一个元素
+          const inextDom = children.nextElementSibling
+          // 把i插入j之前
+          container.insertBefore(children, childrens[j])
+          // 把下标j的元素插入到i元素之前
+          container.insertBefore(childrens[j], inextDom)
+        }
+      }
+    }
+    sort.onclick = () => {
+      record(container)
+      change()
+      move(container)
+    }
+
+    function record(container) {
+      for (let i = 0, len = container.children.length; i < len; i++) {
+        const dom = container.children[i]
+        const rect = dom.getBoundingClientRect()
+        dom.startX = rect.left
+        dom.startY = rect.top
+      }
+    }
+
+    function move(container) {
+      for (let i = 0, len = container.children.length; i < len; i++) {
+        const dom = container.children[i]
+        const rect = dom.getBoundingClientRect()
+        const curX = rect.left, curY = rect.top
+        dom.animate([
+          { transform: `translate(${dom.startX - curX}px, ${dom.startY - curY}px)` },
+          { transform: `translate(0px, 0px)` }
+        ], { duration: 600 })
+      }
+    }
+  </script>
+</body>
+
+</html>
