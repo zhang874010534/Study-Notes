@@ -32,7 +32,7 @@ window.setupWebViewJavascriptBridge = function (callback) {
     document.addEventListener(
       'WebViewJavascriptBridgeReady',
       function () {
-        callback(.WebViewJavascriptBridge);
+        callback(window.WebViewJavascriptBridge);
       },
       false
     );
