@@ -78,6 +78,7 @@ export function download({url, name = '', success, next, fail, complete}) {
     
 }
 
+// 下载文件
 export function downloadFile({file, name = ''}) {
     const eleLink = document.createElement('a')
     eleLink.setAttribute('href', file)
@@ -90,6 +91,7 @@ export function downloadFile({file, name = ''}) {
     document.body.removeChild(eleLink)
 }
 
+// 获取日期范围
 export function getDayRange(date, dayInterval) {
     let tmp = [];
   
@@ -104,6 +106,7 @@ export function getDayRange(date, dayInterval) {
     return tmp;
 }
   
+// 复制文字
 export function copyText(text){
     let dom = document.createElement('input')
     document.body.appendChild(dom)
@@ -113,6 +116,7 @@ export function copyText(text){
     document.body.removeChild(dom)
 }
 
+// 十六进制转RGBA或者RGB
 export function colorRgb(sColor,opacity){
     sColor = sColor.toLowerCase();
     //十六进制颜色值的正则表达式
@@ -153,4 +157,21 @@ export function handleFileChange(e: Event){
             console.log(res)
         })
     }
+}
+// 版本号判断
+export const compareVersionEle = (currVersion, targetVerison) => {
+  if (!currVersion || !targetVerison) return false;
+  const curr = currVersion.split('.');
+  const target = targetVerison.split('.');
+  for (let i = 0; i < curr.length; i++) {
+      if (parseInt(curr[i]) > parseInt(target[i])) {
+          return true
+      }
+      if (parseInt(curr[i]) < parseInt(target[i])) {
+          return false
+      }
+      //相等继续
+      //parseInt(curr[i]) == parseInt(target[i])  continue
+  }
+  return true
 }
