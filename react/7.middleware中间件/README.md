@@ -1,4 +1,4 @@
-### 去看store.ts 和middlewares/actionLog.ts
+### 去看redux/store.ts 和redux/middlewares/actionLog.ts
 
 ```typescript
  // applyMiddleware 简单源码
@@ -8,4 +8,8 @@
  }
 
 ```
+
+### 异步方法giveMeDataCreator
+
+在 src\redux\recommendReducer\recommendAction.ts
 
