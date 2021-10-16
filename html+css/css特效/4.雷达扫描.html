@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0; 
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, silver, black);
+    }
+    .radar {
+      width: calc(8em + 1.5em);
+      height: calc(8em + 1.5em);
+      background: 
+        linear-gradient(
+          transparent 49.75%,
+          darkgreen 49.75%,
+          darkgreen 50.25%,
+          transparent 50.25%
+        ),
+        linear-gradient(
+          90deg,
+          transparent 49.75%,
+          darkgreen 49.75%,
+          darkgreen 50.25%,
+          transparent 50.25%
+        ),
+        repeating-radial-gradient(
+          transparent 0,
+          transparent 0.95em,
+          darkgreen 0.95em,
+          darkgreen 1em
+        ),
+        linear-gradient(black, black);
+      font-size: 32px;
+      position: relative;
+      border-radius: 50%;
+      /* overflow: hidden; */
+    }
+    .radar::before {
+      content: '';
+      position: absolute;
+      width: calc(8em / 2);
+      height: calc(8em / 2);
+      left: calc(1.5em / 2);
+      top: calc(1.5em / 2); 
+      /* border: 1px solid white; */
+      background: linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 192, 0, 1) 
+      );
+      border-radius: 100% 0 0 0;
+      transform-origin: 100% 100%;
+      animation: rotate 5s linear infinite;
+    }
+    @keyframes rotate {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="radar"></div>
+</body>
+</html>

@@ -61,9 +61,13 @@
 
 > 定义该元素的背景图片，以及背景色如何混合。
 
+##### [background : repeating-radial-gradient](https://developer.mozilla.org/zh-CN/docs/Web/CSS/gradient/repeating-radial-gradient())
+
+> 重复的径向渐变
+
 ##### [mix-blend-mode](https://developer.mozilla.org/zh-CN/docs/Web/CSS/mix-blend-mode)
 
-> 属性描述了元素的内容应该与元素的直系父元素的内容和元素的背景如何混合t
+> 属性描述了元素的内容应该与元素的直系父元素的内容和元素的背景如何混合
 
 #### 单行文本省略
 
