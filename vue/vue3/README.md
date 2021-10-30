@@ -1,0 +1,30 @@
+### Vue3 小技巧
+
+#### props  required:true
+
+```js
+如果直接传内部会进行ts的类型判断
+https://github.com/vuejs/vue-next/blob/master/packages/runtime-core/src/apiDefineComponent.ts
+the Readonly constraint allows TS to treat the type of { required: true }
+as constant instead of boolean.
+
+但是提出来后,没法判断,所以要手动的告诉ts这个就是readonly
+const Props = {
+  msg: {
+    type: String,
+    required: true
+  },
+} as const
+
+export default defineComponent({
+  name: "HelloWorld",
+  props: Props,
+  mounted() {
+    // 这里如果不加as const required:true 会无效 提示 string || undefined
+    this.msg
+  },
+});
+```
+
+
+
