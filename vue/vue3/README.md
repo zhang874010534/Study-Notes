@@ -1,4 +1,4 @@
-### Vue3 小技巧
+### Vue3学习过程中遇到的问题
 
 #### props  required:true
 
@@ -26,5 +26,71 @@ export default defineComponent({
 });
 ```
 
+#### package.json
 
+```js
+{
+    "devDependencies": {
+        @vue/babel-plugin-jsx: '^1.1.1'
+    }
+}
+```
+
+
+
+#### .prettierrc
+
+```js
+{
+  "semi": false,
+  "singleQuote": true
+}
+```
+
+#### tsconfig.json
+
+```js
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": [
+      "webpack-env",
+      "jest",
+      "node"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+
+```
 
