@@ -10,7 +10,18 @@
   - 有必要，因为人工的去处理不同的版本，做相应备份会很麻烦。
   - Git是linux之父当年为了维护linux---linus之前也是手动维护合并把文件发给Linus
   - linus自己写了一个版本管理的工具(Git)
-
+## commit 规范与提交验证
+  - build：表示构建，发布版本可用这个
+  - ci：更新 CI/CD 等自动化配置
+  - chore：杂项，其他更改
+  - docs：更新文档
+  - feat：常用，表示新增功能
+  - fix：常用：表示修复 bug
+  - perf：性能优化
+  - refactor：重构
+  - revert：代码回滚
+  - style：样式更改
+  - test：单元测试更改
 ## Git安装
 
 ## 初始化Git仓储/(仓库)
