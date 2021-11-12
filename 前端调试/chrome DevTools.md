@@ -18,3 +18,6 @@ Elements => accessibility => Show source order
 
 HTML 文档中内容的顺序对于搜索引擎优化和提升可访问性至关重要。新的 CSS 特性允许开发人员创建页面内容，这些新创建的内容，在屏幕上的顺序和原来 HTML 文档中的顺序大不相同。这会导致很大的可访问性问题，因为使用屏幕阅读器的用户可能获得和正常用户不同的内容，这是最可能使人感到困惑的用户体验。
 
+#### chrome收藏夹 outline
+javascript: (function() { var elements = document.body.getElementsByTagName('*'); var items = []; for (var i = 0; i < elements.length; i++) { if (elements[i].innerHTML.indexOf('html * { outline: 1px solid red }') != -1) { items.push(elements[i]); } } if (items.length > 0) { for (var i = 0; i < items.length; i++) { items[i].innerHTML = ''; } } else { document.body.innerHTML += '<style>html * { outline: 1px solid red }</style>'; } })();
+
