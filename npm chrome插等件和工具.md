@@ -30,6 +30,8 @@
 
 - [vue-draggable](https://github.com/SortableJS/Vue.Draggable) [中文文档](https://www.itxst.com/vue-draggable/vnqb7fey.html) [demo](https://sortablejs.github.io/Vue.Draggable/#/transition-example-2)  [知乎参数中文版](https://juejin.cn/post/6844904150350692366)
 
+- [vue-seamless-scroll](https://chenxuan0000.github.io/vue-seamless-scroll/) vue无缝滚动
+
 ##### 开发环境
 
 - vue-cli-plugin-element  用vue ui 安装     elementui的按需导入直接在一个文件夹里操作不用自己操作webpack
@@ -117,7 +119,7 @@
 
 - [whimsical](https://whimsical.com/the-beginning-86qy7io4XjdZptgDBuaCzx)  前端流程图
 
-- 
+- https://madewith.cn/vuejs  vue和react 一堆实用案例
 
 ### CSS
 
@@ -136,4 +138,3 @@
 - snipaste 截图工具
 - [spy-debugger](https://github.com/wuchangming/spy-debugger) 一站式页面调试、抓包工具
 - [Mobile debug](https://www.mobiledebug.com/) 自动安装证书 抓电脑里打开的东西的数据
-  
