@@ -108,6 +108,14 @@
   ```typescript
   <script type="text/javascript" src="//cdn.jsdelivr.net/npm/eruda"></script> 
   <script>eruda.init();</script>
+  <script>
+    if(window.location.hostname == 'github.com') {
+      eruda.init();
+    }
+  </script>
+  <% if (process.env.NODE_ENV === 'development') { %>
+      <script>eruda.init();</script>
+    <% } %>
   ```
 
 
