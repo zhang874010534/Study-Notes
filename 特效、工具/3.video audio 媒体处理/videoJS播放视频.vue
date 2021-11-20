@@ -4,6 +4,7 @@
   </div>
 </template>
 <script>
+// https://segmentfault.com/a/1190000038413078
 import Videojs from "video.js";
 import "video.js/dist/video-js.css"; // 引入video.js的css
 export default {
