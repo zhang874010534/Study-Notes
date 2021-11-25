@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+  </style>
+</head>
+
+<body>
+  <input value="1234" onclick="a()"></input>
+  <script>
+
+    function a(e) {
+      let dom = document.createElement('input')
+      document.body.appendChild(dom)
+      dom.value = '123456'
+      dom.select()
+      document.execCommand('Copy')
+      document.body.removeChild(dom)
+    }
+  </script>
+
+
+
+</body>
+
+</html>

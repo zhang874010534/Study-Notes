@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button onclick="copy()">复制</button>
+  <button onclick="paste()">粘贴</button>
+  <script>
+    function copy() {
+      navigator.clipboard.writeText('复制的内容').then((e) => {
+        console.log(e)
+      })
+    }
+    function paste() {
+      navigator.clipboard.readText().then((e) => {
+        console.log(e)
+      })
+    }
+  </script>
+</body>
+</html>
