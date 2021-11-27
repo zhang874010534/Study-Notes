@@ -59,6 +59,17 @@ export default {
     },
 
     mounted() {
+        // let canvasDom
+        // for (const iterator of this.$el.children) {
+        //     if (iterator._prevClass == 'canvas-contain') {
+        //         canvasDom = iterator
+        //     }
+        // }
+        // this.myChart = this.echarts.init(canvasDom)
+        // window.addEventListener('resize', () => {
+        //     // 让我们的图表调用 resize这个方法
+        //     this.myChart.resize()
+        // })
         this.myChart = echarts.init(this.$el);
         this.setMyChart()
     },
@@ -148,7 +159,7 @@ export default {
                 animationDuration: 0,
                 animationDurationUpdate: 0,
             }
-
+            // chart.setOption(option, notMerge, lazyUpdate);
             this.myChart.setOption(option, false, true)
             this.myChart.setOption(this.initOption, false, true)
             this.myChart.setOption({
