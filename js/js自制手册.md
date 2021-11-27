@@ -36,3 +36,16 @@
 
 > 滚动元素的父容器，可以用来滚动到顶部
 
+#### [Dom.scrollTo](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/scrollTo)
+
+> 滚动
+
+```js
+// 平滑滚动
+window.scrollTo({
+    top: 1000,
+    left: 1000,
+    behavior: "smooth"
+});
+```
+
