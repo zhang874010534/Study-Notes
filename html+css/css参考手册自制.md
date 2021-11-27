@@ -31,16 +31,6 @@
 
 > 定义了一个可以是非矩形的形状，相邻的内联内容应围绕该形状进行包装
 
-##### [object-fit](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit)
-
-> 指定[可替换元素](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Replaced_element)的内容应该如何适应到其使用的高度和宽度确定的框
-
-1. ##### video默认自带阴影可以用object-fit:cover 来让内容填满video框
-
-##### [object-position](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-position)
-
-> 规定了[可替换元素](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Replaced_element)的内容在其内容框中的位置
-
 **[steps ](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function#steps())** [参考2](https://segmentfault.com/a/1190000007042048)   [animation steps.html](..\特效\animation steps.html)
 
 > steps()是一个timing function，允许我们将动画或者过渡分割成段，而不是从一种状态持续到另一种状态的过渡。这个函数有两个参数——第一个参数是一个正值，指定我们希望动画分割的段数
@@ -113,3 +103,42 @@
 >
 > 设定行中字符的方向
 
+#### [will-change](https://developer.mozilla.org/zh-CN/docs/Web/CSS/will-change)
+
+> 通知浏览器哪些元素和属性将会改变
+>
+> GPU 硬件加速是需要新建图层的，而把该元素移动到新图层是个耗时操作，界面可能会闪一下，所以最好提前做。
+>
+> will-change 就是提前告诉浏览器在一开始就把元素放到新的图层，方便后面用 GPU 渲染的时候，不需要做图层的新建
+>
+> 如果你的页面在性能方面没什么问题，则不要添加 `will-change` 属性来榨取一丁点的速度
+
+```css
+will-change: auto
+will-change: scroll-position
+will-change: contents
+will-change: transform
+will-change: opacity
+will-change: left, top
+
+will-change: unset
+will-change: initial
+will-change: inherit
+```
+
+### Image
+
+#### [object-fit](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit)
+
+> 指定[可替换元素](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Replaced_element)的内容应该如何适应到其使用的高度和宽度确定的框
+
+1. ##### video默认自带阴影可以用object-fit:cover 来让内容填满video框
+
+#### [object-position](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-position)
+
+> 规定了[可替换元素](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Replaced_element)的内容在其内容框中的位置
+
+#### 优化点
+
+- 始终在图像上设置宽度和高度属性：浏览器会在默认情况下会分配框并保留空间，后续图片资源加载完成后不需要回流。
+  避免多次修改：例如我们需要修改一个 DOM 的 height/width/margin 三个属性，这时候我们可以通过 cssText 去修改，而不是通过 dom.style.height 去修改。
