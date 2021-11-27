@@ -137,6 +137,18 @@
 
 - nodemon 自动重启
 
+- [rimraf](https://www.npmjs.com/package/rimraf) 删除文件
+
+  ```js
+    "scripts": {
+      "build:core": "vue-cli-service build --target lib --name index --no-clean lib/index.tsx", 
+      "build:theme": "vue-cli-service build --target lib --name theme-default/index --no-clean lib/theme-default/index.tsx", 
+      "build": "rimraf dist && npm run build:core && npm run build:theme",
+    }, 
+  ```
+
+  
+
 ### Chrome
 
 - [page-web-skeleton](https://juejin.cn/post/6937939181356187662#comment) 生成骨架屏
