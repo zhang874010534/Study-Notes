@@ -1,20 +1,42 @@
 ### 通用
 
 1. Chinese(Simplified) 中文简体
-3. Image preview 导入图片的时候鼠标放上去可以看见图片 来确定路径是否正确
-4. Live Server 在浏览器中打开实时更新
-5. One Dark pro 主题
-6. Setting Sync 自动同步到github
-7. vscode-icons 
-8. Path Intellisense 路劲自动补全
-9. Highlight Matching Tag    高亮对应的 HTML 标签 以及 标识出对应的各种括号。
-10. Auto Rename Tag   自动修改匹配的 HTML 标签。
+
+2. Image preview 导入图片的时候鼠标放上去可以看见图片 来确定路径是否正确
+
+3. Live Server 在浏览器中打开实时更新
+
+4. One Dark pro 主题
+
+5. Setting Sync 自动同步到github
+
+6. vscode-icons 
+
+7. Path Intellisense 路劲自动补全
+
+8. Highlight Matching Tag    高亮对应的 HTML 标签 以及 标识出对应的各种括号。
+
+9. Auto Rename Tag   自动修改匹配的 HTML 标签。
+
 10. Prettier - Code formatter  格式化工具
+
 11. GitLens   **详细的 Git 提交日志**。
+
 12. Regex Previewer   **实时预览正则表达式的效果**。
+
 13. cssrem 将px转化成rem
+
 14. 驼峰翻译助手
+
 15. 别名路径跳转
+
+    ```js
+    "alias-skip.mappings": {
+        "@": "/src"
+    },
+    ```
+
+16. 1
 
 ### Vue
 
