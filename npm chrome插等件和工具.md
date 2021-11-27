@@ -129,6 +129,8 @@
 
 - https://madewith.cn/vuejs  vue和react 一堆实用案例
 
+- [compressor.](https://github.com/fengyuanchen/compressorjs) 图片压缩 方向修正（还没用过）
+
 ### CSS
 
 - https://www.minimamente.com/css-infinite-photo-carousel/ 图片无限斜着滚动
