@@ -142,3 +142,63 @@ will-change: inherit
 
 - 始终在图像上设置宽度和高度属性：浏览器会在默认情况下会分配框并保留空间，后续图片资源加载完成后不需要回流。
   避免多次修改：例如我们需要修改一个 DOM 的 height/width/margin 三个属性，这时候我们可以通过 cssText 去修改，而不是通过 dom.style.height 去修改。
+
+### [Scroll-snap](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Scroll_Snap)
+
+> CSS 的模块，它引入滚动捕捉位置，它强制滚动位置，即 滚动容器的 滚动端口 在滚动操作完成后可能结束的滚动位置。
+
+#### [scroll-snap-type](https://developer.mozilla.org/zh-CN/docs/Web/CSS/scroll-snap-type)
+
+> 定义在滚动容器中的一个临时点（snap point）如何被严格的执行
+>
+> scroll-snap-type: y mandatory;
+>
+> scroll-snap-type: y proximity; 如果内容过长 mandatory 稍微往下一滑就自动到下一屏了 会导致内容看不完全就马上被划过了 所以要用这个
+
+####  [scroll-snap-align](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-align)
+
+> 设置对齐方式
+>
+> scroll-snap-align: start 下一屏的顶部贴合 父容器的顶部
+
+#### [scroll-padding](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding)
+
+> sets scroll padding on all sides of an element at once
+>
+> 就是加个padding 滚动就都会留出这么一个padding的距离
+
+#### 使用
+
+```html
+<head>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    main {
+      scroll-snap-type: y mandatory;
+      height: 100vh;
+      overflow: scroll;
+    }
+    section {
+      width: 100vw;
+      height: 100vh;
+      background-color: palegreen;
+      scroll-snap-align: end;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>1</section>
+    <section>2</section>
+    <section>3</section>
+    <section>4</section>
+  </main>
+</body>
+```
+
