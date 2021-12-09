@@ -1,0 +1,8 @@
+ctrl+pgup 浏览器选项卡上一个
+shift+enter 在新的浏览器打开并搜索
+ctrl+tab 浏览器选项卡切换
+ctrl+t 浏览器创建新的选项卡
+ctrl k 或者 ctrl e 用google 搜索
+ctrl h 历史记录
+ctrl j 下载记录
+ctrl l 在地址栏进行搜索
