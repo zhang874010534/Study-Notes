@@ -143,7 +143,7 @@ will-change: inherit
 - 始终在图像上设置宽度和高度属性：浏览器会在默认情况下会分配框并保留空间，后续图片资源加载完成后不需要回流。
   避免多次修改：例如我们需要修改一个 DOM 的 height/width/margin 三个属性，这时候我们可以通过 cssText 去修改，而不是通过 dom.style.height 去修改。
 
-### [Scroll-snap](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Scroll_Snap)
+### [Scroll-snap](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Scroll_Snap) 可实现整屏滚动
 
 > CSS 的模块，它引入滚动捕捉位置，它强制滚动位置，即 滚动容器的 滚动端口 在滚动操作完成后可能结束的滚动位置。
 
@@ -200,5 +200,11 @@ will-change: inherit
     <section>4</section>
   </main>
 </body>
+```
+
+### css引入图片
+
+```css
+background: url('~@/assets/img/xxx.png')
 ```
 

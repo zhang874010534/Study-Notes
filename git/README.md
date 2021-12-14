@@ -183,12 +183,6 @@ $ git revert v1.0.0
 
 - git   checkout    -b   dev(本地分支)    origin/dev(远程分支)
 
-### GitHub 
-
-- https://github.com
-- 不是git,只是一个网站
-- 只不过这个网站提供了允许别通过git上传代码的功能
-
 ### 提交代码到github(当作git服务器来用)
 
 - `git push [地址] master`
@@ -205,3 +199,7 @@ $ git revert v1.0.0
 - git clone https://github.com.cnpmjs.org/xxx.git
 
  + 会得到远程仓储相同的数据,如果多次执行会覆盖本地内容。
+
+## 清理本地无用分支 远端不存在本地还是显示的
+
+git remote prune origin
