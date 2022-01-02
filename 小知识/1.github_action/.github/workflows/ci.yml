@@ -1,0 +1,36 @@
+name: push-action
+
+# on: [push]
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  build-job: 
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: install and build
+      run: |
+        npm install
+        npm run build
+    - name: Build and Deploy
+      # 构建发布 Github pages
+      uses: JamesIves/github-pages-deploy-action@4.1.7
+      with:
+        ACCESS_TOEKN: ${{secrets.ACTION_TOKEN}}
+        
+        # 在部署前要checkout的基本分支，默认是master
+        # BASE_BRANCH: master # The branch the action should deploy from.
+        
+        # 指定部署的分支，默认是 gh-pages 分支
+        BRANCH: gh-pages # The branch the action should deploy to.
+        
+        # Vue CLI默认打包到 dist 目录
+        FOLDER: dist # The folder the action should deploy.
+        
+        # 在向 BRANCH 分支推送代码前，可以指定构建脚本
+        # BUILD_SCRIPT: npm install && npm run build # The build script the action 
+      
