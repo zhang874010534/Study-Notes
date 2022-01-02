@@ -78,6 +78,8 @@ wx.startRecord({
 
 > 一定要让后端缓存access_token和jsapi_ticket
 
+> 调接口的ip要加到微信公众号ip白名单 自己调用就是自己的ip 服务器调用就是服务器的ip
+
 ### [获取Access token](https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html)
 
 **接口调用请求说明**
