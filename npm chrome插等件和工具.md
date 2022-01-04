@@ -162,3 +162,64 @@
 - [Mobile debug](https://www.mobiledebug.com/) 自动安装证书 抓电脑里打开的东西的数据
 - [shield.io](https://shields.io/) ![followers](https://img.shields.io/github/followers/zhang874010534?style=social)
 
+### Webpack
+
+- webpack-bundle-analyzer
+
+  https://blog.csdn.net/ypeusksk/article/details/88192385
+
+  webpack.config.js：
+
+  ```js
+  
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+  module.exports = {
+      plugins:[ new BundleAnalyzerPlugin() ]
+  }
+  
+  
+  ```
+
+  vue.config.js
+
+  ```js
+  package.json
+   "analyzer": "use_analyzer=true npm run serve"
+  
+  module.exports = {
+    chainWebpack: config => {
+      if (process.env.use_analyzer) {
+        config
+          .plugin('webpack-bundle-analyzer')
+          .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+      }
+    }
+  }
+  ```
+
+
+### package.json
+
+[npm script使用指南](https://www.ruanyifeng.com/blog/2016/10/npm_scripts.html)
+
+```js
+
+{
+  "name": "foo", 
+  "version": "1.0.0",
+  "private": false,
+  "scripts": {
+    "build:core": "vue-cli-service build --target lib --name index",
+    "build": "rimraf dist && npm run build:core",
+    "prepublishOnly": "npm run build" // publish之前
+  },
+  "publishConfig": { // 提交源
+      "registry": "https://registry.npmjs.org"
+  },
+  "files": [ // 发布的文件
+      "dist"
+  ],
+  "main": "dist/index.common.js" ,//import的那个文件
+}
+```
+
