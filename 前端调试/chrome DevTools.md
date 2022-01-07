@@ -21,3 +21,5 @@ HTML 文档中内容的顺序对于搜索引擎优化和提升可访问性至关
 #### chrome收藏夹 outline
 javascript: (function() { var elements = document.body.getElementsByTagName('*'); var items = []; for (var i = 0; i < elements.length; i++) { if (elements[i].innerHTML.indexOf('html * { outline: 1px solid red }') != -1) { items.push(elements[i]); } } if (items.length > 0) { for (var i = 0; i < items.length; i++) { items[i].innerHTML = ''; } } else { document.body.innerHTML += '<style>html * { outline: 1px solid red }</style>'; } })();
 
+#### chrome控制台输入 自由编辑页面内容
+document.documentElement.contentEditable = true
