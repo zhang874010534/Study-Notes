@@ -108,7 +108,7 @@
   ```typescript
   <script type="text/javascript" src="//cdn.jsdelivr.net/npm/eruda"></script> 
   <script>eruda.init();</script>
-  <script>
+  <script
     if(window.location.hostname == 'github.com') {
       eruda.init();
     }
@@ -130,6 +130,14 @@
 - https://madewith.cn/vuejs  vue和react 一堆实用案例
 
 - [compressor.](https://github.com/fengyuanchen/compressorjs) 图片压缩 方向修正（还没用过）
+
+- [grade](https://github.com/benhowdle89/grade) 一个基于图像中的前2种主要颜色生成互补渐变背景的库
+
+- [Sortable](https://github.com/SortableJS/Sortable) 功能强大的JavaScript 拖拽库
+
+- [Scroll Reveal](https://scrollrevealjs.org/) 零依赖，为 web 和移动浏览器提供了简单的滚动动画，以动画的方式显示滚动中的内容
+
+- [GreenSock JS](https://greensock.com/) 一个JavaScript动画库，用于创建高性能、零依赖、跨浏览器动画，已在超过400万个网站上使用, 并且可以在React、Vue、Angular项目中使用
 
 ### CSS
 
