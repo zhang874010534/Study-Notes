@@ -65,7 +65,6 @@ function demo():never{//函数永远不会执行完
 ```
 
 ```typescript
-function demo({ first }: { first: number }): number {//解构赋值
   return first;
 }
 demo({ first: 1 });
@@ -84,9 +83,15 @@ interface SayHi {
 }
 
 let say: SayHi = (word) => {
-  return word;
+  return word
 };
 
+interface Say {
+    name: string
+}
+const say = ({name}:Say):void => {
+    
+};
 //对象里的函数
 interface Person {
   say(word:string): string; //一个方法 需要返回string类型
