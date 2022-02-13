@@ -208,3 +208,22 @@ will-change: inherit
 background: url('~@/assets/img/xxx.png')
 ```
 
+### 0.5px问题
+
+第一种方法
+
+```css
+ &::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top:0;
+    left:0;
+    transform-origin: 0 0;
+    transform: scale(0.5, 0.5);
+    border: 2px solid #8D8E9A;
+    border-radius: 16px;
+}
+```
+
