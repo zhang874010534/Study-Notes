@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            background: #091b2d;
+        }
+
+        div {
+            margin: auto;
+            position: relative;
+            width: 390px;
+            height: 20px;
+            overflow: hidden;
+        }
+
+        div::before,
+        div::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        div::before {
+            background: repeating-linear-gradient(45deg, #112b52, #112b52 20px, transparent 20px, transparent 30px);
+        }
+
+        div::after {
+            bottom: -300%;
+            background: repeating-linear-gradient(45deg, #6fa2dd, #4c8dfe, #6fa2dd 20px, transparent 20px, transparent 30px);
+            /* 通过这里的 55% 控制进度 */
+            background-size: 55% 100%;
+            background-repeat: no-repeat;
+            animation: change 2s infinite linear;
+        }
+
+        @keyframes change {
+            100% {
+                transform: translate(0, -42px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+</body>
+
+</html>
