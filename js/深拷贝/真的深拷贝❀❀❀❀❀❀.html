@@ -12,7 +12,7 @@
 
 <body>
   <script>
-    function deepClone(obj) {
+    function deepClone(obj = {}) {
       if (typeof obj !== "object" || obj === null) return obj;
       if (obj instanceof RegExp) {
         return new RegExp(obj)
