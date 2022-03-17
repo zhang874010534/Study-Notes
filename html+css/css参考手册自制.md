@@ -224,6 +224,19 @@ background: url('~@/assets/img/xxx.png')
     transform: scale(0.5, 0.5);
     border: 2px solid #8D8E9A;
     border-radius: 16px;
+    pointer-events: none;
+}
+&::after {
+   content: '';
+   position: absolute;
+   width: 200%;
+   height: 200%;
+   top: 0;
+   left: 0;
+   transform-origin: 0 0;
+   transform: scale(0.5, 0.5);
+   border-bottom: 2px solid #EDEDF0;
+   pointer-events: none;
 }
 ```
 
