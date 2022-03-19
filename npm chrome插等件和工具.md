@@ -83,6 +83,10 @@
 
 - [react-i18next](https://react.i18next.com/guides/quick-start) react的i18n
 
+- [react-photo-view](https://github.com/MinJieLiu/react-photo-view) react图片预览
+
+- [react-reveal](https://github.com/rnosov/react-reveal) 适一个用于 React 的高性能动画库。它占用空间小，专门为 ES6 中的 React 编写。可用于创建各种炫酷的滚动效果显示。
+
 ### 通用
 
 - [moment](https://momentjs.com/)  时间格式化工具
