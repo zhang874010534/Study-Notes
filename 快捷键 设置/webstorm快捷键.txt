@@ -19,3 +19,9 @@ css里 bg+    然后tab
 ctrl+shift+back(返回键) 可以回到上一次编辑的地方
 alt+→ 切换选项卡 切换上一个选项卡（ctrl+Tab）
 ctrl+alt+方向键 可以让屏幕竖过来
+ctrl shift M 移动光标到闭合的括号
+ctrl shift v 剪切板列表
+ctrl e最近文件
+shift shift 全局搜索
+ctrl shift n 文件搜索
+alt F7 可以查看当前变量、函数、类的使用、读取、导入的地方，在阅读别人的代码理清逻辑关系的时候非常好用
