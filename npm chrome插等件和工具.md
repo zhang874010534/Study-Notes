@@ -145,6 +145,15 @@
 
 - [GreenSock JS](https://greensock.com/) 一个JavaScript动画库，用于创建高性能、零依赖、跨浏览器动画，已在超过400万个网站上使用, 并且可以在React、Vue、Angular项目中使用
 
+- [mathjs](https://github.com/josdejong/mathjs) 精度问题  [掘金文章](https://juejin.cn/post/6935722510491222029)
+
+  ```js
+    const ans = math.add(0.1, 0.2)     //  0.30000000000000004
+    console.log(math.format(ans, {precision: 14})) // '0.3'
+  ```
+
+  
+
 ### CSS
 
 - https://www.minimamente.com/css-infinite-photo-carousel/ 图片无限斜着滚动
