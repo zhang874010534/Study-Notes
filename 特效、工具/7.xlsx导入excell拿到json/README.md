@@ -108,9 +108,9 @@ function readWorkbookFromRemoteFile(url, callback) {
 
 每一个单元格是一个对象（`Cell Object`），主要有`t`、`v`、`r`、`h`、`w`等字段（详见[这里](https://github.com/SheetJS/js-xlsx#cell-object)）：
 
-- t：表示内容类型，`s`表示string类型，`n`表示number类型，`b`表示boolean类型，`d`表示date类型，等等
-- v：表示原始值；
-- f：表示公式，如`B2+B3`；
+- t：type表示内容类型，`s`表示string类型，`n`表示number类型，`b`表示boolean类型，`d`表示date类型，等等
+- v：value表示原始值；
+- f：function表示公式，如`B2+B3`；
 - h：HTML内容
 - w：格式化后的内容
 - r：富文本内容`rich text`
