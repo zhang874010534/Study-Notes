@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+  <script>eruda.init();</script>
+  <style>
+      * {
+          padding: 0;
+          margin: 0;
+      }
+
+      img {
+          /*width: 300px;*/
+          /*object-fit: contain;*/
+          touch-action: none;
+      }
+  </style>
+</head>
+<body>
+<img id="image" alt="" src="">
+<script>
+  const image = document.querySelector('#image')
+  let result, // 图片缩放宽高
+    x = 0, // x轴偏移量
+    y = 0, // y轴偏移量
+    scale = 1, // 缩放比例
+    maxScale,
+    minScale = 0.5;
+  image.addEventListener('load', () => {
+    result = getImgSize(image.naturalWidth, image.naturalHeight, window.innerWidth, window.innerHeight);
+    maxScale = Math.max(Math.round(image.naturalWidth / result.width), 3);
+    // 图片宽高
+    image.style.width = result.width + 'px';
+    image.style.height = result.height + 'px';
+  })
+  // 图片赋值需放在load回调之后，因为图片缓存后读取很快，有可能不执行load回调
+  image.src = 'https://github.com/zhang874010534/tuchuan/blob/main/effectAndTool/landscape.png?raw=true';
+
+  // 全局变量
+  let isPointerdown = false, // 按下标识
+    pointers = [], // 触摸点数组
+    point1 = {x: 0, y: 0}, // 第一个点坐标
+    point2 = {x: 0, y: 0}, // 第二个点坐标
+    diff = {x: 0, y: 0}, // 相对于上一次pointermove移动差值
+    lastPointermove = {x: 0, y: 0}, // 用于计算diff
+    lastPoint1 = {x: 0, y: 0}, // 上一次第一个触摸点坐标
+    lastPoint2 = {x: 0, y: 0}, // 上一次第二个触摸点坐标
+    lastCenter; // 上一次中心点坐标
+  image.addEventListener('pointerdown', function (e) {
+    console.log(e, 'down')
+    pointers.push(e)
+    point1 = {
+      x: pointers[0].clientX,
+      y: pointers[0].clientY
+    }
+    if (pointers.length === 1) {
+      isPointerdown = true
+      image.setPointerCapture(e.pointerId)
+      lastPointermove = {x: pointers[0].clientX, y: pointers[0].clientY};
+    } else if (pointers.length === 2) {
+      point2 = {x: pointers[1].clientX, y: pointers[1].clientY};
+      lastPoint2 = {x: pointers[1].clientX, y: pointers[1].clientY};
+      lastCenter = getCenter(point1, point2);
+    }
+    lastPoint1 = {x: pointers[0].clientX, y: pointers[0].clientY};
+  })
+
+  image.addEventListener('pointermove', function (e) {
+    // console.log(e,'move')
+    if (isPointerdown) {
+      handlePointers(e, 'update')
+      const current1 = {x: pointers[0].clientX, y: pointers[0].clientY};
+      if (pointers.length === 1) {
+        // 单指拖动查看图片
+        console.log(diff.x)
+        diff.x = current1.x - lastPointermove.x
+        diff.y = current1.y - lastPointermove.y
+        lastPointermove = {x: current1.x, y: current1.y};
+        x += diff.x;
+        y += diff.y;
+        // console.log(x,y)
+        image.style.transform = 'translate3d(' + x + 'px, ' + y + 'px, 0) scale(' + scale + ')';
+      } else if (pointers.length === 2) {
+        const current2 = {x: pointers[1].clientX, y: pointers[1].clientY};
+        // 计算相对于上一次移动距离比例 ratio > 1放大，ratio < 1缩小
+        let ratio = getDistance(current1, current2) / getDistance(lastPoint1, lastPoint2);
+        // 缩放比例
+        const _scale = scale * ratio;
+        if (_scale > maxScale) {
+          scale = maxScale;
+          ratio = maxScale / scale;
+        } else if (_scale < minScale) {
+          scale = minScale;
+          ratio = minScale / scale;
+        } else {
+          scale = _scale;
+        }
+
+        // 计算当前双指中心点坐标
+        const center = getCenter(current1, current2);
+        // 计算图片中心偏移量，默认transform-origin: 50% 50%
+        // 如果transform-origin: 30% 40%，那origin.x = (ratio - 1) * result.width * 0.3
+        // origin.y = (ratio - 1) * result.height * 0.4
+        // 如果通过修改宽高或使用transform缩放，但将transform-origin设置为左上角时。
+        // 可以不用计算origin，因为(ratio - 1) * result.width * 0 = 0
+        const origin = {
+          x: (ratio - 1) * result.width * 0.5,
+          y: (ratio - 1) * result.height * 0.5
+        };
+        // 计算偏移量，认真思考一下为什么要这样计算(带入特定的值计算一下)
+        x -= (ratio - 1) * (center.x - x) - origin.x - (center.x - lastCenter.x);
+        y -= (ratio - 1) * (center.y - y) - origin.y - (center.y - lastCenter.y);
+        image.style.transform = 'translate3d(' + x + 'px, ' + y + 'px, 0) scale(' + scale + ')';
+        lastCenter = { x: center.x, y: center.y };
+        lastPoint1 = { x: current1.x, y: current1.y };
+        lastPoint2 = { x: current2.x, y: current2.y };
+      }
+    }
+    e.preventDefault();
+  })
+
+  image.addEventListener('pointerup', function (e) {
+    console.log(e, 'up')
+    if (isPointerdown) {
+      handlePointers(e, 'delete');
+      if (pointers.length === 0) {
+        isPointerdown = false;
+      } else if (pointers.length === 1) {
+        // 抬起一只手指头 就是单指拖动
+        point1 = { x: pointers[0].clientX, y: pointers[0].clientY };
+        lastPointermove = { x: pointers[0].clientX, y: pointers[0].clientY };
+      }
+    }
+  })
+
+  image.addEventListener('pointercancel', function (e) {
+    console.log(e, 'cancel')
+    if (isPointerdown) {
+      isPointerdown = false;
+      pointers.length = 0;
+    }
+  })
+</script>
+</body>
+</html>
