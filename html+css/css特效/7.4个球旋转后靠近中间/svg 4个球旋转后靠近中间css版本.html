@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title></title>
+  <style>
+      .screen-loading-wrapper {
+          width: 100vw;
+          height: 100vh;
+          position: fixed;
+          left: 0;
+          top: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 4000;
+          transition: opacity 1s;
+          opacity: 1;
+          pointer-events: none;
+      }
+
+      .screen-loading-content {
+          width: 53.33vw /* 200/3.75 */;
+          height: 53.33vw /* 200/3.75 */;
+          border-radius: 50%;
+          position: relative;
+          animation: ball-wrapper-rotate 1.95s cubic-bezier(.23, .33, .81, 1.45) infinite;
+      }
+
+      .screen-loading-content > div {
+          width: 4.44vw; /* 32/7.2 */
+          height: 4.44vw; /* 32/7.2 */
+          border-radius: 50%;
+          position: absolute;
+      }
+
+      .screen-loading-content > div:nth-child(1) {
+          background-color: #4285F4;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          animation: ball-move1 1.95s ease-in-out infinite;
+      }
+
+      .screen-loading-content > div:nth-child(2) {
+          background-color: #00BDD4;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%) rotate(90deg);
+          animation: ball-move2 1.95s ease-in-out infinite;
+      }
+
+      .screen-loading-content > div:nth-child(3) {
+          background-color: #FF6C00;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%) rotate(180deg);
+          animation: ball-move3 1.95s ease-in-out infinite;
+
+      }
+
+      .screen-loading-content > div:nth-child(4) {
+          background-color: #FF9800;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%) rotate(270deg);
+          animation: ball-move4 1.95s ease-in-out infinite;
+      }
+
+      @keyframes ball-wrapper-rotate {
+          0% {
+              transform: rotate(70deg);
+          }
+          100% {
+              transform: rotate(-290deg);
+          }
+      }
+
+      @keyframes ball-move1 {
+          0%, 100% {
+              transform: translate(-50%, -50%);
+          }
+          50% {
+              transform: translate(-50%, calc(-24vw/* 90/3.75 */ - 50%));
+          }
+      }
+
+      @keyframes ball-move2 {
+          0%, 100% {
+              transform: translate(-50%, -50%);
+          }
+          50% {
+              transform: translate(calc(24vw/* 90/3.75 */ - 50%), -50%);
+          }
+      }
+
+      @keyframes ball-move3 {
+          0%, 100% {
+              transform: translate(-50%, -50%);
+          }
+          50% {
+              transform: translate(-50%, calc(24vw/* 90/3.75 */ - 50%));
+          }
+      }
+
+      @keyframes ball-move4 {
+          0%, 100% {
+              transform: translate(-50%, -50%);
+          }
+          50% {
+              transform: translate(calc(-24vw/* 90/3.75 */ - 50%), -50%);
+          }
+
+      }
+
+  </style>
+</head>
+
+<body>
+<noscript>
+  <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+    Please enable it to continue.</strong>
+</noscript>
+<div class="screen-loading-wrapper" id="screen-loading-wrapper">
+  <div class="screen-loading-content">
+    <div class="screen-loading-item"></div>
+    <div class="screen-loading-item"></div>
+    <div class="screen-loading-item"></div>
+    <div class="screen-loading-item"></div>
+  </div>
+</div>
+</body>
+</html>
