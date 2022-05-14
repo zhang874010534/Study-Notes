@@ -1,3 +1,4 @@
 字体主题（颜色啥的） 编辑器=>切换配色方案 
 字体样式 编辑器=>Font  备用样式可以改成宋体这些
 editor general editor_tabs 修改tabs折叠等
+code => optimize import 自动把没有用到的引用去除
