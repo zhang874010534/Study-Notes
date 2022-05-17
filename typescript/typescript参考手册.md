@@ -33,7 +33,6 @@ TypeScript 提供最新的和不断发展的 JavaScript 特性，包括那些来
 
 ```
 $ npm install -g typescript
-复制代码
 ```
 
 **2.编译 TypeScript 文件**
@@ -41,7 +40,6 @@ $ npm install -g typescript
 ```
 $ tsc helloworld.ts
 # helloworld.ts => helloworld.js
-复制代码
 ```
 
 当然，对于刚入门 TypeScript 的小伙伴，也可以不用安装 `typescript`，而是直接使用线上的 [TypeScript Playground](https://www.typescriptlang.org/play/) 来学习新的语法或新特性。
@@ -55,7 +53,6 @@ $ tsc helloworld.ts
 ```
 let isDone: boolean = false;
 // ES5：var isDone = false;
-复制代码
 ```
 
 #### 2.2 Number 类型
@@ -63,7 +60,6 @@ let isDone: boolean = false;
 ```
 let count: number = 10;
 // ES5：var count = 10;
-复制代码
 ```
 
 #### 2.3 String 类型
@@ -71,7 +67,6 @@ let count: number = 10;
 ```
 let name: string = "Semliker";
 // ES5：var name = 'Semlinker';
-复制代码
 ```
 
 #### 2.4 Array 类型
@@ -82,7 +77,6 @@ let list: number[] = [1, 2, 3];
 
 let list: Array<number> = [1, 2, 3]; // Array<number>泛型语法
 // ES5：var list = [1,2,3];
-复制代码
 ```
 
 #### 2.5 Enum 类型
@@ -100,7 +94,6 @@ enum Direction {
 }
 
 let dir: Direction = Direction.NORTH;
-复制代码
 ```
 
 默认情况下，NORTH 的初始值为 0，其余的成员会从 1 开始自动增长。换句话说，Direction.SOUTH 的值为 1，Direction.EAST 的值为 2，Direction.WEST 的值为 3。上面的枚举示例代码经过编译后会生成以下代码：
@@ -115,7 +108,6 @@ var Direction;
   Direction[(Direction["WEST"] = 3)] = "WEST";
 })(Direction || (Direction = {}));
 var dir = Direction.NORTH;
-复制代码
 ```
 
 当然我们也可以设置 NORTH 的初始值，比如：
@@ -127,7 +119,6 @@ enum Direction {
   EAST,
   WEST,
 }
-复制代码
 ```
 
 **2.字符串枚举**
@@ -141,7 +132,6 @@ enum Direction {
   EAST = "EAST",
   WEST = "WEST",
 }
-复制代码
 ```
 
 以上代码对于的 ES5 代码如下：
@@ -155,7 +145,6 @@ var Direction;
     Direction["EAST"] = "EAST";
     Direction["WEST"] = "WEST";
 })(Direction || (Direction = {}));
-复制代码
 ```
 
 **3.异构枚举**
@@ -171,7 +160,6 @@ enum Enum {
   E = 8,
   F,
 }
-复制代码
 ```
 
 以上代码对于的 ES5 代码如下：
@@ -187,7 +175,6 @@ var Enum;
     Enum[Enum["E"] = 8] = "E";
     Enum[Enum["F"] = 9] = "F";
 })(Enum || (Enum = {}));
-复制代码
 ```
 
 通过观察上述生成的 ES5 代码，我们可以发现数字枚举相对字符串枚举多了 “反向映射”：
@@ -195,7 +182,6 @@ var Enum;
 ```
 console.log(Enum.A) //输出：0
 console.log(Enum[0]) // 输出：A
-复制代码
 ```
 
 #### 2.6 Any 类型
@@ -206,7 +192,6 @@ console.log(Enum[0]) // 输出：A
 let notSure: any = 666;
 notSure = "Semlinker";
 notSure = false;
-复制代码
 ```
 
 `any` 类型本质上是类型系统的一个逃逸舱。作为开发者，这给了我们很大的自由：TypeScript 允许我们对 `any` 类型的值执行任何操作，而无需事先执行任何形式的检查。比如：
@@ -219,7 +204,6 @@ value.trim(); // OK
 value(); // OK
 new value(); // OK
 value[0][1]; // OK
-复制代码
 ```
 
 在许多场景下，这太宽松了。使用 `any` 类型，可以很容易地编写类型正确但在运行时有问题的代码。如果我们使用 `any` 类型，就无法使用 TypeScript 提供的大量的保护机制。为了解决 `any` 带来的问题，TypeScript 3.0 引入了 `unknown` 类型。
@@ -241,7 +225,6 @@ value = null; // OK
 value = undefined; // OK
 value = new TypeError(); // OK
 value = Symbol("type"); // OK
-复制代码
 ```
 
 对 `value` 变量的所有赋值都被认为是类型正确的。但是，当我们尝试将类型为 `unknown` 的值赋值给其他类型的变量时会发生什么？
@@ -257,7 +240,6 @@ let value5: string = value; // Error
 let value6: object = value; // Error
 let value7: any[] = value; // Error
 let value8: Function = value; // Error
-复制代码
 ```
 
 `unknown` 类型只能被赋值给 `any` 类型和 `unknown` 类型本身。直观地说，这是有道理的：只有能够保存任意类型值的容器才能保存 `unknown` 类型的值。毕竟我们不知道变量 `value` 中存储了什么类型的值。
@@ -272,7 +254,6 @@ value.trim(); // Error
 value(); // Error
 new value(); // Error
 value[0][1]; // Error
-复制代码
 ```
 
 将 `value` 变量类型设置为 `unknown` 后，这些操作都不再被认为是类型正确的。通过将 `any` 类型改变为 `unknown` 类型，我们已将允许所有更改的默认设置，更改为禁止任何更改。
@@ -286,7 +267,6 @@ value[0][1]; // Error
 ```
 let tupleType: [string, boolean];
 tupleType = ["Semlinker", true];
-复制代码
 ```
 
 在上面代码中，我们定义了一个名为 `tupleType` 的变量，它的类型是一个类型数组 `[string, boolean]`，然后我们按照正确的类型依次初始化 tupleType 变量。与数组一样，我们可以通过下标来访问元组中的元素：
@@ -294,14 +274,12 @@ tupleType = ["Semlinker", true];
 ```
 console.log(tupleType[0]); // Semlinker
 console.log(tupleType[1]); // true
-复制代码
 ```
 
 在元组初始化的时候，如果出现类型不匹配的话，比如：
 
 ```
 tupleType = [true, "Semlinker"];
-复制代码
 ```
 
 此时，TypeScript 编译器会提示以下错误信息：
@@ -309,21 +287,18 @@ tupleType = [true, "Semlinker"];
 ```
 [0]: Type 'true' is not assignable to type 'string'.
 [1]: Type 'string' is not assignable to type 'boolean'.
-复制代码
 ```
 
 很明显是因为类型不匹配导致的。在元组初始化的时候，我们还必须提供每个属性的值，不然也会出现错误，比如：
 
 ```
 tupleType = ["Semlinker"];
-复制代码
 ```
 
 此时，TypeScript 编译器会提示以下错误信息：
 
 ```
 Property '1' is missing in type '[string]' but required in type '[string, boolean]'.
-复制代码
 ```
 
 #### 2.9 Void 类型
@@ -335,7 +310,6 @@ Property '1' is missing in type '[string]' but required in type '[string, boolea
 function warnUser(): void {
   console.log("This is my warning message");
 }
-复制代码
 ```
 
 以上代码编译生成的 ES5 代码如下：
@@ -345,14 +319,12 @@ function warnUser(): void {
 function warnUser() {
   console.log("This is my warning message");
 }
-复制代码
 ```
 
 需要注意的是，声明一个 void 类型的变量没有什么作用，因为它的值只能为 `undefined` 或 `null`：
 
 ```
 let unusable: void = undefined;
-复制代码
 ```
 
 #### 2.10 Null 和 Undefined 类型
@@ -362,7 +334,6 @@ TypeScript 里，`undefined` 和 `null` 两者有各自的类型分别为 `undef
 ```
 let u: undefined = undefined;
 let n: null = null;
-复制代码
 ```
 
 默认情况下 `null` 和 `undefined` 是所有类型的子类型。 就是说你可以把 `null` 和 `undefined` 赋值给 `number` 类型的变量。**然而，如果你指定了`--strictNullChecks` 标记，`null` 和 `undefined` 只能赋值给 `void` 和它们各自的类型。**
@@ -380,7 +351,6 @@ function error(message: string): never {
 function infiniteLoop(): never {
   while (true) {}
 }
-复制代码
 ```
 
 在 TypeScript 中，可以利用 never 类型的特性来实现全面性检查，具体示例如下：
@@ -398,14 +368,12 @@ function controlFlowAnalysisWithNever(foo: Foo) {
     const check: never = foo;
   }
 }
-复制代码
 ```
 
 注意在 else 分支里面，我们把收窄为 never 的 foo 赋值给一个显示声明的 never 变量。如果一切逻辑正确，那么这里应该能够编译通过。但是假如后来有一天你的同事修改了 Foo 的类型：
 
 ```
 type Foo = string | number | boolean;
-复制代码
 ```
 
 然而他忘记同时修改 `controlFlowAnalysisWithNever` 方法中的控制流程，这时候 else 分支的 foo 类型会被收窄为 `boolean` 类型，导致无法赋值给 never 类型，这时就会产生一个编译错误。通过这个方式，我们可以确保
@@ -425,7 +393,6 @@ type Foo = string | number | boolean;
 ```
 let someValue: any = "this is a string";
 let strLength: number = (<string>someValue).length;
-复制代码
 ```
 
 #### 3.2 as 语法
@@ -433,7 +400,6 @@ let strLength: number = (<string>someValue).length;
 ```
 let someValue: any = "this is a string";
 let strLength: number = (someValue as string).length;
-复制代码
 ```
 
 ### 四、类型守卫
@@ -466,7 +432,6 @@ function printEmployeeInformation(emp: UnknownEmployee) {
     console.log("Start Date: " + emp.startDate);
   }
 }
-复制代码
 ```
 
 #### 4.2 typeof 关键字
@@ -481,7 +446,6 @@ function padLeft(value: string, padding: string | number) {
   }
   throw new Error(`Expected string or number, got '${padding}'.`);
 }
-复制代码
 ```
 
 `typeof` 类型保护只支持两种形式：`typeof v === "typename"` 和 `typeof v !== typename`，`"typename"` 必须是 `"number"`， `"string"`， `"boolean"` 或 `"symbol"`。 但是 TypeScript 并不会阻止你与其它字符串比较，语言不会把那些表达式识别为类型保护。
@@ -512,7 +476,6 @@ let padder: Padder = new SpaceRepeatingPadder(6);
 if (padder instanceof SpaceRepeatingPadder) {
   // padder的类型收窄为 'SpaceRepeatingPadder'
 }
-复制代码
 ```
 
 #### 4.4 自定义类型保护的类型谓词
@@ -525,7 +488,6 @@ function isNumber(x: any): x is number {
 function isString(x: any): x is string {
   return typeof x === "string";
 }
-复制代码
 ```
 
 ### 五、联合类型和类型别名
@@ -538,7 +500,6 @@ function isString(x: any): x is string {
 const sayHello = (name: string | undefined) => {
   /* ... */
 };
-复制代码
 ```
 
 例如，这里 `name` 的类型是 `string | undefined` 意味着可以将 `string` 或 `undefined` 的值传递给`sayHello` 函数。
@@ -546,7 +507,6 @@ const sayHello = (name: string | undefined) => {
 ```
 sayHello("Semlinker");
 sayHello(undefined);
-复制代码
 ```
 
 通过这个示例，你可以凭直觉知道类型 A 和类型 B 联合后的类型是同时接受 A 和 B 值的类型。
@@ -581,7 +541,6 @@ interface Truck {
   vType: "truck"; // discriminant
   capacity: number; // in tons
 }
-复制代码
 ```
 
 在上述代码中，我们分别定义了 `Motorcycle`、 `Car` 和 `Truck` 三个接口，在这些接口中都包含一个 `vType` 属性，该属性被称为可辨识的属性，而其它的属性只跟特性的接口相关。
@@ -592,7 +551,6 @@ interface Truck {
 
 ```
 type Vehicle = Motorcycle | Car | Truck;
-复制代码
 ```
 
 现在我们就可以开始使用 `Vehicle` 联合类型，对于 `Vehicle` 类型的变量，它可以表示不同类型的车辆。
@@ -609,7 +567,6 @@ function evaluatePrice(vehicle: Vehicle) {
 
 const myTruck: Truck = { vType: "truck", capacity: 9.5 };
 evaluatePrice(myTruck);
-复制代码
 ```
 
 对于以上代码，TypeScript 编译器将会提示以下错误信息：
@@ -617,7 +574,6 @@ evaluatePrice(myTruck);
 ```
 Property 'capacity' does not exist on type 'Vehicle'.
 Property 'capacity' does not exist on type 'Motorcycle'.
-复制代码
 ```
 
 原因是在 Motorcycle 接口中，并不存在 `capacity` 属性，而对于 Car 接口来说，它也不存在 `capacity` 属性。那么，现在我们应该如何解决以上问题呢？这时，我们可以使用类型守卫。下面我们来重构一下前面定义的 `evaluatePrice` 方法，重构后的代码如下：
@@ -633,7 +589,6 @@ function evaluatePrice(vehicle: Vehicle) {
       return vehicle.make * EVALUATION_FACTOR;
   }
 }
-复制代码
 ```
 
 在以上代码中，我们使用 `switch` 和 `case` 运算符来实现类型守卫，从而确保在 `evaluatePrice` 方法中，我们可以安全地访问 `vehicle` 对象中的所包含的属性，来正确的计算该车辆类型所对应的价格。
@@ -648,7 +603,6 @@ type Message = string | string[];
 let greet = (message: Message) => {
   // ...
 };
-复制代码
 ```
 
 ### 六、交叉类型
@@ -674,7 +628,6 @@ const staff: IStaff = {
 };
 
 console.dir(staff)
-复制代码
 ```
 
 在上面示例中，我们首先为 IPerson 和 IWorker 类型定义了不同的成员，然后通过 `&` 运算符定义了 IStaff  交叉类型，所以该类型同时拥有 IPerson 和 IWorker 这两种类型的成员。
@@ -709,7 +662,6 @@ myBooks.forEach((title, idx, arr) =>
 myBooks.forEach((title, idx, arr) => {
   console.log(idx + '-' + title);
 });
-复制代码
 ```
 
 **2.使用示例**
@@ -731,7 +683,6 @@ function Book() {
     console.log(this.publishDate);
   }, 1000);
 }
-复制代码
 ```
 
 #### 7.3 参数类型和返回类型
@@ -740,7 +691,6 @@ function Book() {
 function createUserId(name: string, id: number): string {
   return name + id;
 }
-复制代码
 ```
 
 #### 7.4 函数类型
@@ -753,7 +703,6 @@ function createUserId(name: string, id: number): string {
 }
 
 IdGenerator = createUserId;
-复制代码
 ```
 
 #### 7.5 可选参数及默认参数
@@ -772,7 +721,6 @@ function createUserId(
 ): string {
   return name + id;
 }
-复制代码
 ```
 
 在声明函数时，可以通过 `?` 号来定义可选参数，比如 `age?: number` 这种形式。在实际使用时，需要注意的是可选参数要放在普通参数的后面，不然会导致编译错误。
@@ -788,7 +736,6 @@ function push(array, ...items) {
 
 let a = [];
 push(a, 1, 2, 3);
-复制代码
 ```
 
 #### 7.7 函数重载
@@ -806,7 +753,6 @@ function add(a: Combinable, b: Combinable) {
   }
   return a + b;
 }
-复制代码
 ```
 
 在以上代码中，我们为 add 函数提供了多个函数类型定义，从而实现函数的重载。之后，可恶的错误消息又消失了，因为这时 result 变量的类型是 `string` 类型。在 TypeScript 中除了可以重载普通函数之外，我们还可以重载类中的成员方法。
@@ -829,7 +775,6 @@ class Calculator {
 
 const calculator = new Calculator();
 const result = calculator.add("Semlinker", " Kakuqo");
-复制代码
 ```
 
 这里需要注意的是，当 TypeScript 编译器处理函数重载时，它会查找重载列表，尝试使用第一个重载定义。 如果匹配的话就使用这个。 因此，在定义重载的时候，一定要把最精确的定义放在最前面。另外在 Calculator 类中，`add(a: Combinable, b: Combinable){ }` 并不是重载列表的一部分，因此对于 add 成员方法来说，我们只定义了四个重载方法。
@@ -842,7 +787,6 @@ const result = calculator.add("Semlinker", " Kakuqo");
 let x: number; let y: number; let z: number;
 let five_array = [0,1,2,3,4];
 [x,y,z] = five_array;
-复制代码
 ```
 
 #### 8.2 数组展开运算符
@@ -850,7 +794,6 @@ let five_array = [0,1,2,3,4];
 ```
 let two_array = [0, 1];
 let five_array = [...two_array, 2, 3, 4];
-复制代码
 ```
 
 #### 8.3 数组遍历
@@ -860,7 +803,6 @@ let colors: string[] = ["red", "green", "blue"];
 for (let i of colors) {
   console.log(i);
 }
-复制代码
 ```
 
 ### 九、TypeScript 对象
@@ -874,7 +816,6 @@ let person = {
 };
 
 let { name, gender } = person;
-复制代码
 ```
 
 #### 9.2 对象展开运算符
@@ -891,7 +832,6 @@ let personWithAge = { ...person, age: 33 };
 
 // 获取除了某些项外的其它项
 let { name, ...rest } = person;
-复制代码
 ```
 
 ### 十、TypeScript 接口
@@ -912,7 +852,6 @@ let Semlinker: Person = {
   name: "Semlinker",
   age: 33,
 };
-复制代码
 ```
 
 #### 10.2 可选 | 只读属性
@@ -922,7 +861,6 @@ interface Person {
   readonly name: string;
   age?: number;
 }
-复制代码
 ```
 
 只读属性用于限制只能在对象刚刚创建的时候修改其值。此外 TypeScript 还提供了 `ReadonlyArray<T>` 类型，它与 `Array<T>` 相似，只是把所有可变方法去掉了，因此可以确保数组创建后再也不能被修改。
@@ -934,7 +872,6 @@ ro[0] = 12; // error!
 ro.push(5); // error!
 ro.length = 100; // error!
 a = ro; // error!
-复制代码
 ```
 
 ### 十一、TypeScript 类
@@ -969,7 +906,6 @@ class Greeter {
 }
 
 let greeter = new Greeter("world");
-复制代码
 ```
 
 那么成员属性与静态属性，成员方法与静态方法有什么区别呢？这里无需过多解释，我们直接看一下以下编译生成的 ES5 代码：
@@ -994,7 +930,6 @@ var Greeter = /** @class */ (function () {
     return Greeter;
 }());
 var greeter = new Greeter("world");
-复制代码
 ```
 
 #### 11.2 访问器
@@ -1025,7 +960,6 @@ employee.fullName = "Semlinker";
 if (employee.fullName) {
   console.log(employee.fullName);
 }
-复制代码
 ```
 
 #### 11.3 类的继承
@@ -1068,7 +1002,6 @@ class Snake extends Animal {
 
 let sam = new Snake("Sammy the Python");
 sam.move();
-复制代码
 ```
 
 #### 11.4 ECMAScript 私有字段
@@ -1094,7 +1027,6 @@ semlinker.#name;
 //     ~~~~~
 // Property '#name' is not accessible outside class 'Person'
 // because it has a private identifier.
-复制代码
 ```
 
 与常规属性（甚至使用 `private` 修饰符声明的属性）不同，私有字段要牢记以下规则：
@@ -1120,7 +1052,6 @@ semlinker.#name;
 interface GenericIdentityFn<T> {
   (arg: T): T;
 }
-复制代码
 ```
 
 #### 12.2 泛型类
@@ -1136,7 +1067,6 @@ myGenericNumber.zeroValue = 0;
 myGenericNumber.add = function (x, y) {
   return x + y;
 };
-复制代码
 ```
 
 #### 12.3 泛型变量
@@ -1170,7 +1100,6 @@ function toArray(x: number): Array<number> {
 }
 
 type Func = typeof toArray; // -> (x: number) => number[]
-复制代码
 ```
 
 **2.keyof**
@@ -1186,7 +1115,6 @@ interface Person {
 type K1 = keyof Person; // "name" | "age"
 type K2 = keyof Person[]; // "length" | "toString" | "pop" | "push" | "concat" | "join" 
 type K3 = keyof { [x: string]: Person };  // string | number
-复制代码
 ```
 
 **3.in**
@@ -1199,7 +1127,6 @@ type Keys = "a" | "b" | "c"
 type Obj =  {
   [p in Keys]: any
 } // -> { a: any, b: any, c: any }
-复制代码
 ```
 
 **4.infer**
@@ -1210,7 +1137,6 @@ type Obj =  {
 type ReturnType<T> = T extends (
   ...args: any[]
 ) => infer R ? R : any;
-复制代码
 ```
 
 以上代码中 `infer R` 就是声明一个变量来承载传入函数签名的返回值类型，简单说就是用它取到函数返回值的类型方便之后使用。
@@ -1228,21 +1154,18 @@ function loggingIdentity<T extends ILengthwise>(arg: T): T {
   console.log(arg.length);
   return arg;
 }
-复制代码
 ```
 
 现在这个泛型函数被定义了约束，因此它不再是适用于任意类型：
 
 ```
 loggingIdentity(3);  // Error, number doesn't have a .length property
-复制代码
 ```
 
 这时我们需要传入符合约束类型的值，必须包含必须的属性：
 
 ```
 loggingIdentity({length: 10, value: 3});
-复制代码
 ```
 
 **6.Partial**
@@ -1259,7 +1182,6 @@ loggingIdentity({length: 10, value: 3});
 type Partial<T> = {
   [P in keyof T]?: T[P];
 };
-复制代码
 ```
 
 在以上代码中，首先通过 `keyof T` 拿到 `T` 的所有属性名，然后使用 `in` 进行遍历，将值赋给 `P`，最后通过 `T[P]` 取得相应的属性值。中间的 `?` 号，用于将所有属性变为可选。
@@ -1284,7 +1206,6 @@ const todo1 = {
 const todo2 = updateTodo(todo1, {
   description: "throw out trash",
 });
-复制代码
 ```
 
 在上面的 `updateTodo` 方法中，我们利用 `Partial<T>` 工具类型，定义 `fieldsToUpdate` 的类型为 `Partial<Todo>`，即：
@@ -1294,7 +1215,6 @@ const todo2 = updateTodo(todo1, {
    title?: string | undefined;
    description?: string | undefined;
 }
-复制代码
 ```
 
 ### 十三、TypeScript 装饰器
@@ -1321,7 +1241,6 @@ const todo2 = updateTodo(todo1, {
 declare type ClassDecorator = <TFunction extends Function>(
   target: TFunction
 ) => TFunction | void;
-复制代码
 ```
 
 类装饰器顾名思义，就是用来装饰类的。它接收一个参数：
@@ -1346,7 +1265,6 @@ class Greeting {
 
 let myGreeting = new Greeting();
 myGreeting.greet(); // console output: 'Hello Semlinker!';
-复制代码
 ```
 
 上面的例子中，我们定义了 `Greeter` 类装饰器，同时我们使用了 `@Greeter` 语法糖，来使用装饰器。
@@ -1375,7 +1293,6 @@ class Greeting {
 
 let myGreeting = new Greeting();
 myGreeting.greet(); // console output: 'Hello TS!';
-复制代码
 ```
 
 #### 13.4 属性装饰器
@@ -1385,7 +1302,6 @@ myGreeting.greet(); // console output: 'Hello TS!';
 ```
 declare type PropertyDecorator = (target:Object, 
   propertyKey: string | symbol ) => void;
-复制代码
 ```
 
 属性装饰器顾名思义，用来装饰类的属性。它接收两个参数：
@@ -1440,7 +1356,6 @@ class Person {
 
 const p1 = new Person("semlinker");
 p1.name = "kakuqo";
-复制代码
 ```
 
 以上代码我们定义了一个 `logProperty` 函数，来跟踪用户对属性的操作，当代码成功运行后，在控制台会输出以下结果：
@@ -1448,7 +1363,6 @@ p1.name = "kakuqo";
 ```
 Set: name => semlinker
 Set: name => kakuqo
-复制代码
 ```
 
 #### 13.5 方法装饰器
@@ -1458,7 +1372,6 @@ Set: name => kakuqo
 ```
 declare type MethodDecorator = <T>(target:Object, propertyKey: string | symbol, 	 	
   descriptor: TypePropertyDescript<T>) => TypedPropertyDescriptor<T> | void;
-复制代码
 ```
 
 方法装饰器顾名思义，用来装饰类的方法。它接收三个参数：
@@ -1499,7 +1412,6 @@ let calc = new Calculator();
 calc.double(11);
 // console ouput: [{method: "double", output: 22, ...}]
 console.log(calc.loggedOutput); 
-复制代码
 ```
 
 下面我们来介绍一下参数装饰器。
@@ -1511,7 +1423,6 @@ console.log(calc.loggedOutput);
 ```
 declare type ParameterDecorator = (target: Object, propertyKey: string | symbol, 
   parameterIndex: number ) => void
-复制代码
 ```
 
 参数装饰器顾名思义，是用来装饰函数参数，它接收三个参数：
@@ -1536,7 +1447,6 @@ class Greeter {
 
 // console output: The parameter in position 0 
 // at Greeter has been decorated
-复制代码
 ```
 
 介绍完 TypeScript 入门相关的基础知识，猜测很多刚入门的小伙伴已有 **“从入门到放弃”** 的想法，最后我们来简单介绍一下编译上下文。
