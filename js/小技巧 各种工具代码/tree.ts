@@ -2,7 +2,8 @@ interface ITreeKeyHandle {
   key?: string
   title?: string
   childrenName?: string
-  treeData: any[]
+  treeData: any[],
+  myLevel?: number
 }
 
 /**
@@ -11,8 +12,9 @@ interface ITreeKeyHandle {
  * @param title 显示的名字
  * @param childrenName children字段
  * @param treeData 树数据
+ * @param myLevel 层级
  */
-export function treeKeyHandle({ key, title, childrenName, treeData }: ITreeKeyHandle) {
+export function treeKeyHandle({ key, title, childrenName, treeData, myLevel = 0 }: ITreeKeyHandle) {
   key = key || 'key'
   title = title || 'title'
   childrenName = childrenName || 'children'
@@ -20,12 +22,14 @@ export function treeKeyHandle({ key, title, childrenName, treeData }: ITreeKeyHa
     item['key'] = item[key]
     item['title'] = item[title]
     item['children'] = item[childrenName] || []
+    item['myLevel'] = myLevel
     if (item['children'].length > 0) {
       item['children'] = treeKeyHandle({
         key,
         title,
         childrenName,
         treeData: item['children'],
+        myLevel: myLevel + 1
       })
     }
     return item
