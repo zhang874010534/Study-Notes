@@ -110,7 +110,7 @@
 - [eruda](https://github.com/liriliri/eruda) 移动端调试工具
 
   ```typescript
-  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/eruda"></script> 
+  <script type="text/javascript" src="//unpkg.zhimg.com/erud"></script> 
   <script>eruda.init();</script>
   <script
     if(window.location.hostname == 'github.com') {
@@ -127,7 +127,7 @@
 
   > h5录音调研 https://www.jianshu.com/p/2199939b629d
 
-- [rrweb](https://github.com/rrweb-io/rrweb) 前端录制和回放用户操作‘
+- [rrweb](https://github.com/rrweb-io/rrweb) 前端录制和回放用户操作
 
 - [whimsical](https://whimsical.com/the-beginning-86qy7io4XjdZptgDBuaCzx)  前端流程图
 
@@ -152,7 +152,7 @@
     console.log(math.format(ans, {precision: 14})) // '0.3'
   ```
 
-  
+- [js-cookie](https://www.npmjs.com/package/js-cookie) 简单操作cookie的库
 
 ### CSS
 
