@@ -154,6 +154,8 @@
 
 - [js-cookie](https://www.npmjs.com/package/js-cookie) 简单操作cookie的库
 
+- [js-image-compressor](https://www.npmjs.com/package/js-image-compressor) 图片压缩库
+
 ### CSS
 
 - https://www.minimamente.com/css-infinite-photo-carousel/ 图片无限斜着滚动
