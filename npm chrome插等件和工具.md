@@ -32,6 +32,8 @@
 
 - [vue-seamless-scroll](https://chenxuan0000.github.io/vue-seamless-scroll/) vue无缝滚动
 
+- [vue-print-nb](https://www.npmjs.com/package/vue-print-nb) 打印
+
 ##### 开发环境
 
 - vue-cli-plugin-element  用vue ui 安装     elementui的按需导入直接在一个文件夹里操作不用自己操作webpack
