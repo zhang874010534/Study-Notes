@@ -203,3 +203,15 @@ $ git revert v1.0.0
 ## 清理本地无用分支 远端不存在本地还是显示的
 
 git remote prune origin
+
+# Git-flow
+
+![](https://raw.githubusercontent.com/zhang874010534/tuchuan/main/git/git-flow.png)
+
+1. Master 分支： 稳定版本代码分支，用作发布环境，上面的每次提交都是可以发布的。
+2. Feture 分支： 功能分支，用于开发功能（需求），用于开发环境
+3. Develop 分支: 开发分支， 一旦Feature分支内功能开发完成就将Feture中的代码合并到Develop分支中，合并完成后，删除该功能分支。这个分支对应的是集成测试环境。
+4. Release 分支：预发分支，做发布前的准备工作，对应的是预发环境。这个分支可以确保们开发继续向前，不会因为要发布不而被停滞住。一旦Release分支达到了可发布的状态，我们需要把Release分支同时向Master，Develop分支上合并，保持代码的一致性，然后把Release分支删除。
+5. Hotfix 分支： 线上bug修缮用的分支，每次修改线上代码的bug时都要用hotfix来维护，完成后向Develop和Master同时合并。完成后删除分支。
+
+所以这个版本要发布的功能可以先合到release分支再把release分支合并到develop分支
