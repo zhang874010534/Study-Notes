@@ -14,11 +14,11 @@
     //封装一个防抖的函数 
     function throttle(fn, delay = 500) {
       let timer = null;
-      return () => {
+      return (argument) => {
         if (timer) {
           return; 
         }
-        fn();
+        fn(argument);
         timer = setTimeout(() => {
           timer = null
         }, delay)
