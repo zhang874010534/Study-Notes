@@ -89,6 +89,8 @@
 
 - [react-reveal](https://github.com/rnosov/react-reveal) 适一个用于 React 的高性能动画库。它占用空间小，专门为 ES6 中的 React 编写。可用于创建各种炫酷的滚动效果显示。
 
+- [classnames](https://www.npmjs.com/package/classnames) 处理类名 vue自带这种功能
+
 ### 通用
 
 - [moment](https://momentjs.com/)  时间格式化工具
