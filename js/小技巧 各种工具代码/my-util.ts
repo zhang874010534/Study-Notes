@@ -175,3 +175,28 @@ export const compareVersionEle = (currVersion, targetVerison) => {
   }
   return true
 }
+
+function padStart(data) {
+  return String(data).padStart(2, '0')
+}
+// 获取时间00:00这种格式
+export const getRemainTime = (time: number) => {
+  // const second = '00'
+  // const minute = padStart(String(time % 60))
+  // const hour = padStart(Math.floor(time / 60) % 24)
+  // const day = Math.floor(Math.floor(time / 60) / 24)
+  time = Math.abs(time)
+  let temp = 0
+  const second = padStart(time % 60)
+  temp = Math.floor(time / 60)
+  const minute = padStart(temp % 60)
+  temp = Math.floor(temp / 60)
+  const hour = padStart(temp % 24)
+  const day = Math.floor(temp / 24)
+  return {
+    day,
+    hour,
+    minute,
+    second,
+  }
+}
