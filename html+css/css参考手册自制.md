@@ -240,3 +240,10 @@ background: url('~@/assets/img/xxx.png')
 }
 ```
 
+### [css虚拟列表](https://developer.mozilla.org/en-US/docs/Web/CSS/content-visibility)  [codepen](https://codepen.io/Chokcoco/pen/rNJvPEX)
+
+```css
+content-visibility: auto;
+contain-intrinsic-size: 100px;
+```
+
