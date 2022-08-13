@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div class="wrapper" id="print_content">
+  <div class="item">数据数据</div>
+  <div class="item">数据数据</div>
+  <div class="item">数据数据</div>
+  <div class="item">数据数据</div>
+  <div class="item">数据数据</div>
+  <div class="item">数据数据</div>
+  <div class="item">数据数据</div>
+  <div class="item">数据数据</div>
+  <div class="item">数据数据</div>
+  <div class="item">数据数据</div>
+</div>
+<button onclick="print()">打印</button>
+<script>
+function print() {
+  const contentInnerHtml = document.querySelector("#print_content").innerHTML
+  const newWindow = window.open()
+  newWindow.document.body.innerHTML = `
+    <style>
+      * {
+        color: palegreen;
+      }
+    </style>
+    ${contentInnerHtml}
+  `
+  newWindow.print()
+  setTimeout(() => {
+    newWindow.close()
+  },100)
+}
+</script>
+</body>
+</html>
