@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+      * {
+          padding: 0;
+          margin: 0;
+      }
+
+      body {
+          background-color: palegreen;
+          transition: all 2s ease-out;
+          animation: dd  2s infinite;
+      }
+
+      .wrapper {
+          width: 100vw;
+          height: 100px;
+          position: fixed;
+          bottom: 0;
+      }
+
+      .circle {
+          width: 102px;
+          height: 102px;
+          border-radius: 50%;
+          background-color: red;
+          position: absolute;
+          left: 40px;
+          top: -30px;
+      }
+
+      @keyframes dd {
+          0% {
+              background: paleturquoise;
+          }
+          50% {
+              background: palegoldenrod;
+          }
+          100% {
+              background: paleturquoise;
+          }
+      }
+  </style>
+</head>
+<body>
+<script>
+
+</script>
+<div class="wrapper">
+  <div class="circle"></div>
+  <svg width="200" height="98" viewBox="0 0 200 98" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M91 82C123.585 82 150 55.5848 150 23C150 11.7943 157.767 0 168.973 0H183V98H0V0H13.027C24.233 0 32 11.7943 32 23C32 55.5848 58.415 82 91 82Z"
+          fill="white"/>
+  </svg>
+</div>
+</body>
+</html>
