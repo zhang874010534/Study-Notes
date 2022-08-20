@@ -11,19 +11,20 @@
 <body>
   <input type="text" id="input">
   <script>
-    //封装一个防抖的函数 
+    //封装一个节流的函数 
     function throttle(fn, delay = 500) {
       let timer = null;
-      return (argument) => {
-        if (timer) {
-          return; 
-        }
-        fn(argument);
-        timer = setTimeout(() => {
-          timer = null
-        }, delay)
+      return function (argument) {
+          if (timer) {
+              return;
+          }
+          fn.call(this,argument);
+          timer = setTimeout(() => {
+              timer = null
+          }, delay)
       }
     }
+
     //调用
     const input = document.getElementById('input')
     input.addEventListener('keyup', debounce(() => {
