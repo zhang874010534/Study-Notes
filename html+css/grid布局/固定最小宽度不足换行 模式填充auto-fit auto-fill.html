@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .wrapper {
+        display: grid;
+        grid-gap: 10px;
+        /* auto-fit 将空轨道的空间全部平均分配给已有元素的轨道*/
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+
+
+        /* auto-fill 保留空轨道留白，不会折叠空轨道*/
+        /*grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));*/
+    }
+    .item {
+        border: 1px solid red;
+        min-height: 100px;
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="item">1</div>
+  <div class="item"></div>
+  <div class="item"></div>
+  <div class="item"></div>
+  <div class="item"></div>
+  <div class="item"></div>
+</div>
+</body>
+</html>
