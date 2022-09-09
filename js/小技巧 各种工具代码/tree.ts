@@ -111,3 +111,19 @@ function recurrenceGetLeaf(node, childName) {
 export function getAllLeaf(node, childName = 'children') {
   return recurrenceGetLeaf(node, childName)
 }
+
+
+// 获取节点
+export function getNode(id, data: any[]) {
+  let node
+  data.some(item => {
+    if(item.id === id){
+      node = item
+      return true
+    }
+    if(item.children.length > 0) {
+      node = getNode(id, item.children)
+    }
+  })
+  return node
+}
