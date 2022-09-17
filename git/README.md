@@ -99,6 +99,15 @@ $ git revert v1.0.0
   + 配置用户名:`git config --global user.name "xiaoming"`
   + 配置邮箱:  `git config --global user.email "xm@sina.com"`
 
+## 生成/添加SSH公钥
+
+- ```
+  ssh-keygen -t ed25519 -C "xxxxx@xxxxx.com"  
+  ```
+  
+- ```
+  查看是否连接成功 ssh -T git@gitee.com
+  ```
 
 ## 把大象放到冰箱要几步
 
