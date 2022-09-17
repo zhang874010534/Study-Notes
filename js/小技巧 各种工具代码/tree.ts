@@ -127,3 +127,19 @@ export function getNode(id, data: any[]) {
   })
   return node
 }
+
+/**
+ * 获取所有子节点
+ * @param nodeList 节点列表
+ * @param childName children的名字
+ */
+export function getAllChildrenNode(nodeList, childName = 'children') {
+  let nodeArr = []
+  nodeList.forEach(item => {
+    if(item[childName].length > 0) {
+      nodeArr = nodeArr.concat(getAllChildrenNode(item[childName], childName))
+    }
+    nodeArr.push(item)
+  })
+  return nodeArr
+}
