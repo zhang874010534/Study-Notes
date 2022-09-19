@@ -13,3 +13,43 @@
 
 #### [react-loadable](https://github.com/jamiebuilds/react-loadable)
 
+## Hook
+
+父组件往子组件传值或者函数 虽然本身没有变化 但是引用类型的地址是变化的，所以会重新渲染组件，通过缓存保证他们栈里的地址不变，那么就不会重新渲染子组件
+
+https://www.joshwcomeau.com/react/usememo-and-usecallback/
+
+### useMemo
+
+> vue的computed,依赖的值不改变不会重新执行
+
+```react
+const [number, setNumber] = useState(0)
+const result = React.useMemo(() => {
+	return count()
+},[number])
+```
+
+通过memo包装也可以达到同样的效果
+
+```react
+React.memo(Component)
+```
+
+### useCallback
+
+> 缓存函数
+
+```react
+const handleMegaBoost = React.useCallback(() => {
+  setCount((currentValue) => currentValue + 1234)  
+},[])
+
+// 这样也行不过需要自己return
+const handleMegaBoost = React.useMemo(() => {
+    return function() {
+        setCount((currentValue) => currentValue + 1234)  
+    }
+})
+```
+
