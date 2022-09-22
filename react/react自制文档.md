@@ -53,3 +53,39 @@ const handleMegaBoost = React.useMemo(() => {
 })
 ```
 
+### [useRef](https://react.docschina.org/docs/hooks-reference.html#useref)
+
+```react
+import {forwardRef, useImperativeHandle, useRef} from "react";
+
+//通过forwardRef可以将ref转发给子组件
+// 直接暴露给父组件带来的问题是某些情况的不可控 所以需要useImperativeHandle
+const MyInput = forwardRef((props, ref) => {
+  const inputRef = useRef()
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      inputRef.current.focus()
+    }
+  }))
+  return <input type="text" ref={inputRef}/>
+})
+
+
+function Demo (props,ref) {
+  const inputRef = useRef()
+  setTimeout(() => {
+    console.log(inputRef)
+  },5000)
+  return (
+    <div>
+      demo
+      <MyInput ref={inputRef}></MyInput>
+    </div>
+  )
+}
+export default Demo
+```
+
+### useLayoutEffect
+
+> useLayoutEffect和原来componentDidMount&componentDidUpdate一致，在react完成DOM更新后马上同步调用的代码，会阻塞页面渲染。而useEffect是会在整个页面渲染完才会调用的代码。
