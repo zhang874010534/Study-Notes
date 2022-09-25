@@ -73,7 +73,7 @@ const MyInput = forwardRef((props, ref) => {
 
 function Demo (props,ref) {
   const inputRef = useRef()
-  setTimeout(() => {
+  (() => {
     console.log(inputRef)
   },5000)
   return (
@@ -89,3 +89,45 @@ export default Demo
 ### useLayoutEffect
 
 > useLayoutEffect和原来componentDidMount&componentDidUpdate一致，在react完成DOM更新后马上同步调用的代码，会阻塞页面渲染。而useEffect是会在整个页面渲染完才会调用的代码。
+
+### useContext
+
+```jsx
+const Child = (props) => {
+  return <div>child
+    <Context.Consumer>
+      {(value) => {
+        return (
+          <div>
+            第一种使用Context方式获取的值：{JSON.stringify(value)}
+          </div>
+        );
+      }}
+    </Context.Consumer>
+  </div>
+}
+const Context = createContext()
+
+const Child2 = () => {
+  const child2Context = useContext(Context)
+  console.log(child2Context,'child2Context')
+  return <div>
+    child2
+  </div>
+}
+function Parent (props,ref) {
+  const [color, setColor] = useState({
+    name: 123,
+    age: 123
+  })
+  return (
+    <div>
+      <Context.Provider value={color}>
+        <Child></Child>
+        <Child2></Child2>
+      </Context.Provider>
+    </div>
+  )
+}
+export default Parent
+```
