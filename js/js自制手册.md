@@ -49,3 +49,21 @@ window.scrollTo({
 });
 ```
 
+#### [ToLocalString](https://blog.csdn.net/qq_42453950/article/details/88339163)
+
+```js
+const num = 2333333;
+num.toLocaleString('zh', { style: 'decimal' });   //2,333,333
+num.toLocaleString('zh', { style: 'percent' });   //233,333,300%
+
+
+const num = 2333333;
+num.toLocaleString('zh', { style: 'currency', currency: 'CNY' });    //￥2,333,333.00
+num.toLocaleString('zh', { style: 'currency', currency: 'cny', currencyDisplay: 'code' });      //CNY2,333,333.00
+num.toLocaleString('zh', { style: 'currency', currency: 'cny', currencyDisplay: 'name' });      //2,333,333.00人民币
+
+const date = new Date();
+date.toLocaleString('zh', { hour12: true });        //2018/4/4 下午6:57:36
+date.toLocaleString('zh', { hour12: false });       //2018/4/4 18:57:36
+
+```
