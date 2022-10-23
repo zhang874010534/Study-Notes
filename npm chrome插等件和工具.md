@@ -160,6 +160,12 @@
 
 - [js-image-compressor](https://www.npmjs.com/package/js-image-compressor) 图片压缩库
 
+- [driver.js](https://www.npmjs.com/package/driver.js) 交互引导工具库s
+
+  > [demo](https://kamranahmed.info/driver.js/)
+
+- 
+
 ### CSS
 
 - https://www.minimamente.com/css-infinite-photo-carousel/ 图片无限斜着滚动
@@ -253,3 +259,14 @@
 }
 ```
 
+### 预览word，ppt等
+
+> https://juejin.cn/post/7071598747519549454
+
+| 文档格式           | 老的开源组件                 | 替代开源组件                         |
+| ------------------ | ---------------------------- | ------------------------------------ |
+| word（docx）       | mammoth                      | docx-preview(npm)                    |
+| powerpoint（pptx） | pptxjs                       | pptxjs改造开发                       |
+| excel（xlsx）      | sheetjs、handsontable        | exceljs(npm)、handsontable(npm)(npm) |
+| pdf（pdf）         | pdfjs                        | pdfjs(npm)                           |
+| 图片               | jquery.verySimpleImageViewer | v-viewer(npm)                        |
