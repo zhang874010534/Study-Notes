@@ -13,6 +13,25 @@
 
 #### [react-loadable](https://github.com/jamiebuilds/react-loadable)
 
+## React16
+
+### Api变化
+
+#### getDerivedStateFromProps
+
+> static getDerivedStateFromProps(nextProps,nextState)  替代 componentWillMount; componentWillReceiveProps;
+>
+> 在组件实例化、接收到新的 props 、组件状态更新时会被调用
+
+#### getSnapshotBeforeUpdate
+
+> getSnapshotBeforeUpdate（prevProps,prevState）
+>
+> 在这个阶段我们可以拿到上一个状态 Dom 元素的坐标、大小的等相关信息。用于替代旧的生命周期中的 componentWillUpdate。
+> 该函数的返回值将会作为 componentDidUpdate 的第三个参数出现。
+
+
+
 ## Hook
 
 父组件往子组件传值或者函数 虽然本身没有变化 但是引用类型的地址是变化的，所以会重新渲染组件，通过缓存保证他们栈里的地址不变，那么就不会重新渲染子组件
