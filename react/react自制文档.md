@@ -38,6 +38,19 @@
 
 https://www.joshwcomeau.com/react/usememo-and-usecallback/
 
+### useEffect
+
+```jsx
+useEffect(() => {
+    const fetchCountries = async () => {
+        const response = await fetch(`${BASE_URL}/countries?sort=${key}`);
+        const data = await response.json();
+        setCountries(data.slice(0, 10));
+    };
+    fetchCountries();
+}, [key]);
+```
+
 ### useMemo
 
 > vue的computed,依赖的值不改变不会重新执行
