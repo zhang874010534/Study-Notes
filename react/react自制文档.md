@@ -87,6 +87,20 @@ const handleMegaBoost = React.useMemo(() => {
 
 ### [useRef](https://react.docschina.org/docs/hooks-reference.html#useref)
 
+> 返回一个可变对象
+
+```jsx
+const [count, setCount] = useState(0);
+//extract the 'current' property and assign it a value
+const { current: myArray } = useRef(["one", "two", "three"]);
+
+useEffect(() => {
+  setCount((count) => count + 1);
+}, [myArray]); //the reference value is stable, so no infinite loop
+```
+
+
+
 ```react
 import {forwardRef, useImperativeHandle, useRef} from "react";
 
