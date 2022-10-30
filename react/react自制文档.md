@@ -136,6 +136,36 @@ export default Demo
 
 > useLayoutEffect和原来componentDidMount&componentDidUpdate一致，在react完成DOM更新后马上同步调用的代码，会阻塞页面渲染。而useEffect是会在整个页面渲染完才会调用的代码。
 
+### [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer)
+
+> 可以配合下面的useContext， 不过复杂起来肯定是用redux这样的库
+
+```tsx
+const initialState = {count: 0};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return {count: state.count + 1};
+    case 'decrement':
+      return {count: state.count - 1};
+    default:
+      throw new Error();
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+      <button onClick={() => dispatch({type: 'increment'})}>+</button>
+    </>
+  );
+}
+```
+
 ### useContext
 
 ```jsx
@@ -155,7 +185,7 @@ const Child = (props) => {
 const Context = createContext()
 
 const Child2 = () => {
-  const child2Context = useContext(Context)
+  const  = useContext(Context)
   console.log(child2Context,'child2Context')
   return <div>
     child2
