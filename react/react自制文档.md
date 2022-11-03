@@ -51,6 +51,10 @@ useEffect(() => {
 }, [key]);
 ```
 
+### useLayoutEffect
+
+> useLayoutEffect和原来componentDidMount&componentDidUpdate一致，在react生成完dom（还没有渲染到页面上）马上同步调用的代码，会阻塞页面渲染。而useEffect是会在整个页面渲染完才会调用的代码。
+
 ### useMemo
 
 > vue的computed,依赖的值不改变不会重新执行
@@ -132,10 +136,6 @@ function Demo (props,ref) {
 export default Demo
 ```
 
-### useLayoutEffect
-
-> useLayoutEffect和原来componentDidMount&componentDidUpdate一致，在react完成DOM更新后马上同步调用的代码，会阻塞页面渲染。而useEffect是会在整个页面渲染完才会调用的代码。
-
 ### [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer)
 
 > 可以配合下面的useContext， 不过复杂起来肯定是用redux这样的库
@@ -206,4 +206,22 @@ function Parent (props,ref) {
   )
 }
 export default Parent
+```
+
+## Api
+
+### React.forwardRef 
+
+> 让使用组件的人直接拿到组件里的某个元素
+
+```tsx
+const FancyButton = React.forwardRef((props, ref) => (  
+    <button ref={ref} className="FancyButton">
+        {props.children}
+    </button>
+));
+
+// You can now get a ref directly to the DOM button:
+const ref = React.createRef();
+<FancyButton ref={ref}>Click me!</FancyButton>;
 ```
