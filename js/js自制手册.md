@@ -67,3 +67,14 @@ date.toLocaleString('zh', { hour12: true });        //2018/4/4 下午6:57:36
 date.toLocaleString('zh', { hour12: false });       //2018/4/4 18:57:36
 
 ```
+
+### Element
+
+#### [Element.closest()](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/closest)
+
+> **`Element.closest()`** 方法用来获取：匹配特定选择器且离当前元素最近的祖先元素（也可以是当前元素本身）。如果匹配不到，则返回 `null`。
+
+```js
+e.target.closest('.item').classList.add("current");
+```
+
