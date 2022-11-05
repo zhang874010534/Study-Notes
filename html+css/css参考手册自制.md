@@ -59,6 +59,24 @@
 
 > 属性描述了元素的内容应该与元素的直系父元素的内容和元素的背景如何混合
 
+### 选择器
+
+#### [:has伪类](https://mp.weixin.qq.com/s?__biz=MzIyMDc1NTYxNg==&mid=2247486055&idx=1&sn=3f44a7993c69b7c60721b7475afd71f6&chksm=97c669a8a0b1e0be3a71bdff8c2157d0c037f6918e24e6ee0c3547daf71fd5c14f95af92a5df&scene=21#wechat_redirect)
+
+> `:has`伪类的语法非常简单，表示满足一定条件后，就会匹配该元素。
+
+只会匹配其后紧跟着`p`元素的`h1`元素
+
+```css
+h1:has(+ p)
+```
+
+当前选中项的前一项
+
+```css
+.item:has(+.item.current)
+```
+
 #### 单行文本省略
 
 ````CSS

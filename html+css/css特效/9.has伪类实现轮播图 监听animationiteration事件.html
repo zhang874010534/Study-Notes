@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+      .view {
+          position: relative;
+          width: 400px;
+          height: 250px;
+          transform-style: preserve-3d;
+          perspective: 500px;
+          margin-left: 200px;
+          animation: scroll 3s infinite;
+      }
+      .view:hover {
+          animation-play-state: paused;
+      }
+      .item {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 8px;
+          display: grid;
+          place-content: center;
+          box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+          transform: translate3d(0, 0, -100px);
+          transition: transform 1s;
+      }
+      /*当前项*/
+      .item.current {
+          transform: translate3d(0, 0, 0);
+      }
+      /*当前项右1*/
+      .item.current + .item,
+      .item:first-child:has(~ .item.current:last-child) {
+          transform: translate3d(30%, 0, -100px);
+      }
+      /*当前项左1*/
+      .item:has(+ .item.current),
+      /*选中第一个 最后一个向左走*/
+      .item.current:first-child ~ .item:last-child {
+          transform: translate3d(-30%, 0, -100px);
+      }
+      /*当前项右2*/
+      .item.current + .item + .item,
+      .item:first-child:has(~ .item.current:nth-last-child(2)),
+      .item:nth-child(2):has(~ .item.current:last-child) {
+          transform: translate3d(50%, 0, -150px);
+      }
+      /*当前项左2*/
+      .item:has(+.item + .item.current),
+      /*选中最后一个 那么第一个往右走 如果第一个判断出来存在最后一个child*/
+      .item.current:first-child ~ .item:nth-last-child(2),
+      .item.current:nth-child(2) ~ .item:last-child{
+          transform: translate3d(-50%, 0, -150px);
+      }
+      @keyframes scroll {
+          to {
+              /* 无关紧要 主要为了触发事件 */
+              transform: translateZ(1px);
+          }
+      }
+
+
+  </style>
+</head>
+<body>
+<div class="view" id="view">
+  <div class="item" style="background: palegreen">1</div>
+  <div class="item " style="background: palegoldenrod">2</div>
+  <div class="item" style="background: paleturquoise">3</div>
+  <div class="item " style="background: papayawhip">4</div>
+  <div class="item current" style="background: palevioletred">5</div>
+</div>
+<script>
+  const view = document.querySelector('#view')
+  view.addEventListener('animationiteration' , () => {
+    console.log(1234)
+    const current = view.querySelector(".current")
+    current.classList.remove('current')
+    if(current.nextElementSibling) {
+      current.nextElementSibling.classList.add('current')
+    }else {
+      view.firstElementChild.classList.add('current')
+    }
+  })
+  view.addEventListener("click", (ev) => {
+    const current = view.querySelector(".current");
+    current.classList.remove("current");
+    ev.target.closest('.item').classList.add("current");
+  });
+</script>
+</body>
+</html>
