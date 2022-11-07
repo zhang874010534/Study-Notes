@@ -27,3 +27,4 @@ ctrl shift n 文件搜索
 alt F7 可以查看当前变量、函数、类的使用、读取、导入的地方，在阅读别人的代码理清逻辑关系的时候非常好用
 languages & frameworks javascript webpack 选择.webstorm.ide.js 设置@别名
 editor code style  enable editorConfig 可以选择是否启用editorConfig
+ctrl+ 空格 代码提示 keymap => Code Completion => Basic
