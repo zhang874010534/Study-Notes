@@ -13,6 +13,31 @@
 
 #### [react-loadable](https://github.com/jamiebuilds/react-loadable)
 
+## React
+
+### [React.Children](https://zh-hans.reactjs.org/docs/react-api.html#reactchildren)
+
+> `React.Children` 提供了用于处理 `this.props.children` 不透明数据结构的实用方法。
+
+```tsx
+React.Children.map(children, (child, index) => {
+  console.log(child)
+  const childElement = child as React.FunctionComponentElement<MenuItemProps>
+  const {name} = childElement.type
+  if(name === 'MenuItem') {
+    return React.cloneElement(childElement, {
+      index
+    })
+  }else {
+    console.error('请检查传入的组件')
+  }
+})
+```
+
+### [React.cloneElement](https://zh-hans.reactjs.org/docs/react-api.html#cloneelement)
+
+> 以 `element` 元素为样板克隆并返回新的 React 元素
+
 ## React16
 
 ### Api变化
