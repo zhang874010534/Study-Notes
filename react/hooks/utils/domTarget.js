@@ -1,4 +1,4 @@
-import {isFunction} from "./index";
+import {isFunction} from "./index.js";
 
 export function getTargetElement (target) {
   let targetElement

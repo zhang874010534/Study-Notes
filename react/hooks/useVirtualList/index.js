@@ -7,12 +7,9 @@ import {isNumber} from "../utils";
 const useVirtualList =  (list, options) => {
   const { containerTarget, wrapperTarget, itemHeight, overscan = 5 } = options;
   const itemHeightRef = useLatest(itemHeight);
-
   // const size = useSize(containerTarget);
-
   // 如果是直接跳转，则不需要重新计算
   const scrollTriggerByScrollToFunc = useRef(false);
-
 
   const [targetList, setTargetList] = useState([]);
   const getVisibleCount = (containerHeight, fromIndex) => {
@@ -104,7 +101,7 @@ const useVirtualList =  (list, options) => {
     //   return;
     // }
     calculateRange();
-  }, [ list]);
+  }, [list]);
   useEventListener('scroll', (e) => {
     // 如果是直接跳转，则不需要重新计算
     if(scrollTriggerByScrollToFunc.current) {
@@ -126,4 +123,5 @@ const useVirtualList =  (list, options) => {
   // }
   return [targetList]
 }
+
 export default useVirtualList
