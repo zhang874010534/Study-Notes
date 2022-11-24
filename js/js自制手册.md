@@ -78,3 +78,14 @@ date.toLocaleString('zh', { hour12: false });       //2018/4/4 18:57:36
 e.target.closest('.item').classList.add("current");
 ```
 
+### Window
+
+#### getComputedStyle
+
+```js
+// 拿到CSSStyleDeclaration上面有一个方法getPropertyValue获取属性
+getComputedStyle(temp1).getPropertyValue('bottom')
+```
+
+
+
