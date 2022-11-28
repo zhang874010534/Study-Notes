@@ -269,4 +269,8 @@
 | powerpoint（pptx） | pptxjs                       | pptxjs改造开发                       |
 | excel（xlsx）      | sheetjs、handsontable        | exceljs(npm)、handsontable(npm)(npm) |
 | pdf（pdf）         | pdfjs                        | pdfjs(npm)                           |
-| 图片               | jquery.verySimpleImageViewer | v-viewer(npm)                        |
+| 图片               | jquery.verySimpleImageViewer | v-viewer(npm)a                       |
+
+### 组件库
+
+#### [storybook](https://storybook.js.org/docs/vue/get-started/introduction)

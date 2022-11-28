@@ -28,3 +28,4 @@ alt F7 ¿ÉÒÔ²é¿´µ±Ç°±äÁ¿¡¢º¯Êý¡¢ÀàµÄÊ¹ÓÃ¡¢¶ÁÈ¡¡¢µ¼ÈëµÄµØ·½£¬ÔÚÔÄ¶Á±ðÈËµÄ´úÂëÀíÇåÂ
 languages & frameworks javascript webpack Ñ¡Ôñ.webstorm.ide.js ÉèÖÃ@±ðÃû
 editor code style  enable editorConfig ¿ÉÒÔÑ¡ÔñÊÇ·ñÆôÓÃeditorConfig
 ctrl+ ¿Õ¸ñ ´úÂëÌáÊ¾ keymap => Code Completion => Basic
+alt+ f1 => 1 Ä¿Â¼ÇÐ»»µ½µ±Ç°ÎÄ¼þ
