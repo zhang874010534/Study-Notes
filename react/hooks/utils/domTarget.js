@@ -1,6 +1,14 @@
 import {isFunction} from "./index.js";
+import isBrowser from "./isBrowser";
+export function getTargetElement (target, defaultElement) {
+  if(!isBrowser) {
+    return undefined
+  }
 
-export function getTargetElement (target) {
+  if(!target) {
+    return defaultElement
+  }
+
   let targetElement
 
   if(isFunction(target)) {
