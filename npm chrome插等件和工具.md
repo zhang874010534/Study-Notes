@@ -269,7 +269,7 @@
 | powerpoint（pptx） | pptxjs                       | pptxjs改造开发                       |
 | excel（xlsx）      | sheetjs、handsontable        | exceljs(npm)、handsontable(npm)(npm) |
 | pdf（pdf）         | pdfjs                        | pdfjs(npm)                           |
-| 图片               | jquery.verySimpleImageViewer | v-viewer(npm)a                       |
+| 图片               | jquery.verySimpleImageViewer | v-viewer(npm)                        |
 
 ### 组件库
 
