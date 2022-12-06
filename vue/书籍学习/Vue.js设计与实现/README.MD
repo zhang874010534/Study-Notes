@@ -129,3 +129,38 @@ app.config.errorHandle = () => {}
 Tree-Shaking是一种排除 dead code 的机制，框架中会内建多种能力，例如 Vue.js内建的组件等。对于用户可能用不到的能力，我们可以利用Tree-Shaking 机制使最终打包的代码体积最小化。另外，Tree-Shaking 本身基于 ESM，并且JavaScript是一门动态语言，通过纯静态分析的手段进行Tree-Shaking难度较大，因此大部分工具能够识别/#_PURE_#/注释，在编写框架代码时，我们可以利用/#_PURE_#/来辅助构建工具进行 Tree-Shaking。
 
 接着我们讨论了框架的输出产物，不同类型的产物是为了满足不同的需求。为了让用户能够通过
+
+### **第3章 Vue.js 3的设计思路**
+
+#### **声明式地描述UI**
+
+使用与HTML标签一致地方式来描述DOM元素、属性、事件、层级结构
+
+h函数就是一个辅助创建虚拟DOM的工具函数
+
+#### **初识渲染器**
+
+ 将虚拟DOM变成真实的DOM
+
+```js
+const vnode = {
+    tag: 'div',
+    props: {
+        onClick: () => alert('hello')    
+    },
+    children: 'click me'
+}
+```
+
+#### 渲染器
+
+renderer中更复杂的逻辑是交给patch处理的
+
+```js
+function renderer(vnode, container) {
+    // 使用vnode.tag 作为标签名称创建DOM元素
+    const el = document.createElement(vnode.tag)
+    
+}
+```
+
