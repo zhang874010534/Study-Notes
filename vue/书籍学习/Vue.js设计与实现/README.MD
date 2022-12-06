@@ -41,3 +41,91 @@ vue是运行时+编译时的框架，template通过compiler转换成树型结构
 有一些函数在生成环境虽然没有意义，但是可能会产生副作用，比如输出了某个对象上的属性，这个对象是通过proxy代理的，那么就会触发代理对象的get夹子，get夹子中是可能产生副作用的。如果我们确定一个函数确定不会产生副作用可以使用注释代码/*#_PURE_*/  foo(),这样foo就不会被编译到最终的文件里去。
 
 rollup.js,webpack以及压缩工具比如terser都是识别它的。
+
+#### **框架应该输出怎样的构建产物**
+
+- vue.global.js
+
+用于开发环境，会带警告
+
+IIFE(Immediately Invoked Function Expresstion) 立即执行函数
+
+- vue.global.prod.js
+
+用于生成环境，不包含警告信息
+
+- vue.esm-broser.js
+
+主流浏览器对原生ESM的支持都不错，可通过script直接引入
+
+```js
+<script type="module" src='/vue.esm-browser.js'></script>
+```
+
+- vue.esm-bundler.js
+
+和esm-broswer的区别 if(_DEV_) {    warn('111') } if((process.env.NODE_ENV !== 'production')) {    warn('111') }
+
+- vue.cjs.js
+
+commonjs规范
+
+#### **特性开关**
+
+提供开关，用户可以关闭特性
+
+- 对于用户关闭的特性，我们可以利用Tree-Shaking 机制让其不包含在最终的资源中。
+- 该机制为框架设计带来了灵活性，可以通过特性开关任意为框架添加新的特性，而不用担心资源体积变大。同时，当框架升级时，我们也可以通过特性开关来支持遗留API,这样新用户可以选择不使用遗留API，从而使最终打包的资源体积最小化。
+
+#### **错误处理**
+
+提供给用户的方法需要代替用户统一处理错误
+
+```js
+// util.js
+let handleError = null
+export default {
+    foo(fn) {
+        callWithErrorHandling(fn)
+    },
+    // 用户可以调用该函数注册统一的错误处理函数
+    registryErrorHandler(fn) {
+        handleError = fn    
+    }
+}
+function callWithErrorHandling(fn) {
+    try {
+        fn && fn()        
+    } catch(e) {
+        handleError(e)              
+    }
+}
+
+
+import util from 'util.js'
+util.registryErrorHandler((e) => {
+    console.log(e)
+}))
+
+
+// vue中使用
+import App from 'App.vue'
+const app = createApp(App)
+app.config.errorHandle = () => {}
+```
+
+
+
+#### **良好的TypeScript类型支持**
+
+编译器自动提示、代码可维护更强、避免低级错误
+
+#### **总结**
+
+本章首先讲解了框架设计中关于开发体验的内容，开发体验是衡量一个框架的重要指标之一。提供友好的警告信息至关重要，这有助于开发者快速定位问题，因为大多数情况下“框架”要比开发者更清楚问题出在哪里，因此在框架层面抛出有意义的警告信息是非常必要的。
+
+但提供的警告信息越详细，就意味着框架体积越大。因此，为了框架体积不受警告信息的影响，我们需要利用Tree-Shaking机制，配合构建工具预定义常量的能力，例如预定义_DEV_常量，从而实现仅在开发环境中打印警告信息，而生产环境中则不包含这些用于提升开发体验的代码，从而实现线上代码体积的可控性。
+
+Tree-Shaking是一种排除 dead code 的机制，框架中会内建多种能力，例如 Vue.js内建的组件等。对于用户可能用不到的能力，我们可以利用Tree-Shaking 机制使最终打包的代码体积最小化。另外，Tree-Shaking 本身基于 ESM，并且JavaScript是一门动态语言，通过纯静态分析的手段进行Tree-Shaking难度较大，因此大部分工具能够识别/#_PURE_#/注释，在编写框架代码时，我们可以利用/#_PURE_#/来辅助构建工具进行 Tree-Shaking。
+
+接着我们讨论了框架的输出产物，不同类型的产物是为了满足不同的需求。为了让用户能够通过
