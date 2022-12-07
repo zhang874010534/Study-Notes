@@ -160,7 +160,31 @@ renderer中更复杂的逻辑是交给patch处理的
 function renderer(vnode, container) {
     // 使用vnode.tag 作为标签名称创建DOM元素
     const el = document.createElement(vnode.tag)
+    // 遍历 vnode.props, 将属性、时间添加到DOM元素
+    for(const key in vnode.props) {
+        if(/^on/.test(key)) {
+            // 如果 key 以 on开头、 说明它是事件
+            el.addEventListener(
+                key.subStr(2).toLowerCase(), // 事件名称 onClick ---> click
+                vnode.props[key] // 事件处理函数     
+            )
+        }    
+    }
     
+    // 处理 children
+    if(typeof vnode.children === 'string') {
+        // 如果 children是字符串，说明它是元素的文本子节点
+        el.appendChild(document.createTextNode(vnode.children))    
+    }else if(Array.isArray(vnode.children)) {
+        // 递归地调用 renderer 函数渲染子节点， 使用当前元素el 作为挂载点
+        vnode.children.forEach(child => renderer(child, el))                    
+    }
+    
+    // 将元素添加到挂载点下
+    container.appendChild(el)
 }
 ```
 
+**组件的本质**
+
+组件就是一组DOM元素的封装，我们可以定义一个函数来表示组件。
