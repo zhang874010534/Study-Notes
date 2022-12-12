@@ -1,6 +1,6 @@
 ## **第一篇 框架设计概览**
 
-### 第一章 权衡的艺术
+### 第1章 权衡的艺术
 
 #### 命令式和声明式
 
@@ -356,3 +356,102 @@ render() {
 Vue.js的模板会被一个叫作编译器的程序编译为渲染函数，后面我们会着重讲解编译器相关知识。最后，编译器、渲染器都是 Vue.js的核心组成部分，它们共同构成一个有机的整体，不同模块之间互相配合，进一步提升框架性能。
 
 ## **第二篇 响应系统**
+
+### **第4章 响应系统的作用与实现**
+
+#### **响应式数据与副作用函数**
+
+```js
+const obj = { text: 'hello world' }
+function effect() {
+    // effect 函数的执行会读取 obj.text
+    ducument.body.innerText = obj.text
+}
+```
+
+当obj.text的值发生变化时，希望副作用函数effect会重新执行
+
+```js
+obj.text = 'hello vue3' // 修改obj.text 的值，同时希望副作用函数会重新执行
+```
+
+#### **响应式数据的基本实现**
+
+下面的实现还存在很多缺陷，例如直接通过名字（effect） 来获取副作用函数。
+
+```js
+// 存储副作用函数的桶
+const bucket = new Set()
+
+// 原始数据
+const data = { text: 'hello world' }
+// 对原始数据的代理
+const obj = new Proxy(data, {
+    // 拦截读取操作
+    get(target, key) {
+        // 将副作用函数effect 添加到存储副作用函数的桶中
+        bucket.add(effect)
+        // 返回属性值
+        return target[key]
+    },
+    set(target, key, newVal) {
+        // 设置属性值
+        target[key] = newVal
+        // 把副作用函数从桶里取出并执行
+        bucket.forEach(fn => fn())
+        // 返回 true 代表设置操作成功
+        return true    
+    }
+})
+```
+
+#### **设计一个完善的响应系统**
+
+希望哪怕副作用函数是一个匿名函数，也能够被正确地收集到桶中,下面提供一个注册副作用函数的机制
+
+```js
+// 用一个全局变量存储被注册的副作用函数
+let activeEffect
+// effect 函数用于注册副作用函数
+function effect(fn) {
+    // 当调用effect 注册副作用函数时，将副作用函数 fn 赋值给 activeEffect
+    activeEffect = fn
+    // 执行副作用函数
+    fn()
+}
+```
+
+按照如下方式使用effect函数
+
+```js
+effect(
+    // 一个匿名的副作用函数
+    () => {
+        document.body.innerText = obj.text    
+    }
+)
+```
+
+匿名函数会被赋值给全局变量activeEffect，接着执行，触发obj.text的读取操作，proxy的get方法。
+
+```js
+const obj = new Proxy(data, {
+    // 拦截读取操作
+    get(target, key) {
+        if(activeEffect) {
+            bucket.add(activeEffect)        
+        }
+        // 返回属性值
+        return target[key]
+    },
+    set(target, key, newVal) {
+        // 设置属性值
+        target[key] = newVal
+        // 把副作用函数从桶里取出并执行
+        bucket.forEach(fn => fn())
+        // 返回 true 代表设置操作成功
+        return true    
+    }
+})
+```
+
