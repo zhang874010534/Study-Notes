@@ -455,3 +455,148 @@ const obj = new Proxy(data, {
 })
 ```
 
+例如在响应式数据obj上设置一个不存在的属性时
+
+```js
+effect(
+    // 匿名副作用函数
+    () => {
+        console.log('effect run') // 会打印 2 次 这是不正确的 需要解决这个问题
+        document.body.innerText = obj.text    
+    }
+)
+
+setTimeout(() => {
+    // 副作用函数中并没有读取 notExist 属性的值
+    obj.notExist = 'hello vue3'
+}, 1000)
+```
+
+有如下代码
+
+```js
+effect(function effectFn() {
+    document.body.innerText = obj.text
+})
+```
+
+会建立如下关系
+
+- target
+
+- - key
+
+  - - effectFn
+
+如果有两个副作用函数同时读取同一个对象的属性值
+
+```js
+effect(function effectFn1() {
+    obj.text
+})
+effect(function effectFn2() {
+    obj.text
+})
+```
+
+会建立如下关系
+
+- target
+
+- - key
+
+  - - effectFn1
+    - effectFn2
+
+如果有一个副作用函数读取同一个对象的两个属性值
+
+```js
+effect(function effectFn() {
+    obj.text1
+    obj.text2
+})
+```
+
+会建立如下关系
+
+- target
+
+- - text1
+
+  - - effectFn
+
+  - text2
+
+  - - effectFn
+
+如果在不同的副作用函数读取两个对象的不同属性值
+
+```js
+effect(function effectFn1() {
+    obj1.text1
+})
+effect(function effectFn2() {
+    obj2.text2
+})
+```
+
+会建立如下关系
+
+- obj1
+
+- - text1
+
+  - - effectFn1
+
+- obj2
+
+- - text2
+
+  - - effectFn2
+
+使用WeakMap代表Set作为桶的数据结构
+
+```js
+// 存储副作用函数的桶
+const bucket = new WeakMap()
+
+const obj = new Proxy(data, {
+    // 拦截读取操作
+    get(target, key) {
+        if(!activeEffect) return target[key]
+        // 根据target从 桶 里取得depsMap， 它也是一个Map类型：key --> effects
+        let depsMap = bucket.get(target)                
+        // 如果不存在 depsMap, 那么新建一个 Map并与 target 关联
+        if(!depsMap) {
+            bucket.set(target, (depsMap = new Map()))        
+        }
+        // 再根据 key 从depsMap 中取得 deps， 它是一个 Set 类型
+        // 里面存储着所有与当前 key 相关联的副作用函数： effects
+        let deps = depsMap.get(key)
+        if(!deps) {
+            depsMap.set(key, (deps = new Set()))        
+        }
+        // 最后将当前激活的副作用函数添加到桶里
+        deps.add(activeEffect)
+        
+        // 返回属性值
+        return target[key]
+    },
+    set(target, key, newVal) {
+        // 设置属性值
+        target[key] = newVal
+        // 根据 target 从桶里取得 depsMap, 它是 key --> effects
+        cosnt depsMap = bucket.get(target)
+        if(!depsMap) return;
+        // 根据 key 取得所有副作用函数 effects
+        const effect = depsMap.get(key)
+        // 执行副作用函数
+        effect && effect.forEach(fn => fn())            
+    }
+})
+```
+
+- WeakMap 由 target --> Map 构成
+- Map 由 key --> Set 构成
+
+![](https://raw.githubusercontent.com/zhang874010534/tuchuan/main/vue/vue%E4%BE%9D%E8%B5%96%E6%94%B6%E9%9B%86WeakMap%20Set.png)
