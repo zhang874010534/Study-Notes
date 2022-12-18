@@ -669,3 +669,35 @@ function trigger(target, key) {
 }
 ```
 
+#### **分支切换与cleanup**
+
+ 首先明确分支切换的定义
+
+```js
+const data = { ok: true, text: 'hello world' }
+const obj = new Proxy(data, { /* ... */ })
+
+effect(function effectFn() {
+    document.body.innerText = obj.ok ? obj.text : 'not'
+})
+```
+
+副作用函数effectFn与响应式数据之间建立的联系如下
+
+-  data
+
+- - ok
+
+  - - effectFn
+
+  - text
+
+  - - effectFn
+
+如果obj.ok的值修改为false，obj.text应该不需要被读取
+
+![](https://github.com/zhang874010534/tuchuan/blob/main/vue/202212181413.jfif?raw=true)
+
+无论obj.text的值怎么变，都不需要重新执行副作用函数，但事实并非如此，还是会重复执行。
+
+解决这个问题的思路很简单，每次副作用函数执行时，先把它从所有与之关联的依赖集合中删除。
