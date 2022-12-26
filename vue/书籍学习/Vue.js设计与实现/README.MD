@@ -701,3 +701,83 @@ effect(function effectFn() {
 无论obj.text的值怎么变，都不需要重新执行副作用函数，但事实并非如此，还是会重复执行。
 
 解决这个问题的思路很简单，每次副作用函数执行时，先把它从所有与之关联的依赖集合中删除。
+
+<img src="https://github.com/zhang874010534/tuchuan/blob/main/vue/202212262117.jfif?raw=true" style="zoom: 50%;" />
+
+当副作用函数执行完毕后，会重新建立联系，但在新的联系中不会包含遗留的副作用函数。所以只要在每次副作用函数执行前，将其从相关联的依赖集合中移除，问题就迎刃而解了。
+
+要将一个副作用函数从所有与之关联的依赖集合中移除，就需要明确知道哪些依赖集合中包含它
+
+```js
+// 用一个全局变量存储被注册的副作用函数
+let activeEffect
+function effect(fn) {
+    const effectFn = () => {
+        // 当 effectFn 执行时，将其设置为当前激活的副作用函数
+        activeEffect = effectFn
+        fn()    
+    }
+    // activeEffect.deps 用来存储所有与该副作用函数想关联的依赖集合
+    effectFn.deps = []
+    // 执行副作用函数
+    effectFn()
+}
+```
+
+修改track函数
+
+```js
+function track(target, key) {
+    if(!activeEffect) return target[key]
+    // 根据target从 桶 里取得depsMap， 它也是一个Map类型：key --> effects
+    let depsMap = bucket.get(target)                
+    // 如果不存在 depsMap, 那么新建一个 Map并与 target 关联
+    if(!depsMap) {
+        bucket.set(target, (depsMap = new Map()))        
+    }
+    // 再根据 key 从depsMap 中取得 deps， 它是一个 Set 类型
+    // 里面存储着所有与当前 key 相关联的副作用函数： effects
+    let deps = depsMap.get(key)
+    if(!deps) {
+        depsMap.set(key, (deps = new Set()))        
+    }
+    // 最后将当前激活的副作用函数添加到桶里
+    deps.add(activeEffect)
+    // deps 就是一个与当前副作用函数存在联系的依赖集合
+    // 将其添加到 activeFeect.deps 数组中
+    activeEffect.deps.push(deps) // 新增
+}
+```
+
+在每次副作用函数执行时，根据effectFn.deps获取所有相关联的依赖集合，进而将副作用函数从依赖集合中移除
+
+```js
+// 用一个全局变量存储被注册的副作用函数
+let activeEffect
+function effect(fn) {
+    const effectFn = () => {
+        // 调用 cleanup 函数完成清除工作
+        cleanup(effectFn)
+        // 当 effectFn 执行时，将其设置为当前激活的副作用函数
+        activeEffect = effectFn
+        fn()    
+    }
+    // activeEffect.deps 用来存储所有与该副作用函数想关联的依赖集合
+    effectFn.deps = []
+    // 执行副作用函数
+    effectFn()
+}
+
+function cleanup(effectFn) {
+    // 遍历 effectFn.deps 数组
+    for (let i = 0; i < effectFn.deps.length; i++) {
+        // deps 是依赖集合
+        const deps = effect.deps[i]
+        // 将 effectFn 从依赖集合中移除
+        deps.delete(effectFn)    
+    }
+    // 最后需要重置 effectFn.deps 数组
+    effectFn.deps.length = 0
+}
+```
+
