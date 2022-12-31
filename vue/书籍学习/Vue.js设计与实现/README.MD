@@ -781,3 +781,42 @@ function cleanup(effectFn) {
 }
 ```
 
+clean 函数接收副作用函数作为参数，遍历副作用函数的 effectFn.deps 数组， 该数组的每一项都是一个依赖集合，然后将该副作用函数从依赖集合中移除，最后重置effectFn.deps数组
+
+这时候其实是会无线循环的因为
+
+```js
+function trigger(target, key) {
+    cosnt depsMap = bucket.get(target)
+    if(!depsMap) return;
+    const effect = depsMap.get(key)
+    effect && effect.forEach(fn => fn()) // 问题出在这一句代码
+}
+```
+
+一个值被修改，触发trigger，trigger触发所有的effect，effect执行前要去将副作用effect函数（也就是自己）从所有与之关联的依赖集合中移除，副作用函数又执行，获取这个值，又把effect副作用函数重新收集到集合中。
+
+语言规范中对此有明确的说明： 在调用forEach遍历Set集合时，如果一个值已经被访问过了，但该值被删除并重新添加到集合，如果此时forEach遍历没有结束，那么该值会重新被访问。
+
+```js
+const set = new Set([1])
+
+const newSet = new Set(set)
+newSet.forEach(item => {
+    set.delete(1)
+    set.add(1)
+})
+
+使用同样的手段来避免无限执行
+function trigger(target, key) {
+    cosnt depsMap = bucket.get(target)
+    if(!depsMap) return;
+    const effect = depsMap.get(key)
+    
+    const effectsToRun = new Set(effects) // 新增
+    effectsToRun.forEach(effectFn => effectFn()) // 新增
+    // effect && effect.forEach(fn => fn())     
+}
+```
+
+**嵌套的 effect 与 effect 栈**
