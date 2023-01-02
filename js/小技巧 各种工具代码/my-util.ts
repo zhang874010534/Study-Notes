@@ -58,7 +58,7 @@ export function download({url, name = '', success, next, fail, complete}) {
             next && next(progress)
         }
     }).then(response => {
-        
+
         const blob = response.data
         let downloadUrl = null
         const URL = window.URL || window.webkitURL
@@ -75,7 +75,7 @@ export function download({url, name = '', success, next, fail, complete}) {
         fail && fail(error)
         complete && complete(error)
     })
-    
+
 }
 
 // 下载文件
@@ -85,7 +85,7 @@ export function downloadFile({file, name = ''}) {
     eleLink.setAttribute('download', name)
     eleLink.setAttribute('target', '_blank')
     eleLink.style.display = 'none'
-    
+
     document.body.appendChild(eleLink)
     eleLink.click()
     document.body.removeChild(eleLink)
@@ -94,7 +94,7 @@ export function downloadFile({file, name = ''}) {
 // 获取日期范围
 export function getDayRange(date, dayInterval) {
     let tmp = [];
-  
+
     if (date instanceof window.Date && typeof dayInterval == 'number') {
       const day = formatTime(date).slice(0, 10);
       const anotherDay = formatTime(
@@ -102,10 +102,10 @@ export function getDayRange(date, dayInterval) {
       ).slice(0, 10);
       tmp = dayInterval > 0 ? [day, anotherDay] : [anotherDay, day];
     }
-  
+
     return tmp;
 }
-  
+
 // 复制文字
 export function copyText(text){
     let dom = document.createElement('input')
@@ -126,19 +126,19 @@ export function colorRgb(sColor,opacity){
         if (sColor.length === 4) {
             var sColorNew = "#";
             for (var i=1; i<4; i+=1) {
-                sColorNew += sColor.slice(i, i+1).concat(sColor.slice(i, i+1));    
+                sColorNew += sColor.slice(i, i+1).concat(sColor.slice(i, i+1));
             }
             sColor = sColorNew;
         }
         //处理六位的颜色值
         var sColorChange = [];
         for (var i=1; i<7; i+=2) {
-            sColorChange.push(parseInt("0x"+sColor.slice(i, i+2)));    
+            sColorChange.push(parseInt("0x"+sColor.slice(i, i+2)));
         }
 		if(opacity){
 			return "RGBA(" + sColorChange.join(",") + "," + opacity + ")";
 		}else{
-			return "RGB(" + sColorChange.join(",") + ")";	
+			return "RGB(" + sColorChange.join(",") + ")";
 		}
     }
     return sColor;
@@ -228,15 +228,12 @@ export function download({url, name = '', success, next, fail, complete}) {
   })
 }
 
-// 下载file
-export function downloadFile({file, name = ''}) {
-  const eleLink = document.createElement('a')
-  eleLink.setAttribute('href', file)
-  eleLink.setAttribute('download', name)
-  eleLink.setAttribute('target', '_blank')
-  eleLink.style.display = 'none'
-
-  document.body.appendChild(eleLink)
-  eleLink.click()
-  document.body.removeChild(eleLink)
+// 分配参数
+export const assignParams = (target, source) => {
+  for (const targetKey in target) {
+    const element = source[targetKey]
+    if (element || element === 0 || typeof element === 'boolean') {
+      target[targetKey] = element
+    }
+  }
 }
