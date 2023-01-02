@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+      .g-wrap {
+          /*width: 100vw;*/
+          /*height: 100vh;*/
+          background: #000;
+      }
+      .text {
+          position: relative;
+          color: transparent;
+          color: #fff;
+          background: #000;
+          /*overflow: hidden;*/
+      }
+
+      .bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          width: 100%;
+          height: 400%;
+          background: linear-gradient(-3deg, #000, #000 25%, #ffb6ff 30%, #ffb6ff, #b344ff, #b344ff 70%, #000 75%, #000);
+          mix-blend-mode: darken;
+          animation: textScroll 6s infinite linear alternate;
+      }
+      @keyframes textScroll {
+          100% {
+              transform: translate(0, -75%);
+          }
+      }
+  </style>
+</head>
+<body>
+<div class="g-wrap">
+  <div class="text">灵动的 iPhone 新玩法，迎面而来。重大的安全新功能，为拯救生命而设计。创新的 4800 万像素主摄，让细节纤毫毕现。更有 iPhone 芯片中的速度之王，为一切提供强大原动力。
+    <div class="bg"></div>
+  </div>
+</div>
+<div class="g-wrap" style="margin-top: 300px">
+  <div class="text" style="overflow: hidden;">灵动的 iPhone 新玩法，迎面而来。重大的安全新功能，为拯救生命而设计。创新的 4800 万像素主摄，让细节纤毫毕现。更有 iPhone 芯片中的速度之王，为一切提供强大原动力。
+    <div class="bg"></div>
+  </div>
+</div>
+</body>
+</html>
