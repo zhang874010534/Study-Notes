@@ -144,6 +144,22 @@ will-change: initial
 will-change: inherit
 ```
 
+#### :empty 
+
+> 接口没有数据的情况。这个时候正常的做法是给用户一个提示
+
+```html
+<div class="content"></div>
+
+ <style>
+    .content:empty::after {
+        content: '暂无数据';
+    }
+ </style>
+```
+
+
+
 ### Image
 
 #### [object-fit](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit)
