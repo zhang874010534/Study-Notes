@@ -59,11 +59,35 @@
 
 > 属性描述了元素的内容应该与元素的直系父元素的内容和元素的背景如何混合
 
+[user-select](https://developer.mozilla.org/en-US/docs/Web/CSS/user-select)
+
+> 控制用户能否选中文本
+
 ### 选择器
 
 #### [:has伪类](https://mp.weixin.qq.com/s?__biz=MzIyMDc1NTYxNg==&mid=2247486055&idx=1&sn=3f44a7993c69b7c60721b7475afd71f6&chksm=97c669a8a0b1e0be3a71bdff8c2157d0c037f6918e24e6ee0c3547daf71fd5c14f95af92a5df&scene=21#wechat_redirect)
 
 > `:has`伪类的语法非常简单，表示满足一定条件后，就会匹配该元素。
+
+#### :focus-within 伪类
+
+> 表示一个元素获得焦点，或，该元素的后代元素获得焦点
+
+focus input的时候背景色变换
+
+```html
+<div class="content">
+  <input type="text" placeholder="请输入..." />
+</div>
+```
+
+```css
+.content:focus-within {
+    background: palegoldenrod;
+}
+```
+
+
 
 只会匹配其后紧跟着`p`元素的`h1`元素
 
