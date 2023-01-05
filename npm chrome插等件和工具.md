@@ -32,7 +32,7 @@
 
 - [vue-seamless-scroll](https://chenxuan0000.github.io/vue-seamless-scroll/) vue无缝滚动
 
-- [vue-print-nb](https://www.npmjs.com/package/vue-print-nb) 打印
+- [vue-print-nb](https://www.npmjs.com/package/vue-print-nb) 打印 vue3-print-nb
 
 ##### 开发环境
 

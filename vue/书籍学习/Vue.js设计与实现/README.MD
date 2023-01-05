@@ -820,3 +820,102 @@ function trigger(target, key) {
 ```
 
 **嵌套的 effect 与 effect 栈**
+
+effect 是可以发生嵌套的
+
+```js
+effect(function effectFn1() {
+    effect(function effectFn2() {
+        /*.....*/    
+    })
+})
+```
+
+在实际场景中父组件嵌套子组件
+
+在一个 effect 中执行 Foo 组件的渲染函数
+
+```js
+const Foo = {
+    render() {
+        return /*....*/    
+    }
+}
+effect(() => {
+    Foo.render()
+})
+```
+
+当组件发生嵌套时
+
+```js
+const Bar = {
+    render() {
+        return /*...*/    
+    }
+}
+// Foo 组件渲染 Bar 组件
+const Foo = {
+    render() {
+        return <Bar/>    
+    }
+}
+```
+
+此时就发生了 effect 嵌套
+
+```js
+effect(() => {
+    Foo.render()
+    // 嵌套
+    effect(() => {
+        Bar.render()    
+    })
+})
+```
+
+那么问题出在哪里呢，先观察如下代码
+
+```js
+// 用一个全局变量存储当前激活的 effect 的函数
+let activeEffect
+function effect(fn) {
+    const effectFn = () => {
+        cleanup(effectFn)
+        // 当调用 effect 注册副作用函数时， 将副作用函数赋值给 activeEffect
+        activeEffect = effectFn
+        fn()    
+    }
+    // activeEffect.deps 用来存储所有与该副作用函数想关联的依赖集合
+    effectFn.deps = []
+    // 执行副作用函数
+    effectFn() 
+}
+```
+
+我们用全局变量 activeEffect 来存储通过 effect 函数注册的副作用函数，意味着同一时刻 activeEffect 所存储的副作用函数只能有一个。当副作用函数发生嵌套时，内层副作用函数的执行会覆盖activeEffect的值，并且永远不会恢复到原来的值。这时如果再有响应式数据进行依赖收集，即使这个响应式数据是在外层副作用函数中读取的，它们收集到的副作用函数也都会是内层副作用函数，这就是问题所在。为了解决这个问题，我们需要一个副作用函数栈 effectstack，在副作用函数执行时，将当前副作用函数压入栈中，待副作用函数执行完毕后将其从栈中弹出，并始终让 activeEffect 指向栈顶的副作用函数。这样就能做到一个响应式数据只会收集直接读取其值的副作用函数，而不会出现互相影响的情况，如以下代码所示：
+
+```js
+let activeEffect
+// effect 栈
+const effectStack = [] // 新增
+function effect(fn) {
+    const effectFn = () => {
+        cleanup(effectFn)
+        // 当调用 effect 注册副作用函数时， 将副作用函数赋值给 activeEffect
+        activeEffect = effectFn
+        // 在调用副作用函数之前将当前副作用函数压入栈中
+        effectStack.push(effectFn)
+        fn()
+        // 在当前副作用函数执行完毕后，将当前副作用函数弹出栈，并把 activeEffect 还原为之前的值
+        effectStack.pop()
+        activeEffect = effectStack[effectStack.length - 1] // 新增
+    }
+    // activeEffect.deps 用来存储所有与该副作用函数想关联的依赖集合
+    effectFn.deps = []
+    // 执行副作用函数
+    effectFn() 
+}
+```
+
+#### **避免无线递归循环**
