@@ -919,3 +919,34 @@ function effect(fn) {
 ```
 
 #### **避免无线递归循环**
+
+```js
+const data = { foo: 1 }
+const obj = new Proxy(data, { /*...*/ })
+
+effect(() => obj.foo++)
+```
+
+在这个语句中，既会读取 obj.foo 的值，又会设置 obj.foo 的值，而这就是导致问题的根本原因。我们可以尝试推理一下代码的执行流程：首先读取 obj.foo的值，这会触发track 操作，将当前副作用函数收集到“桶”中，接着将其加1后再赋值给 obj.foo ，此时会触发 trigger 操作，即把“桶”中的副作用函数取出并执行。但问题是该副作用函数正在执行中，还没有执行完毕，就要开始下一次的执行。这样会导致无限递归地调用自己，于是就产生了栈溢出。
+
+而解决方式就是如果 trigger 触发执行的副作用函数与当前正在执行的副作用函数相同，则不触发执行。
+
+```js
+// 使用同样的手段来避免无限执行
+function trigger(target, key) {
+    cosnt depsMap = bucket.get(target)
+    if(!depsMap) return;
+    const effect = depsMap.get(key)
+    
+    const effectsToRun = new Set()
+    effect && effect.forEach(effectFn => {
+        // 如果 trigger 触发执行的副作用函数与当前正在执行的副作用函数相同，则不触发执行
+        if(effectFn !== activeEffect) { // 新增
+            effectsToRun.add(effectFn)
+        }
+    })
+    effectsToRun.forEach(effectFn => effectFn())
+    // effect && effect.forEach(fn => fn())     
+}
+```
+
