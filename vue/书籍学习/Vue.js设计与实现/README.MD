@@ -918,7 +918,7 @@ function effect(fn) {
 }
 ```
 
-#### **避免无线递归循环**
+#### **避免无限递归循环**
 
 ```js
 const data = { foo: 1 }
@@ -950,3 +950,72 @@ function trigger(target, key) {
 }
 ```
 
+#### **调度执行**
+
+可调度是指当 trigger 动作触发副作用函数重新执行时，有能力决定副作用函数执行的时机、次数及方式
+
+为 effect 函数设置一个选项参数 options
+
+```js
+effect(
+    () => {
+        console.log(obj.foo)    
+    },
+    // options
+    {
+        // 调度器 scheduler 是一个函数
+        scheduler(fn) {
+            // ...        
+        }    
+    }
+)
+
+let activeEffect
+// effect 栈
+const effectStack = []
+function effect(fn) {
+    const effectFn = () => {
+        cleanup(effectFn)
+        // 当调用 effect 注册副作用函数时， 将副作用函数赋值给 activeEffect
+        activeEffect = effectFn
+        // 在调用副作用函数之前将当前副作用函数压入栈中
+        effectStack.push(effectFn)
+        fn()
+        // 在当前副作用函数执行完毕后，将当前副作用函数弹出栈，并把 activeEffect 还原为之前的值
+        effectStack.pop()
+        activeEffect = effectStack[effectStack.length - 1]
+    }
+    // 将 options 挂载到 effectFn 上
+    effectFn.options = options // 新增
+    // activeEffect.deps 用来存储所有与该副作用函数想关联的依赖集合
+    effectFn.deps = []
+    // 执行副作用函数
+    effectFn() 
+}
+
+
+function trigger(target, key) {
+    cosnt depsMap = bucket.get(target)
+    if(!depsMap) return;
+    const effect = depsMap.get(key)
+    
+    const effectsToRun = new Set()
+    effect && effect.forEach(effectFn => {
+        // 如果 trigger 触发执行的副作用函数与当前正在执行的副作用函数相同，则不触发执行
+        if(effectFn !== activeEffect) {
+            effectsToRun.add(effectFn)
+        }
+    })
+    effectsToRun.forEach(effectFn => {
+        // 如果一个副作用函数存在调度器，则调用该调度器，并将副作用函数作为参数传递
+        if(effectFn.options.scheduler) { // 新增
+            effectFn.options.scheduler(effecFn) // 新增
+        }else {
+            // 否则直接执行副作用函数 (之前的默认行为)
+            effectFn() // 新增        
+        }
+    })  
+}
+```
+
+如上面代码所示，回显判断是否传了scheduler调度函数，如果有会调用调度器函数，否则就是直接执行副作用函数
