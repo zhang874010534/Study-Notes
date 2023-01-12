@@ -1019,3 +1019,45 @@ function trigger(target, key) {
 ```
 
 如上面代码所示，回显判断是否传了scheduler调度函数，如果有会调用调度器函数，否则就是直接执行副作用函数
+
+思考如下例子：
+
+```js
+const data = { foo: 1 }
+const obj = new Proxy(data, { /*...*/ })
+
+effect(() => {
+    console.log(obj.foo)
+})
+
+obj.foo++
+obj.foo++
+```
+
+在没有指定调度器前，他的输出如下
+
+```js
+1
+2
+3
+```
+
+基于调度器实现此功能
+
+```js
+// 定义一个任务队列
+const jobQueue = newSet()
+// 使用 Promise.resolve() 创建一个 promise 实例， 我们用它将一个任务添加到微任务队列
+const p = promise.resolve()
+
+// 一个标志代表是否正在刷新队列
+let isFlushing = false
+function flushjob() {
+    // 如果队列正在刷新， 则什么都不做
+    if(isFlushing) return
+    // 设置为 true, 代表正在刷新
+    isFlushing = true
+    
+}
+```
+
