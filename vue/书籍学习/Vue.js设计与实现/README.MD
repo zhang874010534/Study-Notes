@@ -807,7 +807,7 @@ newSet.forEach(item => {
     set.add(1)
 })
 
-使用同样的手段来避免无限执行
+// 使用同样的手段来避免无限执行
 function trigger(target, key) {
     cosnt depsMap = bucket.get(target)
     if(!depsMap) return;
