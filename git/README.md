@@ -1,8 +1,8 @@
 [Bitbucket](https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud)
 
-# Git
+## Git
 
-## 什么是Git?
+### 什么是Git?
 
   - Git是一款源代码管理工具(版本控制工具)
     - 我们写的代码需要使用Git进行管理。
@@ -14,7 +14,7 @@
   - Git是linux之父当年为了维护linux---linus之前也是手动维护合并把文件发给Linus
   - linus自己写了一个版本管理的工具(Git)
 
-## commit 规范与提交验证
+### commit 规范与提交验证
 
   - build：表示构建，发布版本可用这个
   - ci：更新 CI/CD 等自动化配置
@@ -28,11 +28,11 @@
   - style：样式更改
   - test：单元测试更改
 
-## 误操作的撤回方案
+### 误操作的撤回方案
 
   - git revert -n [commitId]
 
-## Tag与生产环境
+### Tag与生产环境
 
 git 支持对于历史的某个提交，打一个 tag 标签，常用于标识重要的版本更新。
 
@@ -82,16 +82,16 @@ $ git revert v1.0.0
 
 那是不是也可以监听 tag 推送再触发自动构建，这样版本更新的直观性是不是更好？
 
-## Git安装
+### Git安装
 
-## 初始化Git仓储/(仓库)
+### 初始化Git仓储/(仓库)
 
 - 这个仓库会存放，git对我们项目代码进行备份的文件
 - 在项目目录右键打开 git bash
 - 命令: `git init`
 
 
-## 自报家门
+### 自报家门
 
 - 就是在git中设置当前使用的用户是谁
 - 每一次备份都会把当前备份者的信息存储起来
@@ -99,7 +99,7 @@ $ git revert v1.0.0
   + 配置用户名:`git config --global user.name "xiaoming"`
   + 配置邮箱:  `git config --global user.email "xm@sina.com"`
 
-## 生成/添加SSH公钥
+### 生成/添加SSH公钥
 
 - ```
   ssh-keygen -t ed25519 -C "xxxxx@xxxxx.com"  
@@ -109,13 +109,13 @@ $ git revert v1.0.0
   查看是否连接成功 ssh -T git@gitee.com
   ```
 
-## 把大象放到冰箱要几步
+### 把大象放到冰箱要几步
 
 1. 打开冰箱门
 2. 放大象
 3. 关上冰箱
 
-## 把代码存储到.git仓储中
+### 把代码存储到.git仓储中
 
 - 1.把代码放到仓储的门口
   + `git add ./readme.md` 所指定的文件放到大门口
@@ -123,17 +123,17 @@ $ git revert v1.0.0
 - 2.把仓储门口的代码放到里面的房间中去
   + `git commit -m "这是对这次添加的东西的说明" `
 
-## 可以一次性把我们修改的代码放到房间里(版本库)
+### 可以一次性把我们修改的代码放到房间里(版本库)
 
 - `git commit --all -m "一些说明"`
   + --all 表示是把所有修改的文件提交到版本库
 
-## 查看当前的状态
+### 查看当前的状态
 
 - 可以用来查看当前代码有没有被放到仓储中去
 - 命令: `git status`
 
-## git中的忽略文件
+### git中的忽略文件
 
 - .gitignore,在这个文件中可以设置要被忽略的文件或者目录。
 - 被忽略的文件不会被提交仓储里去.
@@ -145,12 +145,12 @@ $ git revert v1.0.0
     * ` /js`      会忽略js目录里的所有文件
     * ` /js/*.js` 会忽略js目录下所有js文件
 
-## 查看日志
+### 查看日志
 
 - `git log` 查看历史提交的日志
 - `git log --oneline` 可以看到简洁版的日志
 
-## 回退到指定的版本
+### 回退到指定的版本
 
 - `git reset --hard Head~0`
   + 表示回退到上一次代码提交时的状态
@@ -163,24 +163,24 @@ $ git revert v1.0.0
 - `git reflog`
   + 可以看到每一次切换版本的记录:可以看到所有提交的版本号
 
-## 分支
+### 分支
 
 - 默认是有一个主分支master
 
-### 创建分支
+#### 创建分支
 
 - `git branch dev`
   + 创建了一个dev分支
   + 在刚创建时dev分支里的东西和master分支里的东西是一样的
 
-### 切换分支
+#### 切换分支
 
 - `git checkout dev`
   + 切换到指定的分支,这里的切换到名为dev的分支
     `git branch` 可以查看当前有哪些分支
 
 
-### 合并分支
+#### 合并分支
 
 - `git merge dev`
   + 合并分支内容,把当前分支与指定的分支(dev),进行合并
@@ -209,11 +209,11 @@ $ git revert v1.0.0
 
  + 会得到远程仓储相同的数据,如果多次执行会覆盖本地内容。
 
-## 清理本地无用分支 远端不存在本地还是显示的
+### 清理本地无用分支 远端不存在本地还是显示的
 
 git remote prune origin
 
-# Git-flow
+## Git-flow
 
 ![](https://raw.githubusercontent.com/zhang874010534/tuchuan/main/git/git-flow.png)
 
@@ -224,3 +224,21 @@ git remote prune origin
 5. Hotfix 分支： 线上bug修缮用的分支，每次修改线上代码的bug时都要用hotfix来维护，完成后向Develop和Master同时合并。完成后删除分支。
 
 所以这个版本要发布的功能可以先合到release分支再把release分支合并到develop分支
+
+## Github使用git问题总结
+
+### Failed to connect to github.com port 443
+
+在 http://ping.chinaz.com/github.com 查询对应的耗时情况。
+
+修改 hosts 文件
+
+hosts 文件路径：C:\Windows\System32\drivers\etc\hosts
+
+我们把查到的能用的地址 `140.82.114.3 github.com` 添加到 hosts 文件，或者去网上找一个host塞进去https://github.com/ineo6/hosts
+
+### OpenSSL SSL_read: Connection was reset, errno 10054
+
+```bash
+git config --global http.sslVerify "false"
+```
