@@ -129,3 +129,27 @@ router.beforeEach((to, from, next) => {
 
 ```
 
+### 处理路由的方法
+
+```js
+// 前端组件名和组件映射表
+const map = {
+  //xx: require('@/views/xx.vue').default // 同步的⽅式
+  xx: () => import('@/views/xx.vue') // 异步的⽅式
+}
+// 服务端返回的asyncRoutes
+const asyncRoutes = [
+  { path: '/xx', component: 'xx',... }
+]
+// 遍历asyncRoutes，将component替换为map[component]
+function mapComponent(asyncRoutes) {
+  asyncRoutes.forEach(route => {
+    route.component = map[route.component];
+    if(route.children) {
+      route.children.map(child => mapComponent(child))
+    }
+    })
+}
+mapComponent(asyncRoutes)
+```
+

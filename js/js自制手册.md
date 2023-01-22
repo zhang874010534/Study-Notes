@@ -87,5 +87,24 @@ e.target.closest('.item').classList.add("current");
 getComputedStyle(temp1).getPropertyValue('bottom')
 ```
 
+#### matchMedia
+
+[`Window`](https://developer.mozilla.org/zh-CN/docs/Web/API/Window) 的 **`matchMedia()`** 方法返回一个新的 [`MediaQueryList`](https://developer.mozilla.org/zh-CN/docs/Web/API/MediaQueryList) 对象，表示指定的[媒体查询 (en-US)](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)字符串解析后的结果。返回的 `MediaQueryList` 可被用于判定 [`Document`](https://developer.mozilla.org/zh-CN/docs/Web/API/Document) 是否匹配媒体查询，或者监控一个 `document` 来判定它匹配了或者停止匹配了此媒体查询。
+
+matchMedia() 方法的值可以是任何一个 [CSS @media 规则](https://www.runoob.com/cssref/css3-pr-mediaquery.html) 的特性, 如 **min-height, min-width, orientation** 等。
+
+MediaQueryList 对象有以下两个属性：
+
+- **media**：查询语句的内容。
+- **matches**：用于检测查询结果，如果文档匹配 media query 列表，值为 true，否则为 false。
+
+```js
+if (window.matchMedia("(max-width: 700px)").matches) {
+    /* 窗口小于或等于 700 像素 */
+} else {
+    /*窗口大于 700 像素 */
+}
+```
+
 
 
