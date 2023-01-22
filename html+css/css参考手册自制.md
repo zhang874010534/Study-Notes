@@ -59,9 +59,32 @@
 
 > 属性描述了元素的内容应该与元素的直系父元素的内容和元素的背景如何混合
 
-[user-select](https://developer.mozilla.org/en-US/docs/Web/CSS/user-select)
+##### [user-select](https://developer.mozilla.org/en-US/docs/Web/CSS/user-select)
 
 > 控制用户能否选中文本
+
+##### [color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme)
+
+> 允许元素指示它可以轻松呈现的配色方案
+
+```css
+:root {
+    color-scheme: light dark;
+}
+```
+
+##### [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme)
+
+>  [CSS](https://developer.mozilla.org/zh-CN/docs/Web/CSS) [媒体特性](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Media_Queries/Using_media_queries#media_features)用于检测用户是否有将系统的主题色设置为亮色或者暗色。
+
+```css
+// 系统切换到深色模式 body下的color都会变成红色
+@media (prefers-color-scheme: dark) {
+  body {
+    color: red
+  }
+}
+```
 
 ### 选择器
 
