@@ -1,3 +1,7 @@
+### [Typescript-tutorial](https://github.com/xcatliu/typescript-tutorial)
+
+> Typescript指导手册中文
+
 作者：阿宝哥
 链接：https://juejin.cn/post/6844904182843965453
 
@@ -1527,5 +1531,4 @@ compilerOptions 每个选项的详细说明如下：
   }
 }
 ```
-
 
