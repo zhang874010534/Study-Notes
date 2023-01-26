@@ -38,6 +38,34 @@ React.Children.map(children, (child, index) => {
 
 > 以 `element` 元素为样板克隆并返回新的 React 元素
 
+## ReactDOM
+
+### ReactDOM.createPortal
+
+> Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案。
+>
+> ReactDOM.createPortal(child, container)
+
+```jsx
+import React from 'react';
+import ReactDOM from "react-dom";
+
+function Test(props: any) {
+  return (
+    <>
+      {
+        props.show ? 
+        ReactDOM.createPortal(<div className='model'>你好，我是弹框。</div>, document.body)
+        :
+        <div>啥也不是</div>
+      }
+    </>
+  )
+}
+
+export default React.memo(Test)
+```
+
 ## React16
 
 ### Api变化
@@ -210,7 +238,7 @@ const Child = (props) => {
 const Context = createContext()
 
 const Child2 = () => {
-  const  = useContext(Context)
+  const child2Context  = useContext(Context)
   console.log(child2Context,'child2Context')
   return <div>
     child2
