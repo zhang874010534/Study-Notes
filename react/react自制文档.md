@@ -38,6 +38,50 @@ React.Children.map(children, (child, index) => {
 
 > 以 `element` 元素为样板克隆并返回新的 React 元素
 
+### React.forwardRef 
+
+> 让使用组件的人直接拿到组件里的某个元素
+
+```tsx
+const FancyButton = React.forwardRef((props, ref) => (  
+    <button ref={ref} className="FancyButton">
+        {props.children}
+    </button>
+));
+
+// You can now get a ref directly to the DOM button:
+const ref = React.createRef();
+<FancyButton ref={ref}>Click me!</FancyButton>;
+```
+
+### [React.Suspense](https://zh-hans.reactjs.org/docs/react-api.html#reactsuspense)
+
+> 异步组件，配合[React.Lazy](https://zh-hans.reactjs.org/docs/react-api.html#reactlazy)
+>
+> 可以指定加载指示器（loading indicator），以防其组件树中的某些子组件尚未具备渲染条件
+
+```jsx
+import React from "react";
+
+export function Login() {
+  return (
+    <div className='father'>
+      <React.Suspense fallback={<div>loading...</div>}>
+        <Lazy />
+      </React.Suspense>
+    </div>
+  );
+}
+
+const Lazy = React.lazy(() => new Promise((resolve) => {
+  setTimeout(() => {
+    const a = import('../../components/test')
+    // @ts-ignore
+    resolve(a)
+  }, 1000);
+}))
+```
+
 ## ReactDOM
 
 ### ReactDOM.createPortal
@@ -269,18 +313,3 @@ export default Parent
 
 ## Api
 
-### React.forwardRef 
-
-> 让使用组件的人直接拿到组件里的某个元素
-
-```tsx
-const FancyButton = React.forwardRef((props, ref) => (  
-    <button ref={ref} className="FancyButton">
-        {props.children}
-    </button>
-));
-
-// You can now get a ref directly to the DOM button:
-const ref = React.createRef();
-<FancyButton ref={ref}>Click me!</FancyButton>;
-```
