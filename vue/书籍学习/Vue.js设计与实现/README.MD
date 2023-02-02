@@ -1057,7 +1057,27 @@ function flushjob() {
     if(isFlushing) return
     // 设置为 true, 代表正在刷新
     isFlushing = true
-    
+    // 在微任务队列种刷新 jobQueue 队列
+    p.then(() => {
+        jobQueue.forEach(job => job())    
+    }).finally(() => {
+        // 结束后重置 isFlushing
+        isFlushing = false    
+    })
 }
+
+effect(() => {
+    console.log(obj.foo)
+}, {
+    scheduler(fn) {
+        // 每次调度时， 将副作用函数添加到 jobQueue 队列种
+        jobQueue.add(fn)    
+        // 调用 flushJob 刷新队列
+        flushJob()
+    }
+})
+
+obj.foo++
+obj.foo++
 ```
 
