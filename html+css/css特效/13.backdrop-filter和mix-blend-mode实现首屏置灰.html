@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!--https://mp.weixin.qq.com/s/pwXyZ-MAemaBhlPC6KM0hA-->
+  <style>
+      * {
+          margin: 0;
+      }
+      /*html::before{*/
+      /*    content: '';*/
+      /*    position: absolute;*/
+      /*    inset: 0;*/
+      /*    z-index: 10;*/
+      /*    backdrop-filter: grayscale(0.95);*/
+      /*    pointer-events: none;*/
+      /*}*/
+      html::before{
+          content: '';
+          position: absolute;
+          inset: 0;
+          z-index: 10;
+          pointer-events: none;
+          background: rgba(0, 0, 0, 1);
+          mix-blend-mode: color;
+      }
+      .bg {
+          background: url("https://github.com/zhang874010534/tuchuan/blob/main/Readme/heizi.png?raw=true");
+          width: 100vw;
+          height: 200vh;
+      }
+      .backdrop-filter {
+          backdrop-filter: blur(6px);
+      }
+  </style>
+</head>
+<body>
+<div class="bg">
+  <div class="backdrop-filter">
+  </div>
+</div>
+</body>
+</html>
