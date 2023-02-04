@@ -45,3 +45,31 @@ this.form = this.$options.data().form
 ###### [useVirtualList](https://vueuse.org/core/useVirtualList/)
 
 > 虚拟列表
+
+#### 自制hook
+
+##### useScrollCache
+
+```tsx
+import { onActivated, onMounted } from 'vue'
+import { throttle } from '@/utils/util'
+
+export default function (domRef) {
+  let scrollTop = 0
+  const scrollFn = throttle(e => {
+    scrollTop = e.target.scrollTop
+  })
+  let dom = null
+  onMounted(() => {
+    dom = domRef.value
+    if (dom) {
+      dom.addEventListener('scroll', scrollFn)
+    }
+  })
+
+  onActivated(() => {
+    dom.scrollTop = scrollTop
+  })
+}
+```
+
