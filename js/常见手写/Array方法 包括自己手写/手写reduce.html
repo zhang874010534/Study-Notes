@@ -7,19 +7,19 @@
   </head>
   <body>
     <script>
-      function myReduce(arr, demo) {
-        let value = arr[0];
-        for (let i = 1, len = arr.length; i < len; i++) {
-          value = demo(value, arr[i]);
+      let arr = [1,2,3]
+
+      Array.prototype.myReduce = function (fn,initVal) {
+        const arr = this
+        let total = initVal || arr[0]
+        for (let i = initVal ? 0 : 1; i < arr.length; i++) {
+          total = fn(total, arr[i])
         }
-        return value;
+        return total
       }
-      function demo(pre, crt) {
-        return pre + crt;
-      }
-      let arr = [1, 2, 3];
-      let value = myReduce(arr, demo);
-      console.log(value);
+      console.log(arr.myReduce((old, current) => {
+        return old + current
+      }))
     </script>
   </body>
 </html>
