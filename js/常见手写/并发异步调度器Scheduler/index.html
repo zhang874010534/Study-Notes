@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+
+  class Scheduler {
+    constructor(maxNum = 2) {
+      this.waitTasks = []
+      this.excutingNum = 0
+      this.maxNum = maxNum
+    }
+    add(promiseTask) {
+      if(this.excutingNum < this.maxNum) {
+        this.run(promiseTask)
+      }else {
+        this.waitTasks.push(promiseTask)
+      }
+    }
+    run(promiseTask) {
+      this.excutingNum++
+      promiseTask().then(() => {
+        this.excutingNum--
+        if(this.waitTasks.length > 0) {
+          this.run(this.waitTasks.shift())
+        }
+      })
+    }
+  }
+
+  const scheduler = new Scheduler(2)
+  const addTask = (time, num) => {
+    scheduler.add(() => new Promise((resolve) => {
+      setTimeout(() => {
+        console.log(num)
+        resolve()
+      },time)
+    }))
+  }
+
+  addTask(1000, '1')
+  addTask(500, '2')
+  addTask(300, '3')
+  addTask(300, '4')
+
+  //2 3 1 4
+</script>
+</body>
+</html>
