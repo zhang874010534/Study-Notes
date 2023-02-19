@@ -106,5 +106,116 @@ if (window.matchMedia("(max-width: 700px)").matches) {
 }
 ```
 
+### ECMAScript
 
+#### ES6（2015）
+
+##### 类(class)
+
+```js
+class Man{
+    constructor(options){
+        this.name = options.name
+    }
+    log(){
+        console.log(this.name);
+    }
+}
+const man = new Man({name:"mgd"});
+man.log(); //mgd
+```
+
+##### 模块化(ES Module)
+
+```js
+export const sub = (a,b)=>a+b
+import { sub } from './test'
+console.log(sub(2,5));
+```
+
+##### 箭头函数
+
+```js
+const func = (a,b)=> a+b
+func(2,5);
+console.log(func(2,5)); //7
+```
+
+##### 函数参数默认值
+
+```js
+function func2(age = 25){
+    console.log(age);
+}
+func2() //25
+func2(18) //18
+```
+
+##### 模板字符串
+
+```js
+let food = '包子'
+const str = `爱吃${food}`
+console.log(str); //爱吃包子
+```
+
+##### 解构赋值
+
+```js
+let a = 1;
+let b = 2;
+[a,b] = [b,a]
+console.log([a,b]); //[2, 1]
+```
+
+##### 扩展运算符
+
+```js
+let arr = [1,2,3,4,5,56,7]
+let str2 = 'good good study'
+console.log(...arr); //1 2 3 4 5 56 7
+console.log(...str2); //g o o d   g o o d   s t u d y
+```
+
+##### 对象属性简写
+
+```js
+const name = 'mgd'
+const obj = {name}
+console.log(obj); // {name: "mgd"}
+```
+
+##### Promise
+
+```js
+Promise.resolve().then(()=>{
+    console.log(2);
+})
+console.log(1);
+// 先打印1，后打印2
+```
+
+##### let和const
+
+```js
+let name2 = "zhangce"
+const arr2 = []
+```
+
+#### ES7（2016）
+
+##### Array.prototype.includes()
+
+```js
+let arr3 = [1,2,34,56]
+let bull = arr3.includes(34)
+console.log(bull); //true
+```
+
+##### 指数操作符
+
+```js
+let num = 2**10
+console.log(num); //1024
+```
 
