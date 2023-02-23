@@ -435,7 +435,8 @@ let reg = /\w+\b/g
 // reg是正则方法 match是String方法
 reg.exec(s) // ['aaa', index: 0, input: 'aaa bbb ccc', groups: undefined]
 reg.exec(s) // ['bbb', index: 4, input: 'aaa bbb ccc', groups: undefined]
-s.match(reg) // ['aaa', 'bbb', 'ccc']
+reg.exec(s) // ['ccc', index: 8, input: 'aaa bbb ccc', groups: undefined]
+s.match(reg)// ['aaa', 'bbb', 'ccc']
 ```
 
 ##### [正则表达式反向引用、零宽断言](https://segmentfault.com/a/1190000020279201)
@@ -479,3 +480,67 @@ s.match(reg) // ['aaa', 'bbb', 'ccc']
 <'12,345,678'
 ```
 
+##### 正则表达式dotAll模式
+
+正则表达式中点.匹配除回车外的任何单字符，标记s改变这种行为，允许行终止符的出现
+
+```js
+/hello.world/.test('hello\nworld'); // false
+/hello.world/s.test('hello\nworld'); // true
+```
+
+s 的含义是 singleline 和 dotAll。
+
+singleline(单行)对应的是 multiline(多行)。
+
+`m` 标志用于指定多行输入字符串应该被视为多个行。如果使用 `m` 标志，`^` 和 `$` 匹配的开始或结束是字符串中的每一行，而不是整个字符串的开始或结束。
+
+- `m` 标志只影响 `^` 和 `$`
+- `s` 标志只影响 `.`
+
+```js
+/^java/.test('just\njava\n');   // false
+/^java/m.test('just\njava\n');  // true
+```
+
+#### ES10（2019）
+
+##### Array.flat()和Array.flatMap()
+
+```js
+let arr6 = [1, 2, [3, 4]].flat(Infinity);
+console.log(arr6); //[1, 2, 3, 4]
+
+[1,3,[4,5]].flatMap( item => {
+    if(Object.prototype.toString.call(item) === '[object Array]') {
+       return item.map(mapItem => mapItem * 2)
+    }
+    return item * 2
+}) // [2, 6, 8, 10]
+```
+
+##### String.trimStart()和String.trimEnd()
+
+去除字符串首尾空白字符
+
+```js
+let str = '    ccc     '
+console.log(str.trimStart()); //ccc     
+console.log(sr.trimEnd());//    ccc
+```
+
+##### String.prototype.matchAll
+
+matchAll（）为所有匹配的匹配对象返回一个迭代器
+
+```js
+let s = 'aaa bbb ccc'
+let reg = /\w+\b/g
+for (let match  of smatch.matchAll(reg)) {
+    console.log(match)
+}
+
+['aaa', index: 0, input: 'aaa bbb ccc', groups: undefined]
+['bbb', index: 4, input: 'aaa bbb ccc', groups: undefined]
+['ccc', index: 8, input: 'aaa bbb ccc', groups: undefined]
+```
