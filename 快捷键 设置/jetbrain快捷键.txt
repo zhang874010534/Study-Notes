@@ -29,3 +29,5 @@ languages & frameworks javascript webpack 选择.webstorm.ide.js 设置@别名
 editor code style  enable editorConfig 可以选择是否启用editorConfig
 ctrl+ 空格 代码提示 keymap => Code Completion => Basic
 alt+ f1 => 1 目录切换到当前文件
+
+alt+ ] split right 复制当前页 需要自己设置

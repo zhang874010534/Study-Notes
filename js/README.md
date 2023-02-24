@@ -106,7 +106,7 @@ if (window.matchMedia("(max-width: 700px)").matches) {
 }
 ```
 
-### ECMAScript
+### [ECMAScript](http://es.xiecheng.live/introduction/preface.html)
 
 #### ES6（2015）
 
@@ -544,3 +544,176 @@ for (let match  of smatch.matchAll(reg)) {
 ['bbb', index: 4, input: 'aaa bbb ccc', groups: undefined]
 ['ccc', index: 8, input: 'aaa bbb ccc', groups: undefined]
 ```
+
+##### Symbol.prototype.description
+
+只读属性，回 Symbol 对象的可选描述的字符串。
+
+```js
+Symbol('123').description; // '123'
+```
+
+##### Object.fromEntries()
+
+把键值对列表转换为一个对象
+
+```js
+const arr = [['name','zhangce']]
+Object.fromEntries(arr) // {name: 'zhangce'}
+```
+
+##### 可选Catch
+
+ES10之前
+
+```js
+try {
+    // tryCode
+} catch (err) {
+    // catchCode
+}
+```
+
+ES10 可省略 err
+
+```
+try {
+    console.log('Foobar')
+} catch {
+    console.error('Bar')
+}
+```
+
+#### ES11（2020）
+
+##### Nullish coalescing Operator(空值处理)
+
+表达式在 ?? 的左侧 运算符求值为undefined或null，返回其右侧。
+
+```js
+0 ?? 'you' // 0
+false ?? 'you' // false
+'' ?? 'you' // ''
+null ?? 'you' // 'you'
+undefined ?? 'you' // 'you'
+```
+
+##### Optional chaining（可选链）
+
+ ? 表示如果问号左边表达式有值, 就会继续查询问号后面的字段
+
+```js
+const obj = {
+    like: {
+        name: 123,
+    }
+}
+console.log(obj?.other?.age) // undefined
+console.log(obj.other.age) // Uncaught TypeError: Cannot read properties of undefined (reading 'age')
+```
+
+##### Promise.allSettled
+
+学习了ES新特性，我们都知道 Promise.all() 具有并发执行异步任务的能力。但它的最大问题就是如果其中某个任务出现异常(reject)，所有任务都会挂掉，Promise直接进入reject 状态。
+
+我们需要一种机制，如果并发任务中，无论一个任务正常或者异常，都会返回对应的的状态
+
+```js
+Promise.allSettled([
+    Promise.reject({
+        code: 500,
+        msg: '服务异常'
+    }),
+    Promise.resolve({
+        code: 200,
+        data: ['1', '2', '3']
+    }),
+    Promise.resolve({
+        code: 200,
+        data: ['4', '5', '6']
+    })
+]).then(res => {
+    console.log(res) // 这里会输出3个包括异常的
+    const data = res.filter(item => item.status === 'fulfilled')
+    console.log(data)
+}).catch(err => {
+    console.log(err)
+    console.log('失败')
+})
+```
+
+##### Dynamic Import
+
+按需 import 提案几年前就已提出，如今终于能进入ES正式规范。这里个人理解成“按需”更为贴切。现代前端打包资源越来越大，打包成几M的JS资源已成常态，而往往前端应用初始化时根本不需要全量加载逻辑资源，为了首屏渲染速度更快，很多时候都是按需加载，比如懒加载图片等。而这些按需执行逻辑资源都体现在某一个事件回调中去加载。
+
+页面上有一个按钮，点击按钮才去加载ajax模块。
+
+```js
+const oBtn = document.querySelector('#btn')
+oBtn.addEventListener('click', () => {
+    import('./ajax').then(mod => {
+        // console.log(mod)
+        mod.default('static/a.json', res => {
+            console.log(res)
+        })
+    })
+})
+```
+
+当然，webpack目前已很好的支持了该特性。
+
+Vue中也已使用Dynamic Import实现组件的动态导入，这个我们会在后面的实战项目中讲到。
+
+##### BigInt
+
+在 ES10 增加了新的原始数据类型：BigInt，表示一个任意精度的整数，可以表示超长数据，可以超出2的53次方。
+
+Js 中 Number类型只能安全的表示-(2^53-1)至 2^53-1 范的值
+
+```js
+console.log(2 ** 53) // es7 幂运算符
+console.log(Number.MAX_SAFE_INTEGER) // 最大值-1
+```
+
+使用 BigInt 有两种方式：
+
+方式一：数字后面增加n
+
+```js
+const bigInt = 9007199254740993n
+console.log(bigInt)
+console.log(typeof bigInt) // bigint
+
+console.log(1n == 1) // true
+console.log(1n === 1) // false
+```
+
+方式二：使用 BigInt 函数
+
+```js
+const bigIntNum = BigInt(9007199254740993n)
+console.log(bigIntNum)
+```
+
+##### globalThis
+
+Javascript 在不同的环境获取全局对象有不通的方式：
+
+- node 中通过 global
+- web 中通过 window, self 等.
+
+```js
+console.log(globalThis)
+```
+
+#### ES12（2021）
+
+##### replaceAll
+
+返回一个全新的字符串，所有符合匹配规则的字符都将被替换掉
+
+```js
+const str = 'hello world
+str.replaceAll(l,'') // heo word
+```
+
