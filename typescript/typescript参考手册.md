@@ -1435,7 +1435,7 @@ declare type ParameterDecorator = (target: Object, propertyKey: string | symbol,
 - propertyKey: string | symbol - 方法名
 - parameterIndex: number - 方法中参数的索引值
 
-```
+```typescript
 function Log(target: Function, key: string, parameterIndex: number) {
   let functionLogged = key || target.prototype.constructor.name;
   console.log(`The parameter in position ${parameterIndex} at ${functionLogged} has

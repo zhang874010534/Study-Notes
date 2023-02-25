@@ -717,3 +717,76 @@ const str = 'hello world
 str.replaceAll(l,'') // heo word
 ```
 
+##### Promise.any
+
+Promise.any() 接收一个Promise可迭代对象，只要其中的一个 promise 成功，就返回那个已经成功的 promise 。如果可迭代对象中没有一个 promise 成功（即所有的 promises 都失败/拒绝），就返回一个失败的 promise
+
+```js
+  const promise1 = new Promise((resolve, reject) => resolve(1));
+  const promise2 = new Promise((resolve, reject) => reject('我是失败的Promise_2'));
+  const promiseList = [promise1, promise2];
+  Promise.any(promiseList)
+    .then(values=>{
+      console.log(values);
+    })
+    .catch(e=>{
+      console.log(e);
+    });
+```
+
+##### WeakRefs
+
+用于直接创建对象的弱引用
+
+```js
+let target = {};
+let wr = new WeakRef(target);
+wr.deref() // 获取原始对象
+```
+
+##### FinalizationRegistry
+
+清理器注册表功能 FinalizationRegistry，用来指定目标对象被垃圾回收机制清除以后，所要执行的回调函数。
+
+```js
+const registry = new FinalizationRegistry(heldValue => {
+  // ....
+});
+
+// 注册需要观察的对象
+registry.register(theObject, "some value", theObject);
+// 取消注册 如果以后还想取消已经注册的回调函数，则要向register()传入第三个参数，作为标记值。这个标记值必须是对象，一般都用原始对象。接着，再使用注册表实例对象的unregister()方法取消注册。
+registry.unregister(theObject);
+
+//由于无法知道清理器何时会执行，所以最好避免使用它。另外，如果浏览器窗口关闭或者进程意外退出，清理器则不会运行。
+```
+
+##### 逻辑运算符和赋值表达式
+
+```js
+a ||= b
+//等价于
+a = a || b
+
+a &&= b
+//等价于
+a = a && b
+
+a ??= b
+//等价于
+a = a ?? b
+```
+
+##### 数字分隔符
+
+数字分隔符，可以在数字之间创建可视化分隔符，通过_下划线来分割数字，使数字更具可读性
+
+```js
+const money = 1_000_000_000;
+//等价于
+const moneys = 1000000000;
+money === moneys // true
+```
+
+
+
