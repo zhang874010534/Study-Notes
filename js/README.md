@@ -777,7 +777,7 @@ a ??= b
 a = a ?? b
 ```
 
-##### 数字分隔符
+##### [数字分隔符](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#literals) Numeric separators
 
 数字分隔符，可以在数字之间创建可视化分隔符，通过_下划线来分割数字，使数字更具可读性
 
@@ -788,5 +788,30 @@ const moneys = 1000000000;
 money === moneys // true
 ```
 
+#### ES13（2022）
 
+##### Class Fields
+
+```js
+class Private {
+  #name = '#name'; // 私有变量
+  static #staticName = '#staticName'; // 静态私有变量
+
+  #method() { // 私有方法
+    console.log(this.#name)
+  }
+  static #staticMethod() { // 静态私有方法
+    console.log(this.#staticName)
+  }
+  publicMethod() { // 公共方法
+    this.#method()
+  }
+  static publicStaticMethod() { // 静态公共方法
+    this.#staticMethod()
+  }
+}
+const private = new Private()
+private.publicMethod() // #name 
+Private.publicStaticMethod() // #staticName
+```
 
