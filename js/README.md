@@ -790,7 +790,7 @@ money === moneys // true
 
 #### ES13（2022）
 
-##### Class Fields
+##### [Private class features](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields)
 
 ```js
 class Private {
@@ -813,5 +813,164 @@ class Private {
 const private = new Private()
 private.publicMethod() // #name 
 Private.publicStaticMethod() // #staticName
+```
+
+##### RegExp Match Indices
+
+正则匹配结果的开始位置和结束位置，目前获取并不是很方便。正则实例的 `exec()`方法，返回结果有一个 `index` 属性，可以获取整个匹配结果的开始位置，但是如果包含组匹配，每个组匹配的开始位置，很难拿到。
+
+ES2022 中提供`d`修饰符，为 `exec()`方法的返回结果加上 `indices` 属性，在这个属性上面可以拿到匹配的开始位置和结束位置。
+
+注意：出于性能原因，`indices` 只有在 `d` 指定了标志时才会添加到结果中。
+
+```js
+const text = 'zabbcdef';
+const re = /ab/d;
+const result = re.exec(text);
+
+result.index; // 1
+result.indices; // [ [1, 3] ]
+```
+
+上面例子中，`exec()`方法的返回结果 `result`，它的 index 属性是整个匹配结果`（ab）`的开始位置，而它的 `indices` 属性是一个数组，成员是每个匹配的开始位置和结束位置的数组。由于该例子的正则表达式没有组匹配，所以 `indices` 数组只有一个成员，表示整个匹配的开始位置是 `1`，结束位置是 `3`。
+
+注意，开始位置包含在匹配结果之中，但是结束位置不包含在匹配结果之中。比如，匹配结果为 `ab`，分别是原始字符串的第 1 位和第 2 位，那么结束位置就是第 3 位。
+
+如果正则表达式包含组匹配，那么 `indices` 属性对应的数组就会包含多个成员，提供每个组匹配的开始位置和结束位置。
+
+```javascript
+const text = 'zabbcdef';
+const re = /ab+(cd)/d;
+const result = re.exec(text);
+
+result.indices; // [ [ 1, 6 ], [ 4, 6 ] ]
+```
+
+上面例子中，正则表达式包含一个组匹配，那么 `indices` 属性数组就有两个成员，第一个成员是整个匹配结果`（abbcd）`的开始位置和结束位置，第二个成员是组匹配`（cd）`的开始位置和结束位置。
+
+下面是多个组匹配的例子。
+
+```javascript
+const text = 'zabbcdef';
+const re = /ab+(cd(ef))/d;
+const result = re.exec(text);
+
+result.indices; // [ [1, 8], [4, 8], [6, 8] ]
+```
+
+上面例子中，正则表达式包含两个组匹配，所以 `indices` 属性数组就有三个成员。
+
+##### Top-level
+
+以前我们使用 `await` 时，必须要放到 `async` 函数里，这就限制了一些场景，比如我们在全局作用域使用 `import` 的异步加载方式。而这个特性就是为这些场景提供了便利：
+
+```js
+const strings = await import(`/i18n/${navigator.language}`);
+```
+
+#####  Ergonomic brand checks for Private Fields
+
+```js
+class C {
+    #brand;
+
+    #method() {}
+
+    get #getter() {}
+
+    static isC(obj) {
+        return #brand in obj && #method in obj && #getter in obj;
+    }
+}
+const obj = new C()
+console.log(C.isC(obj)) // true
+```
+
+###### .at()
+
+```js
+var a = [1, 2, 3];
+a.at(1) // 2
+a.at(-1) // 3
+```
+
+因为 JavaScript 数组的特殊性(一个特殊的对象）,我们无法通过 `a[-1]` 这种形式取到数组的倒数第一项，所以有了这个语法。
+
+##### hasOwn 
+
+因为 JS 并没有保护叫做 'hasOwnProperty' 的属性名，为了防止意外的产生，现在 Eslint 一般都会默认开启不允许在对象上判断 `hasOwnProperty` 这条校验。
+
+除此之外，我们有一个对象没有原型，也就不能调用 `hasOwnProperty` 方法了：
+
+```js
+Object.create(null).hasOwnProperty("foo")
+// Uncaught TypeError: Object.create(...).hasOwnProperty is not a function
+复制代码
+```
+
+于是乎，我们一般都这样来判断：
+
+```js
+let hasOwnProperty = Object.prototype.hasOwnProperty
+
+if (hasOwnProperty.call(object, "foo")) {
+  console.log("has property foo")
+}
+复制代码
+```
+
+我自己在项目中也是这么写的，但是大家都这么写，JS 就觉得可以考虑出一个公共方法了，就有了 `hasOwn` 方法，可以比较大的简化我们上面的写法：
+
+```typescript
+if (Object.hasOwn(object, "foo")) {
+  console.log("has property foo")
+}
+```
+
+##### Class Static Block
+
+以前，我们初始化类的静态成员变量只能在定义的时候去做，不能放到构造函数里面（静态方法不用实例化，就不用调用构造函数了）。
+
+现在，我们可以在类内部开辟一个专门为静态成员初始化的作用域，这对一些比较复杂的场景很适用：
+
+在没有作用域之前，我们可能会使用一个工具函数去初始化：
+
+```js
+class Translator {
+  static translations = {
+    yes: 'ja',
+    no: 'nein',
+    maybe: 'vielleicht',
+  };
+  static englishWords = [];
+  static germanWords = [];
+  static _ = initializeTranslator(); // (A)
+}
+function initializeTranslator() {
+  for (const [english, german] of Object.entries(Translator.translations)) {
+    Translator.englishWords.push(english);
+    Translator.germanWords.push(german);
+  }
+}
+```
+
+有了类的静态作用域之后，我们就可以按如下的格式了：
+
+```js
+class Translator {
+  static translations = {
+    yes: 'ja',
+    no: 'nein',
+    maybe: 'vielleicht',
+  };
+  static englishWords = [];
+  static germanWords = [];
+  static { // (A)
+    for (const [english, german] of Object.entries(this.translations)) {
+      this.englishWords.push(english);
+      this.germanWords.push(german);
+    }
+  }
+}
 ```
 
