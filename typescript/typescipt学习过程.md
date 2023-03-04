@@ -249,6 +249,10 @@ type NameFun = (x: number) => string; //
 type NameOrRFun = Name | NameFun; // 联合类型
 type direction = 'up' | 'down'
 let to:direction = 'up'
+type User = {
+  name: string
+  age: number
+};
 ```
 
 ### 类的定义和继承
