@@ -1,0 +1,966 @@
+# 壹 ❀ 引
+
+虚拟`DOM`（Virtual DOM）在前端领域也算是老生常谈的话题了，若你了解过`vue`或者`react`一定避不开这个话题，因此虚拟`DOM`也算是面试中常问的一个点，那么通过本文，你将了解到如下几点：
+
+- 虚拟`DOM`究竟是什么？
+- 虚拟`DOM`的优势是什么？解决了什么问题？
+- 虚拟`DOM`的性能比操作原生`DOM`要快吗？
+- `react`中的虚拟`DOM`是如何生成的？
+- `react`是如何将虚拟`DOM`转变成真实`dom`的？
+
+阅读前建议与提醒：
+
+- 本篇文章可能比较长，建议挑一个空闲的时间段阅读，还请保持耐心，我将以通俗易懂的口吻带你了解这些问题。
+- 本文源码分析部分`react`版本为`17.0.2`，无须担心低版本源码分析对你之后面试帮助不大的问题。
+- 如果可以，泡上一杯性温的茶或者咖啡，保持一个舒服的姿势会让你阅读更加愉快。
+
+那么本文开始。
+
+# 贰 ❀ 在虚拟dom之前
+
+在聊虚拟`DOM`之前，我还是想先聊聊在没有虚拟`DOM`概念的时候，我们是如何更新页面的，所以在这里我将先引出前端框架（库）的发展史，通过这个变迁过程也便于大家理解虚拟dom的出现到底解决了什么问题。
+
+### 贰 ❀ 壹 石器时代jQuery
+
+其实在15年以及更早之前，前端面试涉及到性能优化问题，往往都会提到**尽可能少的操作`DOM`\**这一点。为什么呢？因为在原生JS的年代，前端项目文件都明确分为`html、js`与`css`三种，我们在`js`中获取`DOM`，并为其绑定事件，通过\**事件监听**感知用户在UI层的操作，并随之更新`DOM`，从而达到页面交互的目的：
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/80408114c09a4a16812818bf9885c5c7~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+而在后面，`jQuery`的出现极大简化了开发者操作`DOM`的成本，抹平了当时不同浏览器操作`DOM`的`API`差异，为当时苦于`ie`以及不同浏览器自研`API`的开发者解决了不少兼容性问题，当然`JQ`也并未改变开发者在`JS`层直接操作`DOM`这一现状。
+
+那么我们为什么说要尽可能少的操作`DOM`呢，这里就涉及到重绘与回流两个概念，比如单纯修改颜色就会引发重绘，删除或新增一个`DOM`节点就会引发回流和重绘，用户虽然无法感知这个过程，但对于浏览器而言也存在消耗性能。所以针对于回流，在此之后又提出了`DocumentFragment`文档对象以优化多次操作`DOM`的方案。简单理解就是，假如我要依次替换五个`li`节点，那么我们可以创建一个`DocumentFragment`对象保存这五个节点，然后一次性替换。
+
+### 贰 ❀ 贰 青铜时代angularjs
+
+在`JQ`之后，`angularjs`（这里指angularjs1而非angular）横空出世，一招双向绑定在当时更是惊为天人，除此之外，`angularjs`的模板语法也格外惊艳，我们将所有与数据挂钩的节点通过`{{}}`包裹（vue在早期设计上大量借鉴了angularjs），比如：
+
+```html
+<span>{{vm.name}}</span>
+复制代码
+```
+
+之后 `view` 视图层就自动与 `Model` 数据层进行挂钩（MVC那一套），只要 `Model` 层数据发生变化，`view` 层便自动更新。`angularjs` 的这种做法，彻底将开发者从操作 `DOM` 上解放了出来（为jq没落埋下伏笔），自此之后开发者只用专注 `Model` 层的数据加工以及业务处理，至于页面如何渲染全权交给 `angularjs` 底层处理即好了。
+
+但需要注意的是，`angularjs` 在当时并没有虚拟`dom`的概念，那它是怎么做感知数据层变化以及更新视图层的呢？`angularjs`有一套脏检测机制`$digest`，`html`中凡是使用了模板语法`{{}}`或者`ng-bind`指令的部分，都会被加入到脏检测的`warchers`列表中，它是一个数组，之后只要用户通过`ng-click（与传统click不同，内置绑定了触发脏检测的机制）`等方法改变了`Model`的数据，`angularjs`就会从顶层`rootScope`向下递归，依次访问每个子`scope`中的`warchers`列表，并对其中监听的部分做新旧对比，如果不同则进行数据替换，以及`DOM`层的更新。
+
+但是你要想想，一个应用那么大的结构，只要某一个数据变化了就得从顶层向下对比N个子 `scope` 中 `warchers` 下的所有监听对象，全量对比的性能有多差可想而知，`angularjs` 自身也意识到了这点，所以之后直接放弃了 `angularjs` 的维护转而新开了 `angular` 项目。
+
+### 贰 ❀ 叁 铁器时代react与vue
+
+如果从 `angularjs` 转到 `vue` ，你会发现早期`vue`的模板语法、指令，双向绑定等很多灵感其实都借鉴了`angularjs`，但在更新机制上，`vue `并不是一个改动牵动全身，而是组件均独立更新。`react` 与 `vue` 一样相对 `angularjs` 也是局部更新，只是 `react` 中的局部是以当前组件为根以及之下的所有子组件。
+
+打个比方，如果组件 `A` 状态发生变化，那么 `A` 的所有子组件默认都会触发更新，即使子组件的`props`未发生改变，所以对于`react`我们需要使用 `PureComponent`、`shouldComponentUpdate` 以及 `memo` 来避免这种场景下的多余渲染。而在更新体系中，`react` 与 `vue` 都引入了虚拟 `DOM` 的概念，当然这也是本文需要探讨的重点。
+
+我们先总结下上述的观点：
+
+`js` 和 `jq`：研发在专注业务的同时，还要亲自操作 `dom`。
+
+`angularjs版本1`：将研发从操作 `dom` 中解脱了出来，更新 `dom` 交由 `angularjs` 底层实现，这一套机制由脏检测机制所支撑。
+
+`react/vue`：同样由底层更新 `dom`，只是在此之前多了虚拟`dom`的对比，先对比再更新，以此达到最小更新目的。
+
+所以相对传统更新 `dom` 的策略，虚拟`dom`的更新如下：
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c7d298f9a50043668e375a7e7a345f05~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+到这里，我们站在宏观的角度解释了前端框架的变迁，以及有虚拟`dom`前后我们如何更新`dom`，也许到这里你的脑中隐约对于虚拟`dom`有了一丝感悟，但又不是很清晰，虚拟`dom`到底解决了什么问题，别着急，接下来才是虚拟`dom`的正餐，我们接着聊。
+
+# 叁 ❀ 什么是虚拟DOM？
+
+本文将默认你有 `react` 或者 `vue` 的开发经历，当然本文出发点还是以`react`为主。
+
+熟悉 `react` 的同学对于 `React.createElement` 方法一定不会陌生，它用于创建`reactNode`，语法如下：
+
+```javascript
+/*
+* component 组件名，一个标签也可以理解成一个最基础的组件
+* props 当前组件的属性，比如class，或者其它属性
+* children 组件的子组件，就像标签套标签
+*/
+React.createElement(component, props, ...children)
+复制代码
+```
+
+比如我们定一个最简单的`html`片段：
+
+```html
+<span className='span'>hello echo</span>
+复制代码
+```
+
+用`React.createElement`表示如下：
+
+```javascript
+React.createElement('div', {className:'span'}, 'hello echo');
+复制代码
+```
+
+这样看好像也没什么大问题，但是假定我们`dom`存在嵌套关系：
+
+```html
+<span className='span'>
+  <span>
+    hello echo
+  </span>
+</span>
+复制代码
+```
+
+用`React.createElement`表示就相对比较麻烦了，你需要在`createElement`中不断嵌套：
+
+```javascript
+React.createElement('span', {className:'span'}, React.createElement("span", null, "hello echo"));
+复制代码
+```
+
+这还仅仅是两层嵌套，实际开发中`dom`结构往往要复杂的多，因此`react`中我们常常推荐直接使用`jsx`文件定义业务逻辑以及`html`片段。
+
+我们可以将`jsx`中定义的`html`模板理解成`React.createElement`的语法糖，它方便了开发者以`html`的习惯去定义`reactNode`片段，而在编译之后，这些`reactNode`本质上还是会被转变成`React.createElement`所创建的对象，这个过程可以理解为：
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7eca9e96ead44f6fb223abb183871fdf~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+为方便理解，我们可以将`React.createElement`创建对象结构抽象为：
+
+```javascript
+const VitrualDom = {
+  type: 'span',
+  props: {
+    className: 'span'
+  },
+  children: [{
+    type: 'span',
+    props: {},
+    children: 'hello echo'
+  }]
+}
+复制代码
+```
+
+说到底，这个就是传递给`React.createElement`的结构，而`React.createElement`接收后生成的数据，其实才是真正意义上的虚拟`dom`。我们可以简单定一个`react`组件，来查看虚拟`dom`真正的结构：
+
+```javascript
+class C extends React.PureComponent {
+  render() {
+    console.log(this.props.children);
+    return <div>{this.props.children}</div>;
+  }
+}
+
+class P extends Component {
+  render() {
+    return (
+      <C>
+        <span className="span">
+          <span>hello echo</span>
+        </span>
+      </C>
+    );
+  }
+}
+复制代码
+```
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3bdaab9a322446ba9d77f058a248920c~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+那么到这里，我们搞清楚了虚拟`DOM`究竟是什么，所谓虚拟`DOM`其实只是一个包含了标签类型`type`，属性`props`以及它包含子元素`children`的对象。
+
+# 肆 ❀ 虚拟DOM的优势是什么？
+
+### 肆 ❀ 壹 销毁重建与局部更新
+
+在提及虚拟`DOM`的优势之前，我们可以先抛开什么虚拟`DOM`以及什么`MVC`思想，回想下在纯 `js` 或者 `jq` 开发角度，我们是如何连接`UI`和数据层的。其实在16年之前，博主所经历的项目开发中，`UI`和数据处理都是强耦合，比如我们页面渲染完成，使用`onload`进行监听，然后发起`ajax`请求，并在回调中加工数据，以及在此生成`DOM`片段，并将其替换到需要更新的地方。
+
+打个比方，后端返回了一个用户列表`userList`：
+
+```javascript
+const userList = [
+  'echo',
+  '听风是风',
+  '时间跳跃'
+]
+```
+
+前端在请求完成，于是在`ajax`回调中进行`dom`片段生成以及替换工作，比如：
+
+```html
+<ul id='userList'></ul>
+const ulDom = document.querySelector('#userList');
+// 生成代码片段
+const fragment = document.createDocumentFragment();
+
+for (let i = 0; i < userList.length; i++) {
+  const liDom = document.createElement("li");
+  liDom.innerHTML = userList[i];
+  // 依次生成li，并加入到代码片段
+  fragment.appendChild(liDom);
+}
+
+// 最终将代码片段塞入到ul
+ulDom.appendChild(fragment);
+```
+
+所以不管是页面初始化，还是之后用户通过事件发起请求更新了用户数据，到头来还是都是调用上面生成`li`的这段逻辑。在当时能想着把这段逻辑复用成一个方法，再考虑用上`createDocumentFragment`减少操作`dom`的次数，能做到这些，这在当时都是能小吹一波的了....
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1661b21e0fa8479d8b714b97f28a1b82~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+所以你会发现，在原生`js`的角度，根本没有所谓的`dom`对比，都是重新创建，因为在写代码之前，我们已经**明确知道了哪部分是静态页面，哪部分需要结合数据进行动态展示**。那么只需要将需要动态生成的`dom`的逻辑提前封装成方法，然后在不同时期去调用，这在当年已经是非常不错的复用了（组件的前生）。
+
+那么问题来了，假定现在我们有一个类似`form`表单的展示功能，点击不同用户，表单就会展示用户名，年龄等一系列信息：
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f7da24ede94f4a45aa95d7261471f2b2~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+用`js`写怎么做？还是一样的，点击不同用户，肯定会得到一个用户信息对象，我们根据这个对象动态生成多个信息展示的`input`等相关`dom`，然后塞入到`form`表单中，所以每次点击，这个`form`其实都等同于**完全重建**了。
+
+假定现在我们不希望完整重建这个结构，而是希望做前后`dom`节点对比，比如`input`的`value`前后不一样，某个`style`颜色不同，我们单点更新这个属性，比较笨拙的想法肯定还是得生成一份新`dom`片段，然后递归对比两个结构，且属性一一对比，只有不同的部分我们才需要更新。但仅仅通过下面这段代码，你就能预想到这个做法的性能有多糟糕了：
+
+```javascript
+// 一个li节点自带的属性就有307个
+const liDom = document.createElement("li");
+let num = 0;
+for (let key in liDom) {
+  num += 1;
+}
+console.log(num); // 307
+```
+
+我们生成了一个最基本的`li`节点，并通过遍历依次访问节点的属性，经过统计发现`li`单属性就`307`个，而这仅仅是一个节点。
+
+在前面我们也提到过，不管是`jq`封装，还是`react vue`的模板语法，它的前提一定是研发自己提前知道了哪部分内容未来是可变的，所以我们才要动态封装，才需要使用`{}`进行包裹，那既然如此，我们就对比**未来可能会变的部分**不是更好吗？
+
+而回到上文我们对于虚拟结构的抽象，对于`react`而言，`props`是可变的，`child`是可变的，`state`也是可变的，而这些属性恰好都在虚拟`dom`中均有呈现。
+
+所以到这里，我们解释了虚拟`dom`的第一个优势，站在对比更新的角度，虚拟`dom`能聚焦于需要对比什么，相对原生`dom`它提供更高效的对比可行性。
+
+### 肆 ❀ 贰 更佳的兼容性
+
+我们在上文提到，`react与babel`将`jsx`转成了`js`对象（虚拟dom），之后又通过`render`生成`dom`，那为啥还要转成`js`而不是直接生成`dom`呢，因为在这个中间`react`还需要做`diff`对比，兼容处理，以及跨平台的考虑，我们先说兼容处理。
+
+准确来说，虚拟`dom`只是`react`中的一部分，要真正体现虚拟`dom`的价值，肯定得结合`react`中的其它设计来一起讲，其中一点就是结合合成事件所体现的强大的兼容性。
+
+我们在介绍`jq`时强调了它在操作`dom`的便捷，以及各类`api`兼容性上的贡献，而`react`中使用了虚拟`dom`也做了大量的兼容。
+
+打个比方，原生的`input`有`change`事件，普通的`div`总没有`onchange`事件吧？不管你有没有留意，其实`dom`和事件在底层已经做了强关联，不同的`dom`能触发的事件，浏览器在一开始就已经定义好了，而且你根本改不了。
+
+但是虚拟`dom`就不同了，虚拟`dom`一方面模仿了原生`dom`的行为，其次在事件方面也做了合成事件与原生事件的映射关系，比如：
+
+```javascript
+{
+  onClick: ['click'],
+  onChange: ['blur', 'change', 'click', 'focus', 'input', 'keydown', 'keyup', 'selectionchange']
+}
+```
+
+`react`暴露给我们的合成事件，其实在底层会关联到多个原生事件，通过这种做法抹平了不同浏览器之间的`api`差异，也带来了更强大的事件系统。
+
+若对于合成事件若感兴趣，可以阅读  [八千字长文深入了解react合成事件底层原理，原生事件中阻止冒泡是否会阻塞合成事件？](https://juejin.cn/post/7118626759162986526)一文。
+
+### 肆 ❀ 叁 渲染优化
+
+我们知道`react`遵循`UI = Render(state)`，只要`state`发生了改变，那么`render`就会重新触发，以达到更新`ui`层的效果。而更改`state`依赖了`setState`，大家都知道`setState`对于`state`更新的行为其实是异步的，假设我们在一次事件中更改了多次`state`，你会发现页面也仅会渲染一次。
+
+而假定我们是直接操作`dom`，那还有哪门子的异步和渲染等待，当你`append`完一个子节点，页面早渲染完了。所以虚拟`dom`的对比提前，以及`setState`的异步处理，本质上也是在像尽可能少的操作`dom`靠近。
+
+若对于`setState`想有更深入的了解，可以阅读博主这两篇文章：
+
+[react中的setState是同步还是异步？react为什么要将其设计成异步？](https://juejin.cn/post/7116834546007900197)
+
+[react 聊聊setState异步背后的原理，react如何感知setState下的同步与异步？](https://juejin.cn/post/7117582507595268127)
+
+### 肆 ❀ 肆 跨平台能力
+
+同理，之所以加入虚拟`dom`这个中间层，除了解决部分性能问题，加强兼容性之外，还有个目的是将`dom`的更新抽离成一个公共层，别忘了`react`除了做页面引用外，`react`还支持使用`React Native`做原生`app`。所以针对同一套虚拟`dom`体系，`react`只是在最终将体现在了不同的平台上而已。
+
+# 伍 ❀ 虚拟DOM比原生快吗？
+
+那么问题来了，聊了这么久的虚拟`dom`，虚拟`dom`性能真的比操作原生`dom`要更快吗？很遗憾的说，并不是，或者说不应该这样粗暴的去对比。
+
+我们在前面虽然对比了虚拟`dom`属性以及原生`dom`的属性量级，但事实上我们并不会对原生`dom`属性进行递归对比，而是直接操作`dom`。而且站在`react`角度，即便经历了`diff`算法以及一系列的优化，`react`到头来还是要操作原生`dom`，只是对于研发来讲不用关注这一步罢了。
+
+所以我们可以想象一下，现在要替换`p`标签的内容，用原生就是直接修改`innerHTML`属性，对于`react`而言它需要先生成虚拟`dom`，然后新旧`diff`找出变化的部分，最后才修改原生`dom`，单论这个例子，一定是原生快。
+
+但我们既然说虚拟`dom`，就一定得结合`react`的使命来解释，虚拟`dom`的核心目的是**模拟了原生`dom`大部分特性，让研发高效无痛写`html`的同时，还达到了单点刷新而不是整个替换（前面表单替换的例子），最重要的，它也将研发从繁琐的`dom`操作中解放了出来**。
+
+总结来说，单论修改一个`dom`节点的性能，不管`react`还是`vue`亦或是`angular`，一定是原生最快，但虚拟`dom`有原生`dom`比不了的价值，起码`react`这些框架能让研发更专注业务以及数据处理，而不是陷入繁琐的`dom`增删改查中。
+
+# 陆 ❀ 虚拟DOM的实现原理
+
+文章开头的五个问题到这里已经解释了三个，还剩两个问题均与源码有一定关系，虽然略显枯燥但我会精简给大家阐述这个过程，另外，为了让知识量不会显得格外庞大，本文将不会阐述`diff`算法与`fiber`部分，这两个知识点我会另起文章单独介绍，敬请期待。
+
+除此之外，接下来两个问题的源码，我将均以`react17.0.2`源码为准，所以大家也不用担心版本差异，会不会有理解了用不上的问题，而且目前用`react 18`的公司也不会很多。
+
+我们先解释虚拟`dom`的创建过程，要聊这个那必然逃不开`React.createElement`方法，[github源码](https://github.com/facebook/react/blob/bcbeb52bf36c6f5ecdad46a48e87cf4354c5a64f/packages/react/src/ReactElement.js#L362)，具体代码如下（我删除了`dev`环境特有的逻辑）：
+
+```javascript
+/**
+ * 创建并返回给定类型的新ReactElement。
+ * See https://reactjs.org/docs/react-api.html#createelement
+ */
+function createElement(type, config, children) {
+  let propName;
+
+  // 创建一个全新的props对象
+  const props = {};
+
+  let key = null;
+  let ref = null;
+  let self = null;
+  let source = null;
+
+  // 有传递自定义属性进来吗？有的话就尝试获取ref与key
+  if (config != null) {
+    if (hasValidRef(config)) {
+      ref = config.ref;
+    }
+    if (hasValidKey(config)) {
+      key = '' + config.key;
+    }
+
+    // 保存self和source
+    self = config.__self === undefined ? null : config.__self;
+    source = config.__source === undefined ? null : config.__source;
+
+    // 剩下的属性都添加到一个新的props属性中。注意是config自身的属性
+    for (propName in config) {
+      if (
+        hasOwnProperty.call(config, propName) &&
+        !RESERVED_PROPS.hasOwnProperty(propName)
+      ) {
+        props[propName] = config[propName];
+      }
+    }
+  }
+
+  // 处理子元素，默认参数第二个之后都是子元素
+  const childrenLength = arguments.length - 2;
+  // 如果子元素只有一个，直接赋值
+  if (childrenLength === 1) {
+    props.children = children;
+  } else if (childrenLength > 1) {
+    // 如果是多个，转成数组再赋予给props
+    const childArray = Array(childrenLength);
+    for (let i = 0; i < childrenLength; i++) {
+      childArray[i] = arguments[i + 2];
+    }
+    props.children = childArray;
+  }
+
+  // 处理默认props，不一定有，有才会遍历赋值
+  if (type && type.defaultProps) {
+    const defaultProps = type.defaultProps;
+    for (propName in defaultProps) {
+      // 默认值只处理值不是undefined的属性
+      if (props[propName] === undefined) {
+        props[propName] = defaultProps[propName];
+      }
+    }
+  }
+
+  // 调用真正的React元素创建方法
+  return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
+}
+```
+
+代码看着好像有点多，但其实一共就只做了两件事：
+
+- 根据`createElement`所接收参数`config`做数据加工与赋值。
+- 加工完数据后调用真正的虚拟`dom`创建`API ReactElement`。
+
+而数据加工部分可分为三步，大家可以对应上面代码理解，其实注释写的也很清晰了：
+
+- 第一步，判断
+
+  ```
+  config
+  ```
+
+  有没有传，不为
+
+  ```
+  null
+  ```
+
+  就做处理，步骤分为
+
+  - 判断`ref`、`key`，`__self`、`__source`这些是否存在或者有效，满足条件就分别赋值给前面新建的变量。
+  - 遍历`config`，并将`config`自身的属性依次赋值给前面新建`props`。
+
+- 第二步，处理子元素。默认从第三个参数开始都是子元素。
+
+  - 如果子元素只有一个，直接赋值给`props.children`。
+  - 如果子元素有多个，转成数组后再赋值给`props.children`。
+
+- 第三步，处理默认属性`defaultProps`，一个纯粹的标签也可以理解成一个最最最基础的组件，而组件支持 `defaultProps`，所以这一步判断有没有`defaultProps`，如果有同样遍历，并将值不为`undefined`的部分都拷贝到`props`对象上。
+
+至此，第一大步全部做完，紧接着调用`ReactElement`，我们接着看这一块的源码，同样我删掉`dev`部分的逻辑，然后你会发现就这么一点代码，[github源码](https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2Ffacebook%2Freact%2Fblob%2Fbcbeb52bf36c6f5ecdad46a48e87cf4354c5a64f%2Fpackages%2Freact%2Fsrc%2FReactElement.js%23L148)：
+
+```javascript
+const ReactElement = function (type, key, ref, self, source, owner, props) {
+  const element = {
+    // 这个标签允许我们将其标识为唯一的React Element
+    $$typeof: REACT_ELEMENT_TYPE,
+    // 元素的内置属性
+    type: type,
+    key: key,
+    ref: ref,
+    props: props,
+    // 记录负责创建此元素的组件。
+    _owner: owner,
+  };
+  return element;
+};
+```
+
+这个方法啥也没干，单纯接受我们在上个方法加工后的数据，并将其组装成了一个`element`对象，也就是我们前文所说的虚拟`dom`。
+
+不过针对这个虚拟`dom`，我们可以把`$$typeof: REACT_ELEMENT_TYPE`拧出来单独讲讲。我们可以看看它的具体实现：
+
+```javascript
+// The Symbol used to tag the ReactElement-like types.
+export const REACT_ELEMENT_TYPE = Symbol.for('react.element');
+```
+
+大家在查看虚拟`dom`时应该都有发现它的`$$typeof`定义为`Symbol(react.element)`，而`Symbol`一大特性就是标识唯一性，即便两个看着一模一样的`Symbol`，它们也不会相等。而`react`之所以这样做，本质也是为了防止`xss`攻击，防止外部伪造虚拟`dom`结构。
+
+其次，如果大家有在开发中留意，虚拟`dom`的不允许修改，哪怕你为这个对象新增属性也不可以，这是因为在`ReactElement`方法省略的`dev`代码中，`react`使用`Object.freeze`冻结了虚拟`dom`使其无法修改。但实际上我们确实有为虚拟`dom`添加属性的场景，解决这个问题时我们可以借用顶层`React.cloneElement()`方法，它会以你传递的虚拟`dom`为模板克隆并返回一个新的虚拟`dom`对象，同时这个过程中你可以为其添加新的`config`，具体用法可见 [React.cloneElement](https://link.juejin.cn?target=https%3A%2F%2Fzh-hans.reactjs.org%2Fdocs%2Freact-api.html%23cloneelement)。
+
+其次，如果当前环境不支持`Symbol`时，`REACT_ELEMENT_TYPE`的值为`0xeac7`。
+
+```javascript
+var REACT_ELEMENT_TYPE = 0xeac7;
+```
+
+为什么是`0xeac7`呢？官方答复是，因为它看起来像`React`....好了，那么到这里，关于如何生成虚拟`dom`的源码分析结束。
+
+# 柒 ❀ react中虚拟dom是如何转变成真实dom的
+
+终于，我们来到了本文的最后一个问题，要想搞清这个问题，我们的关注点自然是`ReactDOM.render`方法了，这个部分比较麻烦，大家跟着我的思路走就行。（有兴趣可以直接把`react`脚手架项目跑起来，写一个最基本的组件，然后去`react-dom.development.js`文件断点也可以）。
+
+```javascript
+// 我为了方便断点，定义了一个class组件P
+class P extends Component {
+  state = {
+    name: 1,
+  };
+  handleClick = () => {};
+  render() {
+    return <span onClick={this.handleClick}>111</span>;
+  }
+}
+ReactDOM.render(<P />, document.getElementById("root"));
+```
+
+首先我们来到`render`方法，代码如下：
+
+```javascript
+function render(element, container, callback) {
+	// 我删除了对于container是否合法的效验逻辑
+  return legacyRenderSubtreeIntoContainer(null, element, container, false, callback);
+}
+```
+
+`render`做的事情其实很简单，验证`container`是否合法，如果不是一个有效的`dom`就会抛错，核心逻辑看样子都在`legacyRenderSubtreeIntoContainer`中，根据命名可以推测是将组件子树都渲染到容器元素中。
+
+```javascript
+// 同样，我删除了部分对主逻辑理解没啥影响的代码
+function legacyRenderSubtreeIntoContainer(parentComponent, children, container, forceHydrate, callback) {
+  var root = container._reactRootContainer;
+  var fiberRoot;
+	// 有fiber的root节点吗？没有就新建
+  if (!root) {
+    root = container._reactRootContainer = legacyCreateRootFromDOMContainer(container, forceHydrate);
+    fiberRoot = root._internalRoot;
+    unbatchedUpdates(function () {
+      // 核心关注这里
+      updateContainer(children, fiberRoot, parentComponent, callback);
+    });
+  } else {
+    fiberRoot = root._internalRoot;
+
+    updateContainer(children, fiberRoot, parentComponent, callback);
+  }
+  return getPublicRootInstance(fiberRoot);
+}
+```
+
+因为`react 16`引入了`fiber`的概念，所以后续其实很多代码就是在创建`fiber`节点，`legacyRenderSubtreeIntoContainer`一样，它一开始判断有没有`root`节点（一个fiber对象），很显然我们初次渲染走了新建逻辑，但不管是不是新建，最终都会调用`updateContainer`方法。但此方法没有太多我们需要关注的逻辑，一直往下走，我们会遇到一个很重要的`beginWork`（开始干正事）方法，代码如下：
+
+```javascript
+function beginWork(current, workInProgress, renderLanes) {
+	// 删除部分无影响的代码
+  workInProgress.lanes = NoLanes;
+
+  switch (workInProgress.tag) {
+    // 模糊定义的组件
+    case IndeterminateComponent:
+      {
+        return mountIndeterminateComponent(current, workInProgress, workInProgress.type, renderLanes);
+      }
+		// 函数组件
+    case FunctionComponent:
+      {
+        var _Component = workInProgress.type;
+        var unresolvedProps = workInProgress.pendingProps;
+        var resolvedProps = workInProgress.elementType === _Component ? unresolvedProps : resolveDefaultProps(_Component, unresolvedProps);
+        return updateFunctionComponent(current, workInProgress, _Component, resolvedProps, renderLanes);
+      }
+		// class组件
+    case ClassComponent:
+      {
+        var _Component2 = workInProgress.type;
+        var _unresolvedProps = workInProgress.pendingProps;
+
+        var _resolvedProps = workInProgress.elementType === _Component2 ? _unresolvedProps : resolveDefaultProps(_Component2, _unresolvedProps);
+
+        return updateClassComponent(current, workInProgress, _Component2, _resolvedProps, renderLanes);
+      }
+    case HostRoot:
+      return updateHostRoot(current, workInProgress, renderLanes);
+  }
+}
+```
+
+`beginWork`方法做了很重要的一件事，那就是根据你`render`接收的组件类型，来执行不同的组件更新的方法，毕竟我们可能给`render`传递一个普通标签，也可能是函数组件或者`Class`组件，亦或是`hooks`的`memo`组件等等。
+
+比如我此时定义的`P`是`class`组件，于是走了`ClassComponent`路线，紧接着调用`updateClassComponent`更新组件。
+
+```javascript
+function updateClassComponent(current, workInProgress, Component, nextProps, renderLanes) {
+  // 删除了添加context部分的逻辑
+	// 获取组件实例
+  var instance = workInProgress.stateNode;
+  var shouldUpdate;
+	// 如果没有实例，那就得创建实例
+  if (instance === null) {
+    if (current !== null) {
+      current.alternate = null;
+      workInProgress.alternate = null;
+
+      workInProgress.flags |= Placement;
+    }
+    // 全体目光向我看齐，看我看我，这里new Class创建组件实例
+    constructClassInstance(workInProgress, Component, nextProps);
+    // 挂载组件实例
+    mountClassInstance(workInProgress, Component, nextProps, renderLanes);
+    shouldUpdate = true;
+  } else if (current === null) {
+    shouldUpdate = resumeMountClassInstance(workInProgress, Component, nextProps, renderLanes);
+  } else {
+    shouldUpdate = updateClassInstance(current, workInProgress, Component, nextProps, renderLanes);
+  }
+  // Class组件的收尾工作
+  var nextUnitOfWork = finishClassComponent(current, workInProgress, Component, shouldUpdate, hasContext, renderLanes);
+}
+```
+
+在看这段代码前，我们自己也可以提前想象下这个过程，比如`Class`组件你一定是得`new`才能得到一个实例，只有拿到实例后才能调用其`render`方法，拿到其虚拟`dom`结构，之后再根据结构创建真实`dom`，添加属性，最后加入到页面。
+
+所以在`updateClassComponent`中，首先会对组件做`context`相关的处理，这部分代码我删掉了，其余，判断当前组件是否有实例，如果有就去更新实例，如果没有那就创建实例，所以我们聚焦到`constructClassInstance`与`mountClassInstance、finishClassComponent`三个方法，看命名就能猜到，前者一定是创造实例，后者是应该是挂载实例前的一些处理，先看第一个方法：
+
+```javascript
+function constructClassInstance(workInProgress, ctor, props) {
+	// 删除了对组件context进一步加工的逻辑
+	// ....
+  
+  // 看我看我，我宣布个事，这里创建了组件实例
+  // 验证了前面的推测，这里new了我们的组件，并且传递了当前组件的props以及前面代码加工的context
+  var instance = new ctor(props, context);
+  var state = workInProgress.memoizedState = instance.state !== null && instance.state !== undefined ? instance.state : null;
+  adoptClassInstance(workInProgress, instance);
+
+  // 删除了对于组件生命周期钩子函数的处理，比如很多即将被废弃的钩子，在这里都会被添加 UNSAFE_ 前缀
+  //.....
+
+  return instance;
+}
+```
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0fada131be5442d59f81cb2646ce0e32~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+`constructClassInstance`正如我们推测的一样，这里通过`new ctor(props, context)`创建了组件实例，除此之外，`react`后续版本已将部分声明周期钩子标记为不安全，对于钩子命名的加工也在此方法中。
+
+紧接着，我们得到了一个组件实例，接着看`mountClassInstance`方法：
+
+```javascript
+function mountClassInstance(workInProgress, ctor, newProps, renderLanes) {
+	// 此方法主要是对constructClassInstance创建的实例进行数据组装，为其赋予props,state等一系列属性
+  var instance = workInProgress.stateNode;
+  instance.props = newProps;
+  instance.state = workInProgress.memoizedState;
+  instance.refs = emptyRefsObject;
+  initializeUpdateQueue(workInProgress);
+  
+  // 删除了部分特殊情况下，对于instance的特殊处理逻辑
+}
+```
+
+虽然命名是挂载，但其实离真正的挂载还远得很，本方法其实是为`constructClassInstance`创建的组件实例做数据加工，为其赋予`props state`等一系列属性。
+
+在上文代码中，其实还有个`finishClassComponent`方法，此方法在组件自身都准备完善后调用，我们期待已久的`render`方法处理就在里面：
+
+```javascript
+function finishClassComponent(current, workInProgress, Component, shouldUpdate, hasContext, renderLanes) {
+  var instance = workInProgress.stateNode;
+  ReactCurrentOwner$1.current = workInProgress;
+  var nextChildren;
+  if (didCaptureError && typeof Component.getDerivedStateFromError !== 'function') {
+			// ...
+  } else {
+    {
+      setIsRendering(true);
+      // 关注点在这，通过调用组件实例的render方法，得到内部的元素
+      nextChildren = instance.render();
+      setIsRendering(false);
+    }
+  } 
+  workInProgress.memoizedState = instance.state;
+  return workInProgress.child;
+}
+```
+
+在此方法内部，我们通过获取之前创建的组件实例，然后调用了它的`render`方法，于是成功执行了我们组件`P`的`render`方法：
+
+```javascript
+render() {
+  return <span onClick={this.handleClick}>111</span>;
+}
+```
+
+需要注意的是，`render`返回的其实是一个`jsx`的模板语法，在真正`return`之前，`react`还会再次调用生成虚拟`dom`的逻辑也就是`ReactElement`方法，将`span`这一段转变成虚拟`dom`。
+
+而对于`react`而言，很明显虚拟`dom`的`span`也可能理解成一个最最最基础的组件，所以它会重走`beginWork`这条路线，只是到了组件分类时，这一次会走`HostComponent`路线，然后触发`updateHostComponent`方法，我们直接跳过相同的流程，之后就会走到`completeWork`方法。
+
+到这里，我们可以理解例子`P`组件虚拟`dom`都准备完毕，现在要做的是对于`虚拟`dom这种最基础的组件做转成真实`dom`的操作，见如下代码：
+
+```javascript
+function completeWork(current, workInProgress, renderLanes) {
+  var newProps = workInProgress.pendingProps;
+	// 根据tag类型做不同的处理
+  switch (workInProgress.tag) {
+    // 标签类的基础组件走这条路
+    case HostComponent:
+      {
+        popHostContext(workInProgress);
+        var rootContainerInstance = getRootHostContainer();
+        var type = workInProgress.type;
+
+        if (current !== null && workInProgress.stateNode != null) {
+          // ...
+        } else {
+          // ...
+          } else {
+            // 关注点1：创建虚拟dom的实例
+            var instance = createInstance(type, newProps, rootContainerInstance, currentHostContext, workInProgress);
+            appendAllChildren(instance, workInProgress, false, false);
+            workInProgress.stateNode = instance; // Certain renderers require commit-time effects for initial mount.
+            // 关注点2：初始化实例的子元素
+            if (finalizeInitialChildren(instance, type, newProps, rootContainerInstance)) {
+              markUpdate(workInProgress);
+            }
+          }
+        }
+      }
+  }
+}
+```
+
+可以猜到，虽然同样还是调用`createInstance`生成实例，但目前咱们的组件是个虚拟`dom`对象啊，一个普通的`span`标签，所以接下来一定会创建最基本的`span`节点，代码如下：
+
+```javascript
+function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
+	// 根据span创建节点，调用createElement方法
+  var domElement = createElement(type, props, rootContainerInstance, parentNamespace);
+  precacheFiberNode(internalInstanceHandle, domElement);
+  // 将虚拟dom span的属性添加到span节点上
+  updateFiberProps(domElement, props);
+  return domElement;
+}
+
+// createElement具体实现
+function createElement(type, props, rootContainerElement, parentNamespace) {
+  var isCustomComponentTag; 
+  var ownerDocument = getOwnerDocumentFromRootContainer(rootContainerElement);
+  var domElement;
+  var namespaceURI = parentNamespace;
+
+  if (namespaceURI === HTML_NAMESPACE$1) {
+    if (type === 'script') {
+      var div = ownerDocument.createElement('div');
+      div.innerHTML = '<script><' + '/script>';
+      var firstChild = div.firstChild;
+      domElement = div.removeChild(firstChild);
+    } else if (typeof props.is === 'string') {
+      domElement = ownerDocument.createElement(type, {
+        is: props.is
+      });
+    } else {
+      // 在这里，真实dom span节点创建完毕
+      domElement = ownerDocument.createElement(type); 
+      if (type === 'select') {
+        var node = domElement;
+
+        if (props.multiple) {
+          node.multiple = true;
+        } else if (props.size) {
+          node.size = props.size;
+        }
+      }
+    }
+  } else {
+    domElement = ownerDocument.createElementNS(namespaceURI, type);
+  }
+  return domElement;
+}
+```
+
+在`createElement`方法中，`react`会根据你的标签类型来决定怎么创建`dom`，比如如果你是`script`，那就创建一个`div`用于包裹一个`script`标签。而我们的`span`很显然就是通过`ownerDocument.createElement(type)`创建，如下图：
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6763bab627ea4c9398ce609803e5b8da~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+创建完成后，此时的`span`节点还是一个啥都没有的空`span`，所以通过`updateFiberProps`将还未加工的`span`的子节点以及其它属性强行赋予给`span`，在之后会进一步加工，之后返回我们的`span`：
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/df2dcbe8e4a14231a3af94a2f8431f03~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+然后来到`finalizeInitialChildren`方法，这里开始对创建的`span`节点的子元素进一步加工，其实就是文本`111`，
+
+```javascript
+function finalizeInitialChildren(domElement, type, props, rootContainerInstance, hostContext) {
+  // 实际触发的其实是这个
+  setInitialProperties(domElement, type, props, rootContainerInstance);
+  return shouldAutoFocusHostComponent(type, props);
+}
+
+// 跳过对于部分，接着看 setInitialDOMProperties
+function setInitialProperties(domElement, tag, rawProps, rootContainerElement) {
+  var props;
+
+  switch (tag) {
+		// ...
+    default:
+      props = rawProps;
+  }
+	// 验证props合法性
+  assertValidProps(tag, props);
+  // 正式设置props
+  setInitialDOMProperties(tag, domElement, rootContainerElement, props, isCustomComponentTag);
+  }
+}
+```
+
+又是一系列的跳转，为`dom`设置属性的逻辑现在又聚焦在了`setInitialDOMProperties`中，我们直接看代码：
+
+```javascript
+function setInitialDOMProperties(tag, domElement, rootContainerElement, nextProps, isCustomComponentTag) {
+  for (var propKey in nextProps) {
+    // 遍历所有属性，只要这个属性不是原型属性，那就开始正式处理
+    if (!nextProps.hasOwnProperty(propKey)) {
+      continue;
+    }
+
+    var nextProp = nextProps[propKey];
+		// 如果属性是样式，那就通过setValueForStyles为dom设置样式
+    if (propKey === STYLE) {
+      {
+        if (nextProp) {
+          Object.freeze(nextProp);
+        }
+      }
+      setValueForStyles(domElement, nextProp);
+    } else if (propKey === DANGEROUSLY_SET_INNER_HTML) {
+
+    } else if (propKey === CHILDREN) {
+      if (typeof nextProp === 'string') {
+        var canSetTextContent = tag !== 'textarea' || nextProp !== '';
+        if (canSetTextContent) {
+          // 设置文本属性
+          setTextContent(domElement, nextProp);
+        }
+      } else if (typeof nextProp === 'number') {
+        setTextContent(domElement, '' + nextProp);
+      }
+    } else if (propKey === SUPPRESS_CONTENT_EDITABLE_WARNING || propKey === SUPPRESS_HYDRATION_WARNING) ; else if (propKey === AUTOFOCUS) ; else if (registrationNameDependencies.hasOwnProperty(propKey)) {
+      if (nextProp != null) {
+        if ( typeof nextProp !== 'function') {
+          warnForInvalidEventListener(propKey, nextProp);
+        }
+
+        if (propKey === 'onScroll') {
+          listenToNonDelegatedEvent('scroll', domElement);
+        }
+      }
+    } else if (nextProp != null) {
+      setValueForProperty(domElement, propKey, nextProp, isCustomComponentTag);
+    }
+  }
+}
+```
+
+这段代码看着有点长，其实做的事情非常的清晰，遍历`span`目前的`props`，如果`props`的`key`是`style`，那就通过`setValueForStyles`为当前真实`dom`一一设置样式，如果`key`是`children`，很明显我们虚拟`dom`的`111`是放在`children`属性中的，外加上如果这个`children`类型还是`string`，那就通过`setTextContent`为`dom`添加文本信息。
+
+这里给大家展示为真实`dom`设置`style`以及设置`innerHTML`的源码：
+
+```javascript
+// 为真实dom添加样式的逻辑
+function setValueForStyles(node, styles) {
+  // 获取真是dom的style对象，后面就遍历styles对象，依次覆盖
+  var style = node.style;
+  for (var styleName in styles) {
+    if (!styles.hasOwnProperty(styleName)) {
+      continue;
+    }
+    var isCustomProperty = styleName.indexOf('--') === 0;
+    {
+      if (!isCustomProperty) {
+        warnValidStyle$1(styleName, styles[styleName]);
+      }
+    }
+    // 获取样式的值
+    var styleValue = dangerousStyleValue(styleName, styles[styleName], isCustomProperty);
+    if (styleName === 'float') {
+      styleName = 'cssFloat';
+    }
+		// 最终覆盖node节点原本的值
+    if (isCustomProperty) {
+      style.setProperty(styleName, styleValue);
+    } else {
+      style[styleName] = styleValue;
+    }
+  }
+}
+
+// 为真实dom添加innerHTML的逻辑
+var setTextContent = function (node, text) {
+  if (text) {
+    var firstChild = node.firstChild;
+
+    if (firstChild && firstChild === node.lastChild && firstChild.nodeType === TEXT_NODE) {
+      firstChild.nodeValue = text;
+      return;
+    }
+  }
+  // 为真实dom设置文本信息
+  node.textContent = text;
+};
+```
+
+那么到这里，其实我们的组件`P`已经准备完毕，包括真实`dom`也都创建好了，就等插入到页面了，那这些`dom`什么时候插入到页面的呢？后面我又跟了下调用栈，根据我页面啥时候绘制的`111`一步步断点缩小范围，最终定位到了`insertOrAppendPlacementNodeIntoContainer`方法，直译过来就是将节点插入或者追加到容器节点中：
+
+```javascript
+function insertOrAppendPlacementNodeIntoContainer(node, before, parent) {
+  var tag = node.tag;
+  var isHost = tag === HostComponent || tag === HostText;
+  if (isHost || enableFundamentalAPI ) {
+    var stateNode = isHost ? node.stateNode : node.stateNode.instance;
+    if (before) {
+      // 在容器节点前插入
+      insertInContainerBefore(parent, stateNode, before);
+    } else {
+      // 在容器节点后追加
+      appendChildToContainer(parent, stateNode);
+    }
+  } else if (tag === HostPortal) ; else {
+    var child = node.child;
+		// 只要子节点不为null，继续递归调用
+    if (child !== null) {
+      insertOrAppendPlacementNodeIntoContainer(child, before, parent);
+      var sibling = child.sibling;
+			// 只要兄弟节点不为null，继续递归调用
+      while (sibling !== null) {
+        insertOrAppendPlacementNodeIntoContainer(sibling, before, parent);
+        sibling = sibling.sibling;
+      }
+    }
+  }
+}
+```
+
+在`insertOrAppendPlacementNodeIntoContainer`中，`react`会根据当前节点是否有子节点，或者兄弟节点进行递归调用，然后分别根据`insertInContainerBefore`与`appendChildToContainer`做最终的节点插入页面操作，这里我们看看`appendChildToContainer`的实现：
+
+```javascript
+function appendChildToContainer(container, child) {
+  var parentNode;
+
+  if (container.nodeType === COMMENT_NODE) {
+    parentNode = container.parentNode;
+    parentNode.insertBefore(child, container);
+  } else {
+    parentNode = container;
+    // 将子节点插入到父节点中
+    parentNode.appendChild(child);
+  var reactRootContainer = container._reactRootContainer;
+
+  if ((reactRootContainer === null || reactRootContainer === undefined) && parentNode.onclick === null) {
+    // TODO: This cast may not be sound for SVG, MathML or custom elements.
+    trapClickOnNonInteractiveElement(parentNode);
+  }
+}
+```
+
+由于我们定义的组件非常简单，`P`组件只有一个`span`标签，所以这里的`parentNode`其实就是容器根节点，当执行完`parentNode.appendChild(child)`，可以看到页面就出现了`111`了。
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fe354a14c05443ffbaa26913ec8c8dd6~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+至此，组件的虚拟`dom`生成，真实`dom`的创建，加工以及渲染全部执行完毕。
+
+可能大家对于这个过程还是比较迷糊，我大致画个图描述下这个过程：
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/50f830c64a374e889790413ee4eae099~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+而`react`是怎么知道谁是谁的子节点，谁是谁的父节点，这个就需要了解`fiber`对象了，其实我们在创建完真实`dom`后，它还是会被加工成一个`fiber`节点，而此节点中通过`child`可以访问到自己的子节点，通过`sibling`获取自己的兄弟节点，最后通过`return`属性获取自己的父节点，通过这些属性为构建`dom`树提供了支撑，当然`fiber`我会另开一篇文章来解释，这里不急。
+
+前文，我们验证了`Class`组件是通过`new`得到组件实例，然后开展后续操作，那对于函数组件，是不是直接调用拿到子组件呢？这里我简单跟了下源码，发现了如下代码：
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/aeeca602b14c47eca939fdf3aa3a99cd~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+```javascript
+function renderWithHooks(current, workInProgress, Component, props, secondArg, nextRenderLanes) {
+  // ....
+  var children = Component(props, secondArg);
+}
+```
+
+可以发现确实如此，拿到子节点，然后后续还是跟之前一样，将虚拟`dom`转变成真实`dom`，以及后续的一系列操作。
+
+不过有点意外的是，我以为我定义的函数组件在判断组件类型时，会走`case FunctionComponent`分支路线，结果它走的`case IndeterminateComponent`，也就是模糊定义的组件，不过影响不大，还是符合我们的推测。
+
+好了，到这里，我已经写了一万字，关于虚拟`dom`如何转变成真实`dom`也介绍完毕了。
+
+# 捌 ❀ 我是如何阅读源码的
+
+在文章结束前，我顺带分享下我是如何阅读`react`源码的，本来在写这篇文章前，我也想着要不查查资料，看看大家都是怎么写的，结果部分高赞的文章基本发布时间都在`19`年，那时候的`react`版本基本都是`15`，连`fiber`的概念都没有，无奈之下我只能自己来尝试读源码并解决我自己提出的问题。如果将源码阅读理解成一次探险，我是这样做的。
+
+### 捌 ❀ 壹 确定阅读前的目标
+
+`react`的源码比较多，一个`react`一个`react-dom`加起来代码量都几万行了，所以在读之前，一定要搞清楚自己的目标，这样你也能少受不重要逻辑的干扰，比如我在阅读之前初步定下的目标是：
+
+- 虚拟`dom`是怎么生成的？
+- 函数组件和`class`组件渲染有什么不同？
+- 为啥我之前尝试直接修改虚拟`dom`，添加属性没成功（对应后面typeof Symbol的解释）
+- 虚拟`dom`是怎么转变成真实`dom`的？
+- 啥时候才把真实`dom`插入到页面？
+- ...
+
+清晰了目标，那就可以找到起点开始看了，我要看渲染，那自然看`render`，但接下来就麻烦了，如果你跟着`render`一步步往下走，那估计你看不了五分钟，应该就没耐心看了，因为这里面存在大量你根本看不懂，或者对你帮助不大的代码，那么我是怎么做的呢？
+
+### 捌 ❀ 贰 以点成线
+
+我要看虚拟`dom`转变真实`dom`，`react`到头来还是要操作真实`dom`，那它就一定得通过原生的`createElement`来创建`dom`节点，所以我直接在源码中搜`createElement`，然后看看这些命名出现的上下文，根据语境大致推断是否是自己想要的，不确定也可以打个断点。
+
+哎，然后我就发现我成功找到`function createElement`方法，而且它还真是我想要的方法，但是呢，此时逻辑距离`render`可谓是十万八千里，这中间究竟发生了什么？这时候就可以根据执行栈进行梳理：
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1c16203e17bd4bdba6a1b279ebe5097e~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+比如上图就是我定位到给真实`dom`添加属性的方法，然后我根据调用栈命名，大致知道它在干嘛，同时排除那些没意义的函数的干扰，从终点反向走回起点，看看这一路`react`是怎么处理的。
+
+同理，我在找最后`react`将真实`dom`插入到页面的逻辑时，我发现我跟不下去了，因为断点乱跳，于是我就看页面渲染`111`的时机，然后初略断点，如果这个断点还没走到`111`已经渲染了，说明这个操作在之前，通过这种方式不断缩小范围范围，最终定位到了`insertOrAppendPlacementNodeIntoContainer`方法，也解开了我前面的疑惑。
+
+### 捌 ❀ 叁 以线成面
+
+通过以点连线的方式，你能非常快的理清一小段一小段的逻辑，而这些逻辑的交叉，阅读前的目标就逐渐清晰了。比如我在梳理了`Class`组件后，我就在想，函数组件又是怎么渲染的？于是非常快的定位到了函数组件渲染子节点的逻辑。
+
+我们可以把源码理解成夜晚的星空，小时候总是喜欢选几个点练成线，再用线连成图案，什么北极星织女星，不就是这样画出来的吗，而现在只是将这种做法投射到了源码阅读中罢了。
+
+# 玖 ❀ 总
+
+通过本文，我们介绍了虚拟`dom`的概念，了解了究竟什么是虚拟`dom`。结合文章开头框架发展史，我们也解释了虚拟`dom`存在的价值以及它所具备的优势，而且框架之间也不应该盲目的去对比。在文章后半段，我们介绍了`React.createElement`与`ReactDOM.render`的源码，理解了虚拟`dom`的创建过程，以及`react`是如何将虚拟`dom`转变成真实`dom`的
+
+# [链接](https://juejin.cn/post/7120141908730445854?share_token=33a0aff3-4caa-4986-a688-f45a8e22a438#heading-0)
