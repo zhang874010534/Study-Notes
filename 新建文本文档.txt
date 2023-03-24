@@ -2,9 +2,9 @@
 删除自己的文件(小飞机、笔记)
 vscode 插件远程同步
 webStorm
-Golang
 有道笔记
 钉钉
 微信
 qq
 ToDesk
+https://chat.forchange.cn/  https://poe.com/chatgpt
