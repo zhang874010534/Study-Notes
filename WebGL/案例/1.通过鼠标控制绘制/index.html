@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../utils"></script>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+      }
+      #canvasId {
+          background-color: paleturquoise;
+          display: block;
+          margin: 50px auto;
+      }
+  </style>
+</head>
+<body>
+<canvas id="canvasId" width="400" height="400"></canvas>
+<script>
+  const ctx = document.querySelector("#canvasId")
+  const gl = ctx.getContext('webgl')
+  // 着色器
+  const VERTEX_SHADER_SOURCE = `
+    attribute vec4 aPosition;
+    void main () {
+      gl_Position = aPosition;
+      gl_PointSize = 2.0;
+    }
+  ` // 顶点着色器
+
+  const FRAGMENT_SHADER_SOURCE = `
+    void main() {
+      gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+    }
+  ` // 片元着色器
+
+
+  const program = initShader(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE)
+  // 执行绘制
+
+  const aPosition = gl.getAttribLocation(program, 'aPosition')
+
+
+  const points = []
+  ctx.onmousemove = (e) => {
+    const clientX = e.clientX
+    const clientY = e.clientY
+    const domPosition = e.target.getBoundingClientRect()
+    const domX = clientX - domPosition.left
+    const domY = clientY - domPosition.top
+
+    const halfWidth = ctx.offsetWidth / 2
+    const halfHeight = ctx.offsetHeight / 2
+
+    const x = (domX - halfWidth) / halfWidth
+    const y = (halfHeight - domY) / halfHeight
+    console.log(x,y)
+    points.push({
+      x,y
+    })
+    for (let i = 0; i < points.length; i++) {
+      gl.vertexAttrib4f(aPosition, points[i].x, points[i].y, 0, 1.0)
+      // mode要绘制的图形是什 first从哪里开始 count使用几个顶点
+      gl.drawArrays(gl.POINTS, 0, 1)
+    }
+
+  }
+</script>
+</body>
+</html>
