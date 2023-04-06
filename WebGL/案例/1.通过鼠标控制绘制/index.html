@@ -6,7 +6,7 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <script src="../utils"></script>
+  <script src="utils"></script>
   <style>
       * {
           margin: 0;
@@ -29,13 +29,15 @@
     attribute vec4 aPosition;
     void main () {
       gl_Position = aPosition;
-      gl_PointSize = 2.0;
+      gl_PointSize = 10.0;
     }
   ` // 顶点着色器
 
   const FRAGMENT_SHADER_SOURCE = `
+    precision mediump float;
+    uniform vec4 uColor;
     void main() {
-      gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+      gl_FragColor = uColor;
     }
   ` // 片元着色器
 
@@ -44,7 +46,7 @@
   // 执行绘制
 
   const aPosition = gl.getAttribLocation(program, 'aPosition')
-
+  const uColor = gl.getUniformLocation(program, 'uColor')
 
   const points = []
   ctx.onmousemove = (e) => {
@@ -59,16 +61,15 @@
 
     const x = (domX - halfWidth) / halfWidth
     const y = (halfHeight - domY) / halfHeight
-    console.log(x,y)
     points.push({
       x,y
     })
     for (let i = 0; i < points.length; i++) {
       gl.vertexAttrib4f(aPosition, points[i].x, points[i].y, 0, 1.0)
+      gl.uniform4f(uColor, points[i].x, points[i].y , 0, 1.0)
       // mode要绘制的图形是什 first从哪里开始 count使用几个顶点
       gl.drawArrays(gl.POINTS, 0, 1)
     }
-
   }
 </script>
 </body>

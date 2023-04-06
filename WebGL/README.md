@@ -97,6 +97,44 @@ const aPosition = gl.getAttribLocation(program, 'aPosition') // 获取变量引�
 gl.vertexAttrib4f(aPosition, 0.5, 0.5, 0, 1.0)//设置变量的值
 ```
 
+#### uniform变量
+
+```js
+const FRAGMENT_SHADER_SOURCE = `
+	precision mediump float // 中精度 mediump 高精度 highp 低精度 lowp
+    uniform vec4 uColor;
+    void main() {
+      gl_FragColor = uColor;
+    }
+  ` // 片元着色器
+const uColor = gl.getUniformLocation(program, 'uColor')
+gl.uniform4f(uColor, 1, 0, 0, 1)
+
+// 情况1 
+const FRAGMENT_SHADER_SOURCE = `
+	precision mediump float // 中精度 mediump 高精度 highp 低精度 lowp
+    uniform float uColor;
+    void main() {
+      gl_FragColor = vec4(uColor, 0.0, 0.0, 1.0);
+    }
+  ` // 片元着色器
+const uColor = gl.getUniformLocation(program, 'uColor')
+gl.uniform1f(uColor, 1.0)
+
+// 情况2
+const FRAGMENT_SHADER_SOURCE = `
+	precision mediump float // 中精度 mediump 高精度 highp 低精度 lowp
+    uniform vec3 uColor;
+    void main() {
+      gl_FragColor = vec4(uColor.r, uColor.g, uColor.b, 1.0);
+    }
+  ` // 片元着色器
+const uColor = gl.getUniformLocation(program, 'uColor')
+gl.uniform3f(uColor, 1.0, 0.0, 0.0, 1.0)
+```
+
+
+
 ### WebGL简单应用
 
 #### 清空颜色缓冲区
@@ -179,6 +217,7 @@ ctx.onmousemove = (e) => {
     })
     for (let i = 0; i < points.length; i++) {
         gl.vertexAttrib4f(aPosition, points[i].x, points[i].y, 0, 1.0)
+        gl.uniform4f(uColor, points[i].x, points[i].y , 0, 1.0)
         // mode要绘制的图形是什 first从哪里开始 count使用几个顶点
         gl.drawArrays(gl.POINTS, 0, 1)
     }
