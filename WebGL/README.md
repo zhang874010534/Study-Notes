@@ -204,7 +204,7 @@ ctx.onmousemove = (e) => {
     const clientY = e.clientY
     const domPosition = e.target.getBoundingClientRect()
     const domX = clientX - domPosition.left
-    const domY = clientY - domPosition.top
+    const domY = clientY - domPosition.top 
 
     const halfWidth = ctx.offsetWidth / 2
     const halfHeight = ctx.offsetHeight / 2
