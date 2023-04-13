@@ -14,10 +14,10 @@
       }
       function _new() {
         //1.拿到传入的参数中的第一个参数，即构造函数名Func
-        var Func = [].shift.call(arguments);
+        const Func = [].shift.call(arguments);
         //2.创建一个空对象obj,并让其继承Func.prototype
         // var obj = Object.create(Func.prototype);
-        var obj = Object.create(Func.prototype);
+        const obj = Object.create(Func.prototype);
         //第二步也可以这样写
         // var obj = {}
         // obj.__proto__ = Func.prototype
@@ -25,7 +25,7 @@
         Func.apply(obj, arguments);
         return obj;
       }
-      let a = _new(Person, 1, '你好');
+      const a = _new(Person, 1, '你好');
       console.log(a);
     </script>
   </body>
