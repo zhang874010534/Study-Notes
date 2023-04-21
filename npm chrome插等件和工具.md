@@ -91,6 +91,25 @@
 
 - [classnames](https://www.npmjs.com/package/classnames) 处理类名 vue自带这种功能
 
+- [immer](https://immerjs.github.io/immer/) 更方便的方式处理不可变状态
+
+  ```js
+  import {produce} from "immer";
+  const [baseState, setBaseState] = useState([
+    {
+      title: "Learn TypeScript",
+      done: true
+    },
+    {
+      title: "Try Immer",
+      done: false
+    }
+  ])
+  setBaseState((prevState) => produce(prevState, draft => {
+    draft[1].done = true
+  }))
+  ```
+
 ### 通用
 
 - [moment](https://momentjs.com/)  时间格式化工具

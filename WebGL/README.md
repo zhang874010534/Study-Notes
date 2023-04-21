@@ -133,30 +133,6 @@ const uColor = gl.getUniformLocation(program, 'uColor')
 gl.uniform3f(uColor, 1.0, 0.0, 0.0, 1.0)
 ```
 
-#### 缓冲区对象
-
-WebGL系统中的一块内存区域，可以一次性地向缓冲区对象中填充大量的顶点数据，然后将这些数据保存在其中，供顶点着色器使用
-
-```js
-const buffer = gl.createBuffer();
-//gl.ARRAY_BUFFER:表示缓冲区存储的是顶点的数据
-//gl.ELEMENT_ARRAY_BUFFER:表示缓冲区存储的是顶点的索引信
-gl.bindBuffer(gl.ARRAY_BUFFER, buffer); // 将buffer绑定到WebGL上
-gl.bufferData(gl.ARRAY_BUFFER, points, gl.STATIC_DRAW) // 将顶点数据写入到缓存区对象里  gl.STATIC_DRAW 写入一次多次绘制
-
-// index attribute 变量的存储位置
-// size 指定每个顶点所使用数据的个数
-// type 指定数据格式
-// normalized 表示是否将数据归一化到 [0,1] [-1,1] 这个区间
-// stride 两个相邻顶点之间的字节数
-// offset 数据偏移量
-gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0) // 告诉显卡从当前绑定的缓冲区（bindBuffer() 指定的缓冲区）中读取顶点数据
-
-gl.enableVertexAttribArray(aPosition) // 激活
-
-gl.drawArrays(gl.POINTS, 0, 3) // 绘制3个点
-```
-
 #### 类型化数组
 
 在 webgl中，需要处理大量的相同类型数据，所以引入类型化数组，这样程序就可以预知到数组中的数据类型，提高性能
@@ -167,6 +143,38 @@ const points = new Float32Array([
     0.5, -0.5,
     0.0, 0.5
 ])
+```
+
+#### 缓冲区对象
+
+WebGL系统中的一块内存区域，可以一次性地向缓冲区对象中填充大量的顶点数据，然后将这些数据保存在其中，供顶点着色器使用
+
+```js
+const buffer = gl.createBuffer(); // 缓存区对象
+
+gl.bindBuffer(gl.ARRAY_BUFFER, buffer); // 将buffer绑定到WebGL上
+gl.bufferData(gl.ARRAY_BUFFER, points, gl.STATIC_DRAW) // 将顶点数据写入到缓存区对象里  gl.STATIC_DRAW 写入一次多次绘制
+
+const BYTES = points.BYTES_PER_ELEMENT // 每个元素所占用的字节数
+// index attribute 变量的存储位置
+// size 指定每个顶点所使用数据的个数
+// type 指定数据格式
+// normalized 表示是否将数据归一化到 [0,1] [-1,1] 这个区间
+// stride 两个相邻顶点之间的字节数
+// offset 数据偏移量
+gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, BYTES * 3, 0) // 告诉显卡从当前绑定的缓冲区（bindBuffer() 指定的缓冲区）中读取顶点数据
+
+gl.enableVertexAttribArray(aPosition) // 激活
+
+gl.vertexAttribPointer(aPointSize, 1, gl.FLOAT, false, BYTES * 3, BYTES * 2) // 告诉显卡从当前绑定的缓冲区（bindBuffer() 指定的缓冲区）中读取顶点数据
+
+gl.enableVertexAttribArray(aPointSize)
+
+// gl.vertexAttrib4f(aPosition, 0, 0 , 0, 1.0)
+// mode要绘制的图形是什 first从哪里开始 count使用几个顶点
+gl.uniform4f(uColor, 0.5, 0.5 , 0, 1.0)
+
+gl.drawArrays(gl.POINTS, 0, 3)
 ```
 
 ### WebGL简单应用
