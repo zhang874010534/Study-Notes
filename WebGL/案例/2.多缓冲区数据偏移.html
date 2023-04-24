@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="utils"></script>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+      }
+      #canvasId {
+          background-color: paleturquoise;
+          display: block;
+          margin: 50px auto;
+      }
+   </style>
+</head>
+<body>
+<canvas id="canvasId" width="400" height="400"></canvas>
+<script>
+  const ctx = document.querySelector("#canvasId")
+  const gl = ctx.getContext('webgl')
+  // 着色器
+  const VERTEX_SHADER_SOURCE = `
+    attribute vec4 aPosition;
+    attribute float aPointSize;
+    void main () {
+      gl_Position = aPosition;
+      gl_PointSize = aPointSize;
+    }
+  ` // 顶点着色器
+
+  const FRAGMENT_SHADER_SOURCE = `
+    precision mediump float;
+    uniform vec4 uColor;
+    void main() {
+      gl_FragColor = uColor;
+    }
+  ` // 片元着色器
+
+
+  const program = initShader(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE)
+  // 执行绘制
+
+  const aPosition = gl.getAttribLocation(program, 'aPosition')
+  const uColor = gl.getUniformLocation(program, 'uColor')
+  const aPointSize = gl.getAttribLocation(program, 'aPointSize')
+
+  const points = new Float32Array([
+    -0.5, -0.5, 10,
+    0.5, -0.5, 20,
+    0.0, 0.5, 30
+  ])
+
+  const buffer = gl.createBuffer(); // 缓存区对象
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer); // 将buffer绑定到WebGL上
+  gl.bufferData(gl.ARRAY_BUFFER, points, gl.STATIC_DRAW) // 将顶点数据写入到缓存区对象里  gl.STATIC_DRAW 写入一次多次绘制
+
+  const BYTES = points.BYTES_PER_ELEMENT // 每个元素所占用的字节数
+  // index attribute 变量的存储位置
+  // size 指定每个顶点所使用数据的个数
+  // type 指定数据格式
+  // normalized 表示是否将数据归一化到 [0,1] [-1,1] 这个区间
+  // stride 两个相邻顶点之间的字节数
+  // offset 数据偏移量
+  gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, BYTES * 3, 0) // 告诉显卡从当前绑定的缓冲区（bindBuffer() 指定的缓冲区）中读取顶点数据
+
+  gl.enableVertexAttribArray(aPosition) // 激活
+
+  gl.vertexAttribPointer(aPointSize, 1, gl.FLOAT, false, BYTES * 3, BYTES * 2) // 告诉显卡从当前绑定的缓冲区（bindBuffer() 指定的缓冲区）中读取顶点数据
+  gl.enableVertexAttribArray(aPointSize)
+
+  // gl.vertexAttrib4f(aPosition, 0, 0 , 0, 1.0)
+  // mode要绘制的图形是什 first从哪里开始 count使用几个顶点
+  gl.uniform4f(uColor, 0.5, 0.5 , 0, 1.0)
+
+  gl.drawArrays(gl.POINTS, 0, 3)
+</script>
+</body>
+</html>
