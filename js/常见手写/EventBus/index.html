@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  class EventBus {
+    /*
+    * {
+        'key1': [
+          {
+            fn: () => {},
+            isOnce: false
+          }
+        ]
+    *   'key2': []
+    * }
+    * */
+    constructor() {
+      this.event = {}
+    }
+    on(type, fn, isOnce = false) {
+      if(this.event[type] === undefined) {
+        this.event[type] = []
+      }
+      this.event[type].push({
+        fn: fn,
+        isOnce: isOnce
+      })
+    }
+    once(type, fn) {
+      this.on(type, fn, true)
+    }
+    off(type, fn) {
+      if(!fn) {
+        delete this.event[type]
+      }
+      const eventList = this.event[type]
+      if(eventList) {
+        eventList.some((item,index) => {
+          if(item.fn === fn) {
+            eventList.splice(index, 1)
+            return true
+          }
+        })
+        if(eventList.length === 0) {
+          delete this.event[type]
+        }
+      }
+    }
+    emit(type, ...arg) {
+      const eventList = this.event[type]
+      if(eventList) {
+        this.event[type] = eventList.filter(item => {
+          item.fn(...arg)
+          return !item.isOnce
+        })
+      }
+    }
+  }
+  const eventBus = new EventBus()
+  function fn1() {
+    console.log('fn1')
+  }
+  function fn2(...arg) {
+    console.log('fn2',...arg)
+  }
+  eventBus.on('show', fn1)
+  eventBus.once('show', fn2)
+  eventBus.on('hide', fn2)
+
+  eventBus.off('show', fn1)
+  eventBus.emit('show',1,2,3)
+  eventBus.emit('show',1,2,3)
+  eventBus.emit('hide')
+
+</script>
+</body>
+</html>
