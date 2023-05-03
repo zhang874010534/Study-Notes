@@ -5,51 +5,72 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>
-
-  </style>
 </head>
 
 <body>
-  <script>
-    function deepClone(obj) {
-      if (typeof obj !== "object" || obj === null) return obj;
-      if (obj instanceof RegExp) {
-        return new RegExp(obj)
-      }
-      if (obj instanceof Date) {
-        return new Date(obj)
-      }
-      let newObj = new obj.constructor
-      for (let key in obj) {
-        newObj[key] = deepClone(obj[key])
-      }
-      return newObj;
+<script>
+  function deepClone(obj, map = new WeakMap()) {
+    if (typeof obj !== "object" || obj === null) return obj;
+
+    // 避免循环引用
+    const objFromMap = map.get(obj)
+    if (objFromMap) return objFromMap
+
+    let target = new obj.constructor
+    map.set(obj, target)
+
+    if (obj instanceof Map) {
+      obj.forEach((v, k) => {
+        const v1 = deepClone(v, map)
+        const k1 = deepClone(k, map)
+        target.set(k1, v1)
+      })
     }
-    let obj = {
-      a: 1,
-      b: [1, 2],
-      c: { demo: 1 },
-      d: /\d/,
-      e:()=>{
-        console.log("e")
-      },
-      f:true,
-      g: new Date('1998-01-29')
+
+    if (obj instanceof Set) {
+      obj.forEach(v => {
+        target.add(deepClone(v, map))
+      })
     }
-    // let arr=['a',{demo:1}]
-    // let arr2 = deepClone(arr)
-    let obj2=deepClone(obj)
-    obj2.a=2
-    obj2.f=false
-    obj2.e=1
-    console.log(obj)
-    console.log(obj2)
-    let obj3={
-      a:1,
-      b:2
+
+    if (obj instanceof RegExp) {
+      target =  new RegExp(obj)
     }
-  </script>
+
+    if (obj instanceof Date) {
+      target =  new Date(obj)
+    }
+
+    // let newObj = new obj.constructor
+    for (let key in obj) {
+      target[key] = deepClone(obj[key], map)
+    }
+    return target;
+  }
+
+  let obj = {
+    a: 1,
+    b: [1, 2],
+    c: {demo: 1},
+    d: /\d/,
+    e: () => {
+      console.log("e")
+    },
+    f: true,
+    g: new Date('1998-01-29'),
+    h: new Map([[123,666]]),
+    i: new Set([1,2,3])
+  }
+  obj.self = obj
+  // let arr=['a',{demo:1}]
+  // let arr2 = deepClone(arr)
+  let obj2 = deepClone(obj)
+  obj2.a = 2
+  obj2.f = false
+  obj2.e = 1
+  console.log(obj)
+  console.log(obj2)
+</script>
 </body>
 
 </html>
