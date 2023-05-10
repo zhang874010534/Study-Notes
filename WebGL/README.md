@@ -78,7 +78,7 @@ const vertex_Shader =  gl.createShader(gl.VERTEX_SHADER)
 const fragment_Shader =  gl.createShader(gl.FRAGMENT_SHADER)
 ```
 
-#### drawArrays
+##### drawArrays
 
 - `gl.POINTS`: 绘制一系列点。
 - `gl.LINE_STRIP`: 绘制一个线条。即，绘制一系列线段，上一点连接下一点。
@@ -92,9 +92,9 @@ const fragment_Shader =  gl.createShader(gl.FRAGMENT_SHADER)
 gl.drawArrays(gl.POINTS, 0, 3)
 ```
 
+#### 变量
 
-
-#### attribute变量声明
+##### attribute变量声明
 
 > 只能在顶点着色器内使用
 
@@ -113,7 +113,7 @@ const aPosition = gl.getAttribLocation(program, 'aPosition') // 获取变量引�
 gl.vertexAttrib4f(aPosition, 0.5, 0.5, 0, 1.0)//设置变量的值
 ```
 
-#### uniform变量
+##### uniform变量
 
 ```js
 const FRAGMENT_SHADER_SOURCE = `
@@ -148,6 +148,31 @@ const FRAGMENT_SHADER_SOURCE = `
 const uColor = gl.getUniformLocation(program, 'uColor')
 gl.uniform3f(uColor, 1.0, 0.0, 0.0, 1.0)
 ```
+
+##### varying
+
+可以将变量从顶点着色器传递到片元着色器，2边都需要声明同名的变量
+
+```glsl
+  const VERTEX_SHADER_SOURCE = `
+    attribute vec4 aPosition;
+    varying vec4 vColor;
+    void main () {
+      gl_Position = aPosition;
+      vColor = aPosition;
+    }
+  ` // 顶点着色器
+
+  const FRAGMENT_SHADER_SOURCE = `
+    precision mediump float;
+    varying vec4 vColor;
+    void main() {
+      gl_FragColor = vColor;
+    }
+  ` // 片元着色器
+```
+
+
 
 #### 类型化数组
 
