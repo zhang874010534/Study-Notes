@@ -218,6 +218,46 @@ gl.uniform4f(uColor, 0.5, 0.5 , 0, 1.0)
 gl.drawArrays(gl.POINTS, 0, 3)
 ```
 
+#### 纹理对象
+
+纹理对象主要用于存储纹理图像数据
+
+[案例](./案例/多图形绘制和动画/11.通过纹理给图形添加背景图.html)
+
+```js
+const img = new Image()
+img.onload = () => {
+    const texture = gl.createTexture()
+
+    // 翻转y轴
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1)
+
+    // 开启一个纹理单元
+    gl.activeTexture(gl.TEXTURE0)
+
+    // 绑定纹理对象
+    gl.bindTexture( gl.TEXTURE_2D ,texture)
+
+    // 处理放大缩小的逻辑
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+
+    // 横向 纵向 平铺的方式
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+
+    // 配置纹理图像
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img )
+
+    gl.uniform1i(uSampler, 0)
+
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0 , 4)
+}
+img.src = './heizi.png'
+```
+
+
+
 ### WebGL简单应用
 
 #### 清空颜色缓冲区
