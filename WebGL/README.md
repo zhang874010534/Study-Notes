@@ -256,7 +256,76 @@ img.onload = () => {
 img.src = './heizi.png'
 ```
 
+### OpenGLES语言
 
+#### 语言基础
+
+```glsl
+void main () {
+    float f = 1.0;
+    int i = 10;
+    bool b = true;
+}
+```
+
+```glsl
+void main () {
+    float f = float(10);
+    int i = int(10.0);
+    bool b = bool(1);
+}
+```
+
+#### 矢量
+
+vec2、vec3、vec4 具有 2，3，4 个浮点数元素的矢量
+
+ivec2、ivec3、ivec4 具有 2，3，4 个整型元素的矢量
+
+bvec2、bvec3、bvec4 具有 2，3, 4个布尔值元素的矢量
+
+##### 赋值
+
+需要通过 构造函数 来进行赋值
+
+```glsl
+vec4 position = vec4(0.1,0.2,0.3,1.0); // vec4 就是矢量的构造函数
+```
+
+##### 访问矢量里的分量
+
+x,y z,w 访问顶点坐标的分量
+
+s,t,p,q 访问纹理坐标分量
+
+```glsl
+vec4 position = vec4(0.1,0.2,0.3,1.0); // vec4 就是矢量的构造函数
+
+position.x // 0.1
+position.y // 0.2
+position.z // 0.3
+position.xy // vec2(0,1, 0.2)
+position.yx // vec2(0,2, 0.1)
+position.zyx // vec3(0.3, 0.2, 0.1)
+```
+
+#### 矩阵
+
+mat2、mat3、mat4 2 * 2，3 * 3，4 * 4的浮点数元素矩阵
+
+```glsl
+// 矩阵参数是列主序，竖着排列的
+mat4 m = mat4(
+	1.0, 5.0, 9.0,  13.0,
+    2.0, 6.0, 10.0, 14.0,
+    3.0, 7.0, 11.0, 15.0,
+    4.0, 8.0, 12.0, 16.0,
+)
+```
+
+#### 纹理取样器
+
+取样器有两种: sampler2D 和 samplerCube
 
 ### WebGL简单应用
 
