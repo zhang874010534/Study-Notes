@@ -94,3 +94,6 @@ export default defineComponent({
 
 ```
 
+### JSX
+
+[Vue3+tsx开发语法详解](https://mp.weixin.qq.com/s/KIsLl5aPI9WbZ222RRJZjA)
