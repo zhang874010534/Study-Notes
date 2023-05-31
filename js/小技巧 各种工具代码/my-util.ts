@@ -232,7 +232,8 @@ export function download({url, name = '', success, next, fail, complete}) {
 export const assignParams = (target, source) => {
   for (const targetKey in target) {
     const element = source[targetKey]
-    if (element || element === 0 || typeof element === 'boolean') {
+    const type = Object.prototype.toString.call(element)
+    if (!(type === '[object Null]' || type === '[object Undefined]')) {
       target[targetKey] = element
     }
   }
