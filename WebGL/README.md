@@ -327,9 +327,89 @@ mat4 m = mat4(
 
 取样器有两种: sampler2D 和 samplerCube
 
+#### 内置函数
+
+##### 角度函数
+
+- radians 角度转弧度
+- degress 弧度转角度
+
+##### 三角函数
+
+- sin 正弦
+- cos 余弦
+- tan 正切
+- asin 反正切
+- acos 反余弦
+- atan 反正切
+
+##### 指数函数
+
+- pow 次方
+- exp 自然质数
+- log 对数
+- sqrt 开平方
+- invertesqrt 开平方的倒数
+
+##### 通用函数
+
+- 绝对函数
+- min 最小值
+- max 最大值
+- mod 取余数
+- sign 取符号
+- floor 向下取整
+- ceil 向上取整
+- clamp 限定范围
+- fract 获取小数部分
+
+##### 几何函数
+
+- length(x) 计算向量 x 的长度
+- distance(x, y) 计算向量 xy 之间的距离
+- dot(x,y) 计算向量 xy 的点积
+- cross(x, y) 计算向量 xy 的差积
+- normalize(x) 返回方向同x, 长度为1的向量
+
+#### 存储限定词
+
+##### const
+
+用于定义常量，表示变量的值在定义后不能被修改
+
+##### attribute
+
+用于声明输入变量，在顶点着色器中使用，表示当前变量的值从JavaScript传入到WebGL中。比如说可以来表示点的位置
+
+##### uniform
+
+用于声明全局变量，在顶点着色器和片元着色器中使用，表示当前变量的值在WebGL中保持不变，可以在多个渲染调用中共享。比如可以用来存储所有顶点的矩阵数据
+
+##### varying
+
+用于声明输出变量，在顶点着色器和片元着色器之间使用，表示当前变量的值从顶点着色器传递到片元着色器。
+
+##### 精度限定
+
+作用是提升运行效率，削减内存开支
+
+可以单独针对某个变量声明精度
+
+劣势:会出现精度歧义，也不利于后期维护
+
+精度枚举 highp 高精度 mediump 中精度 lowp 低精度
+
+```glsl
+precision mediump float f;
+```
+
+
+
 ### WebGL简单应用
 
-#### 清空颜色缓冲区
+#### 清空颜色
+
+#### 缓冲区
 
 [clearColor](https://developer.mozilla.org/zh-CN/docs/Web/API/WebGLRenderingContext/clearColor)
 

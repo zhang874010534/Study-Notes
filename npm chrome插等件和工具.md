@@ -133,7 +133,7 @@
 - [eruda](https://github.com/liriliri/eruda) 移动端调试工具
 
   ```typescript
-  <script type="text/javascript" src="//unpkg.zhimg.com/erud"></script> 
+  <script type="text/javascript" src="//unpkg.zhimg.com/eruda"></script> 
   <script>eruda.init();</script>
   <script
     if(window.location.hostname == 'github.com') {
