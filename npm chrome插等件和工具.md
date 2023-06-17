@@ -183,7 +183,9 @@
 
   > [demo](https://kamranahmed.info/driver.js/)
 
-- 
+- [qs](https://www.npmjs.com/package/qs) 字符串parse和字符串stringify
+
+- [d6](https://github.com/antvis/g6)  关系数据可视化引擎与图分析工具
 
 ### CSS
 
