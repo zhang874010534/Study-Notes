@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../three/build/three.js"></script>
+</head>
+<body>
+<script>
+  // 创建一个场景
+  const scene = new THREE.Scene()
+
+  // 创建一个相机 视点
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000)
+
+  // 设置相机的位置
+  camera.position.set(0, 0, 20)
+
+  // 创建一个渲染器
+  const renderer = new THREE.WebGLRenderer()
+
+  // 渲染器尺寸
+  renderer.setSize(window.innerWidth, window.innerHeight)
+
+  document.body.appendChild(renderer.domElement)
+
+  // 立方体对象
+  const cubeGeometry = new THREE.BoxGeometry(2, 2, 2)
+
+  // 材质
+  const cubeMaterial = new THREE.MeshLambertMaterial({
+    color: 0xff0000,
+    wireframe: false
+  })
+
+  const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
+
+  scene.add(cube)
+
+  // 添加一个球体
+  const sphereGeometry = new THREE.SphereGeometry(1,10,10);
+  const sphereMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00, wireframe: false });
+  const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+
+  sphere.position.x = 3;
+  sphere.position.y = 1;
+
+  scene.add(sphere);
+
+  // 添加灯光
+  const spotLight = new THREE.SpotLight(0xffffff)
+  spotLight.position.set(-10, 10, 10)
+  scene.add(spotLight)
+
+  const animation = () => {
+    cube.rotation.x += 0.01
+    cube.rotation.y += 0.01
+    renderer.render(scene, camera)
+    requestAnimationFrame(animation)
+  }
+  animation()
+</script>
+</body>
+</html>
