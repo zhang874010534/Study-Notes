@@ -9,3 +9,5 @@ code => optimize import 自动把没有用到的引用去除
 控制台在外面是因为cmd左上角属性里设置了使用旧版控制台
 
 自动保存 Appearance - System Settings
+
+html注释风格 Editor - Code Style - HTML - Code Generation

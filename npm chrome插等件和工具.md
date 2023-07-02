@@ -34,6 +34,8 @@
 
 - [vue-print-nb](https://www.npmjs.com/package/vue-print-nb) 打印 vue3-print-nb
 
+- [el-table-infinite-scroll](https://www.npmjs.com/package/el-table-infinite-scroll) element ui 虚拟列表
+
 ##### 开发环境
 
 - vue-cli-plugin-element  用vue ui 安装     elementui的按需导入直接在一个文件夹里操作不用自己操作webpack
