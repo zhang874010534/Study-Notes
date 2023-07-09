@@ -189,6 +189,8 @@
 
 - [d6](https://github.com/antvis/g6)  关系数据可视化引擎与图分析工具
 
+- [countUp](https://github.com/inorganik/CountUp.js) 数字增长动画
+
 ### CSS
 
 - https://www.minimamente.com/css-infinite-photo-carousel/ 图片无限斜着滚动

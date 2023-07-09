@@ -32,3 +32,4 @@ ctrl+ 空格 代码提示 keymap => Code Completion => Basic
 alt+ f1 => 1 目录切换到当前文件
 alt+ ] split right 复制当前页 需要自己设置
 ctrl + ]  跳转到闭合标签下一个位置
+ctrl + shift + L  Fix EsLint Problems 用eslint的规范格式化代码（自己设置的）
