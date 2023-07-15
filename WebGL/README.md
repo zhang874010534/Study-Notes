@@ -324,7 +324,42 @@ img.src = './heizi.png'
 const camera = new THREE.OrthographicCamera(-10, 10, 10, -10, 1, 1000);
 ```
 
+#### 透视投影
 
+```js
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+```
+
+#### 光源
+
+##### 环境光 AmbientLight
+
+基础光源，作用在当前场景内的所有物体上
+
+##### 点光源 PointLight
+
+空间中的一个点，向所有方向发射光线，如:恒星光源
+
+##### 聚光灯光源SpotLight
+
+如:灯光、手电筒等
+
+##### 平行光 DirectionalLight
+
+如:太阳光照射在地球上
+
+##### 半球光 HemisphereLight
+
+可以参考夕阳和日出时的光，创建更加自然的户外效果
+
+##### 面光源 AreaLight
+
+散发光线的平面，不是一个点
+
+##### 镜面眩光 LensFlare 光源特殊效果（不是光源）
+
+
+可以为光源添加眩光效果
 
 ### OpenGLES语言
 
