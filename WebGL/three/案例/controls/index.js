@@ -31,7 +31,9 @@ const basicType = {
 }
 
 const itemType = {
-  SpotLight: ['color', 'intensity', 'distance', 'angle', 'decay']
+  SpotLight: ['color', 'intensity', 'distance', 'angle', 'decay'], // 聚光灯
+  AmbientLight: ['color'], // 环境光
+  PointLight: ['color', 'intensity', 'distance'] // 点光源
 }
 function initControls (item) {
   console.log(item)
