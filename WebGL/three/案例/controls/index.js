@@ -33,11 +33,15 @@ const basicType = {
 const itemType = {
   SpotLight: ['color', 'intensity', 'distance', 'angle', 'decay'], // 聚光灯
   AmbientLight: ['color'], // 环境光
-  PointLight: ['color', 'intensity', 'distance'] // 点光源
+  PointLight: ['color', 'intensity', 'distance'], // 点光源
+  DirectionalLight: ['color', 'intensity'] // 平行光
 }
 function initControls (item) {
   console.log(item)
   const typeList = itemType[item.type]
+  if (!typeList || !typeList.length) {
+    return
+  }
   const controls = {
     // color: 0xffffff,
     // intensity: 1,
