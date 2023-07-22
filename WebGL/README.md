@@ -350,7 +350,16 @@ const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerH
 
 ##### 半球光 HemisphereLight
 
+不会产生阴影
+
 可以参考夕阳和日出时的光，创建更加自然的户外效果
+
+```js
+// 添加灯光
+const hemisphereLight = new THREE.HemisphereLight(0xff00ff, 0x00ff00);
+hemisphereLight.position.set(-10,10,30);
+scene.add(hemisphereLight);
+```
 
 ##### 面光源 AreaLight
 

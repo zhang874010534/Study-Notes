@@ -4,6 +4,11 @@ const basicType = {
     getValue: item => item.color.getStyle(),
     setValue: (item, value) => item.color.set(value),
   },
+  groundColor: {
+    method: 'addColor',
+    getValue: item => item.groundColor.getStyle(),
+    setValue: (item, value) => item.groundColor.set(value),
+  },
   intensity: {
     method: 'add',
     extends: [0, 10],
@@ -34,7 +39,8 @@ const itemType = {
   SpotLight: ['color', 'intensity', 'distance', 'angle', 'decay'], // 聚光灯
   AmbientLight: ['color'], // 环境光
   PointLight: ['color', 'intensity', 'distance'], // 点光源
-  DirectionalLight: ['color', 'intensity'] // 平行光
+  DirectionalLight: ['color', 'intensity'], // 平行光
+  HemisphereLight: ['skyColor', 'groundColor', 'intensity'], // 半球光
 }
 function initControls (item) {
   console.log(item)
