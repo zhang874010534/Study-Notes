@@ -32,7 +32,19 @@ const basicType = {
     extends: [0, 20],
     getValue: item => item.decay,
     setValue: (item, value) => item.decay = +value,
-  }
+  },
+  transparent: {
+    getValue: item => item.transparent,
+    setValue: (item, value) => item.transparent = value,
+  },
+  wireframe: {
+    getValue: item => item.wireframe,
+    setValue: (item, value) => item.wireframe = value,
+  },
+  visible: {
+    getValue: item => item.visible,
+    setValue: (item, value) => item.visible = value,
+  },
 }
 
 const itemType = {
@@ -41,6 +53,7 @@ const itemType = {
   PointLight: ['color', 'intensity', 'distance'], // 点光源
   DirectionalLight: ['color', 'intensity'], // 平行光
   HemisphereLight: ['skyColor', 'groundColor', 'intensity'], // 半球光
+  MeshBasicMaterial: ['color', 'opacity', 'transparent', 'wireframe', 'visible'], // 基础材质
 }
 function initControls (item) {
   console.log(item)
