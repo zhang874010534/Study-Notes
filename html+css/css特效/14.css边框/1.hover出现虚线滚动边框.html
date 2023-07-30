@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            outline: 1px solid #333;
+            width: 200px;
+            height: 200px;
+            outline-offset: -1px;
+            }
+        div:hover {
+            animation: linearGradientMove .3s infinite linear;
+            outline: none;
+            background: linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
+            linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
+            linear-gradient(0deg, #333 50%, transparent 0) repeat-y,
+            linear-gradient(0deg, #333 50%, transparent 0) repeat-y;
+            background-size: 4px 1px, 4px 1px, 1px 4px, 1px 4px;
+            background-position: 0 0, 0 100%, 0 0, 100% 0;
+        }
+        @keyframes linearGradientMove {
+            100% {
+                background-position: 4px 0, -4px 100%, 0 -4px, 100% 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div></div>
+</body>
+</html>
