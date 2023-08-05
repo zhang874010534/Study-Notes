@@ -55,6 +55,28 @@ const basicType = {
     getValue: (item, camera) => camera.far,
     setValue: (item, value, camera) => camera.cameraFar = value,
   },
+  side: {
+    extends: {
+      front: 'front',
+      back: 'back',
+      double: 'double'
+    },
+    getValue: () => 'front',
+    setValue: (item, value) => {
+      item.visible = value
+      switch (value) {
+        case 'front':
+          item.side = THREE.FrontSide;
+          break;
+        case 'back':
+          item.side = THREE.BackSide;
+          break;
+        case 'double':
+          item.side = THREE.DoubleSide;
+          break;
+      }
+    },
+  }
 }
 
 const itemType = {
@@ -65,6 +87,7 @@ const itemType = {
   HemisphereLight: ['skyColor', 'groundColor', 'intensity'], // 半球光
   MeshBasicMaterial: ['color', 'opacity', 'transparent', 'wireframe', 'visible'], // 基础材质
   MeshDepthMaterial: ['wireframe', 'cameraNear', 'cameraFar'], // 深度材质
+  MeshNormalMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side'], // 法向材质
 }
 function initControls (item, camera) {
   console.log(item)
@@ -87,7 +110,11 @@ function initControls (item, camera) {
     const child = basicType[type]
     if (child) {
       controls[type] = child.getValue(item, camera)
-      const childExtends = child.extends || []
+      const childExtends = child.extends || {}
+      // 不同的需求需要不同的传参方式 todo 比如需要下拉选项就可以传对象
+      // gui[child.method || 'add'](controls, type, childExtends).onChange(value => {
+      //   child.setValue(item, value, camera)
+      // })
       gui[child.method || 'add'](controls, type).onChange(value => {
         child.setValue(item, value, camera)
       })
