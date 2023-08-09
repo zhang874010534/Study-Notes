@@ -76,7 +76,19 @@ const basicType = {
           break;
       }
     },
-  }
+  },
+  // 材料的环境颜色
+  // ambient: {
+  //   method: 'addColor',
+  //   getValue: (item) => item.ambient.getHex(),
+  //   setValue: (item, value) => item.ambient = new THREE.Color(value),
+  // },
+  // 物体材料本身发出的颜色
+  emissive: {
+    method: 'addColor',
+    getValue: (item) => item.emissive.getHex(),
+    setValue: (item, value) => item.ambient = new THREE.Color(value),
+  },
 }
 
 const itemType = {
@@ -88,6 +100,7 @@ const itemType = {
   MeshBasicMaterial: ['color', 'opacity', 'transparent', 'wireframe', 'visible'], // 基础材质
   MeshDepthMaterial: ['wireframe', 'cameraNear', 'cameraFar'], // 深度材质
   MeshNormalMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side'], // 法向材质
+  MeshLambertMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side', 'ambient', 'emissive', 'color'], // 朗伯材质
 }
 function initControls (item, camera) {
   console.log(item)
