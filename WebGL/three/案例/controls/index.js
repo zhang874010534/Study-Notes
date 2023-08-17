@@ -89,6 +89,26 @@ const basicType = {
     getValue: (item) => item.emissive.getHex(),
     setValue: (item, value) => item.ambient = new THREE.Color(value),
   },
+  // 镜面反射 设置颜色
+  specular: {
+    method: 'addColor',
+    getValue: (item) => item.specular.getHex(),
+    setValue: (item, value) => item.specular = new THREE.Color(value),
+  },
+  // 光泽 就是亮度
+  shininess: {
+    getValue: (item) => item.shininess,
+    setValue: (item, value) => item.shininess = value,
+  },
+  alpha: {
+    extends: [0, 1],
+    getValue: (item) => item.uniforms.a.value,
+    setValue: (item, value) => item.uniforms.a.value = value
+  },
+  red: {
+    getValue: (item) => item.uniforms.r.value,
+    setValue: (item, value) => item.uniforms.r.value = value
+  }
 }
 
 const itemType = {
@@ -101,6 +121,8 @@ const itemType = {
   MeshDepthMaterial: ['wireframe', 'cameraNear', 'cameraFar'], // 深度材质
   MeshNormalMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side'], // 法向材质
   MeshLambertMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side', 'ambient', 'emissive', 'color'], // 朗伯材质
+  MeshPhongMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side', 'ambient', 'emissive', 'color', 'specular', 'shininess'], // phong材质
+  ShaderMaterial: ['red', 'alpha'], // 着色器材质
 }
 function initControls (item, camera) {
   console.log(item)
