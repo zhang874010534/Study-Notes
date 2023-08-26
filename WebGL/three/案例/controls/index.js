@@ -1,3 +1,6 @@
+import * as dat from 'dat.gui';
+import * as SceneUtils from 'three/addons/utils/SceneUtils.js'
+import * as THREE from 'three'
 const basicType = {
   color: {
     method: 'addColor',
@@ -108,6 +111,40 @@ const basicType = {
   red: {
     getValue: (item) => item.uniforms.r.value,
     setValue: (item, value) => item.uniforms.r.value = value
+  },
+  width: getMeshValue('width'),
+  height: getMeshValue('height'),
+  widthSegments: getMeshValue('widthSegments'),
+  heightSegments: getMeshValue('heightSegments'),
+}
+
+function createMaterial (geometry) {
+  // 创建材质
+  const Lambert = new THREE.MeshLambertMaterial({
+    color: 0xff0000
+  })
+  const basic = new THREE.MeshBasicMaterial({
+    wireframe: true
+  })
+  return new SceneUtils.createMultiMaterialObject(geometry,[Lambert, basic])
+}
+
+function removeAndAdd (item, value, camera, mesh, scene, controls) {
+  const {x, y, z} = mesh.pointer.rotation
+  scene.remove(mesh.pointer)
+  const arg = []
+  for (const controlsKey in controls) {
+    arg.push(controls[controlsKey])
+  }
+  mesh.pointer = createMaterial(new THREE[item.type](...arg))
+  mesh.pointer.rotation.set(x, y, z)
+  scene.add(mesh.pointer)
+}
+
+function getMeshValue (name) {
+  return {
+    getValue: (item, camera, mesh) => mesh.children[0].geometry.parameters[name],
+    setValue: (...arg) => removeAndAdd(...arg),
   }
 }
 
@@ -123,8 +160,9 @@ const itemType = {
   MeshLambertMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side', 'ambient', 'emissive', 'color'], // 朗伯材质
   MeshPhongMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side', 'ambient', 'emissive', 'color', 'specular', 'shininess'], // phong材质
   ShaderMaterial: ['red', 'alpha'], // 着色器材质
+  PlaneGeometry: ['width', 'height', 'widthSegments', 'heightSegments'], // 二维平面
 }
-function initControls (item, camera) {
+export function initControls (item, camera, mesh, scene) {
   console.log(item)
   const typeList = itemType[item.type]
   if (!typeList || !typeList.length) {
@@ -144,14 +182,14 @@ function initControls (item, camera) {
     const type = typeList[i]
     const child = basicType[type]
     if (child) {
-      controls[type] = child.getValue(item, camera)
+      controls[type] = child.getValue(item, camera, mesh.pointer)
       const childExtends = child.extends || {}
       // 不同的需求需要不同的传参方式 todo 比如需要下拉选项就可以传对象
       // gui[child.method || 'add'](controls, type, childExtends).onChange(value => {
       //   child.setValue(item, value, camera)
       // })
       gui[child.method || 'add'](controls, type).onChange(value => {
-        child.setValue(item, value, camera)
+        child.setValue(item, value, camera, mesh, scene, controls)
       })
     }
   }
