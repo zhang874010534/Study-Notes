@@ -116,6 +116,10 @@ const basicType = {
   height: getMeshValue('height'),
   widthSegments: getMeshValue('widthSegments'),
   heightSegments: getMeshValue('heightSegments'),
+  radius: getMeshValue('radius'),
+  segments: getMeshValue('segments'),
+  thetaStart: getMeshValue('thetaStart'),
+  thetaLength: getMeshValue('thetaLength'),
 }
 
 function createMaterial (geometry) {
@@ -161,6 +165,7 @@ const itemType = {
   MeshPhongMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side', 'ambient', 'emissive', 'color', 'specular', 'shininess'], // phong材质
   ShaderMaterial: ['red', 'alpha'], // 着色器材质
   PlaneGeometry: ['width', 'height', 'widthSegments', 'heightSegments'], // 二维平面
+  CircleGeometry: ['radius', 'segments', 'thetaStart', 'thetaLength'], // 二维圆
 }
 export function initControls (item, camera, mesh, scene) {
   console.log(item)
