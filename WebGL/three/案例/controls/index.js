@@ -120,6 +120,14 @@ const basicType = {
   segments: getMeshValue('segments'),
   thetaStart: getMeshValue('thetaStart'),
   thetaLength: getMeshValue('thetaLength'),
+  depth: getMeshValue('depth'),
+  depthSegments: getMeshValue('depthSegments'),
+  phiStart: getMeshValue('phiStart'),
+  phiLength: getMeshValue('phiLength'),
+  radiusTop: getMeshValue('radiusTop'),
+  radiusBottom: getMeshValue('radiusBottom'),
+  radiusSegment: getMeshValue('radiusSegment'),
+  openEnded: getMeshValue('openEnded'),
 }
 
 function createMaterial (geometry) {
@@ -166,6 +174,9 @@ const itemType = {
   ShaderMaterial: ['red', 'alpha'], // 着色器材质
   PlaneGeometry: ['width', 'height', 'widthSegments', 'heightSegments'], // 二维平面
   CircleGeometry: ['radius', 'segments', 'thetaStart', 'thetaLength'], // 二维圆
+  BoxGeometry: ['width', 'height', 'depth', 'widthSegments', 'heightSegments', 'depthSegments'], // 立方体
+  SphereGeometry: ['radius', 'widthSegments', 'heightSegments', 'phiStart', 'phiLength', 'thetaStart', 'thetaLength'], // 球体
+  CylinderGeometry: ['radiusTop', 'radiusBottom', 'height', 'radialSegments', 'heightSegments', 'openEnded'], // 圆柱体
 }
 export function initControls (item, camera, mesh, scene) {
   console.log(item)
