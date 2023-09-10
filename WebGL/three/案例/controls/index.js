@@ -1,6 +1,7 @@
 import * as dat from 'dat.gui';
 import * as SceneUtils from 'three/addons/utils/SceneUtils.js'
 import * as THREE from 'three'
+
 const basicType = {
   color: {
     method: 'addColor',
@@ -160,6 +161,7 @@ function createMaterial (geometry) {
   })
   return new SceneUtils.createMultiMaterialObject(geometry,[Lambert, basic])
 }
+
 
 const isPolyhedron = item => item.type === 'PolyhedronGeometry'
 
