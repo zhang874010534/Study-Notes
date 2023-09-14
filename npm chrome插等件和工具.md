@@ -130,6 +130,8 @@
 
 - [anime.js](https://github.com/juliangarnier/anime/) 动画库
 
+- **[tween.js ](https://github.com/tweenjs/tween.js)** 动画库
+
 - [mitt](https://github.com/developit/mitt) 事件的on off emit
 
 - [eruda](https://github.com/liriliri/eruda) 移动端调试工具
@@ -151,6 +153,8 @@
 - [js-audio-recorder](https://github.com/2fps/recorder) h5录音
 
   > h5录音调研 https://www.jianshu.com/p/2199939b629d
+
+- [Recorder](https://github.com/xiangyuecn/Recorder) 前端录音
 
 - [rrweb](https://github.com/rrweb-io/rrweb) 前端录制和回放用户操作
 
