@@ -34,3 +34,4 @@ ctrl+ 空格 代码提示 keymap => Code Completion => Basic
 
 ctrl + ]  跳转到闭合标签下一个位置
 ctrl + shift + L  Fix EsLint Problems 用eslint的规范格式化代码（自己设置的）
+ctrl + shift + alt 切换模式 然后鼠标左键按住往下啦 选中多行 或者鼠标中键按住往下拉

@@ -172,6 +172,8 @@
 
 - [Scroll Reveal](https://scrollrevealjs.org/) 零依赖，为 web 和移动浏览器提供了简单的滚动动画，以动画的方式显示滚动中的内容
 
+- [better-scroll](https://github.com/ustbhuangyi/better-scroll)  重点解决移动端（已支持 PC）各种滚动场景需求的插件
+
 - [GreenSock JS](https://greensock.com/) 一个JavaScript动画库，用于创建高性能、零依赖、跨浏览器动画，已在超过400万个网站上使用, 并且可以在React、Vue、Angular项目中使用
 
 - [mathjs](https://github.com/josdejong/mathjs) 精度问题  [掘金文章](https://juejin.cn/post/6935722510491222029)
