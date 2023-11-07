@@ -197,6 +197,8 @@
 
 - [countUp](https://github.com/inorganik/CountUp.js) 数字增长动画
 
+- [signature_pad](https://github.com/szimek/signature_pad) 基于 HTML5 canvas 的平滑签名绘图
+
 ### CSS
 
 - https://www.minimamente.com/css-infinite-photo-carousel/ 图片无限斜着滚动
