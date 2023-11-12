@@ -18,17 +18,34 @@ document.body.appendChild(renderer.domElement)
 
 // 创建几何体
 const geometry = new THREE.BufferGeometry()
-// 创建顶点数据
+// 创建顶点数据 逆时针为正面 顺时针为背面
+// const vertices = new Float32Array([
+//     -1.0,-1.0,0.0,
+//     1.0,-1.0,0.0,
+//     1.0,1.0,0.0,
+//     1.0,1.0,0.0,
+//     -1.0,1.0,0.0,
+//     -1.0,-1.0,0.0,
+// ])
+// 使用索引绘制
 const vertices = new Float32Array([
-    -1.0,-1.0,0.0,
-    1.0,-1.0,0.0,
-    1.0,1.0,0.0,
+  -1.0,-1.0,0.0,
+  1.0,-1.0,0.0,
+  1.0,1.0,0.0,
+  -1.0,1.0,0.0,
 ])
+
 // 创建顶点属性
 geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+// 创建索引
+const indices = new Uint16Array([0, 1, 2, 2, 3, 0])
+// 创建索引属性
+geometry.setIndex(new THREE.BufferAttribute(indices, 1))
 // 创建材质
 const material = new THREE.MeshBasicMaterial({
   color: 0x00ff00,
+  side: THREE.DoubleSide,
+  wireframe: true,
 })
 const plane = new THREE.Mesh(geometry, material)
 scene.add(plane)
