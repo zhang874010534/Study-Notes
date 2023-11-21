@@ -238,3 +238,37 @@ export const assignParams = (target, source) => {
     }
   }
 }
+
+// base64 转为Blob
+export const base64ToBlob = (base64Data) => {
+    const dataArr = base64Data.split(',') // 根据,来分隔
+
+    const imageType = dataArr[0].match(/:(.*?);/)[1] // 获取文件类型。使用正则捕获 image/jpeg
+
+    const textData = window.atob(dataArr[1]) // 使用atob() 将base64 转为文本文件
+    const arrayBuffer = new ArrayBuffer(textData.length) // 创建一个二进制数据缓冲区，可以理解为一个数组
+    const uint8Array = new Uint8Array(arrayBuffer) // 创建一个类型化数组对象，可以理解为上面的数组的成员，给这个对象赋值就会放到上面的数组中。
+    for (let i = 0; i < textData.length; i++) {
+        uint8Array[i] = textData.charCodeAt(i) // 将文本文件转为UTF-16的ASCII, 放到类型化数组对象中
+    }
+
+    return [new Blob([arrayBuffer], { type: imageType }), imageType.slice(6)]; // 返回两个值，一个Blob对象，一个图片格式（如jpeg）
+}
+// 转为formData
+export const toFormData = (base64Data) => {
+    const [imageBlob, imageType] = base64ToBlob(base64Data)// 获取处理好的Blob 和文件类型
+    const formData = new FormData()
+    formData.append('file', imageBlob, `${Date.now()}.${imageType}`) // 添加到表单，传入文件名
+    return formData
+}
+
+axios({
+    method: 'post',
+    url: '', // 你的文件服务器地址
+    data: toFormData(val),
+    timeout: 60000,
+    headers: {
+        'Content-Type': 'multipart/form-data', // 请求头要设置为 form-data
+        'Cache-Control': 'no-cache',
+    },
+})

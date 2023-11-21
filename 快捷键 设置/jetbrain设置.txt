@@ -11,3 +11,5 @@ code => optimize import 自动把没有用到的引用去除
 自动保存 Appearance - System Settings
 
 html注释风格 Editor - Code Style - HTML - Code Generation
+
+打开项目是当前window还是other window Appearance & Behavior => System Settings
