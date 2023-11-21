@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        .table{
+            overflow:auto;
+            width:400px;
+            height:300px; /* 固定高度 */
+            border:1px solid #999;
+            border-bottom: 0;
+            border-right: 0;
+        }
+
+
+        table {
+            border-collapse:separate;
+            table-layout: fixed;
+            width: 100%; /* 固定寬度 */
+        }
+
+
+        td, th {
+            border-right :1px solid #999;
+            border-bottom :1px solid #999;
+            box-sizing: border-box;
+            /* 单元格宽高 */
+            width:100px;
+            height:30px;
+        }
+        th {
+            background-color:lightblue;
+        }
+
+
+        /* 控制左边固定的核心代码 */
+        td:nth-child(1),
+        th:nth-child(1) {
+            position:sticky;
+            left:0; /* 首行在左 */
+            z-index:1;
+            background-color:lightpink;
+        }
+        td:nth-child(2),
+        th:nth-child(2) {
+            position:sticky;
+            left:100px;
+            z-index:1;
+            background-color:lightpink;
+        }
+
+        /* 控制表头固定的核心代码 */
+        thead tr th {
+            position:sticky;
+            top:0; /* 第一列最上 */
+        }
+
+        th:nth-child(1),
+        th:nth-child(2){
+            z-index:2;
+            background-color:lightblue;
+        }
+    </style>
+</head>
+<body>
+<div class="table">
+    <table cellspacing="0" border="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>表头1</th>
+            <th>表头2</th>
+            <th>表头3</th>
+            <th>表头4</th>
+            <th>表头5</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td ></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr><tr>
+            <td>我的高度不固定我的高度不固定我的高度不固定我的高度不固定我的高度不固定我的高度不固定</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
