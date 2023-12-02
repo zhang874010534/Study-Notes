@@ -37,18 +37,25 @@ const gui = new GUI()
 const textureLoader = new THREE.TextureLoader()
 const texture = textureLoader.load('./texture/watercover/CityNewYork002_COL_VAR1_1K.png')
 // 加载ao贴图
-const aoMap = textureLoader.load('./texture/watercover/11.jpg')
-// 透明度贴图
+const aoMap = textureLoader.load('./texture/watercover/CityNewYork002_COL_VAR2_1K.png')
+// 透明度贴图 白色表示完全透明
 const alphaMap = textureLoader.load('./texture/door/height.jpg')
 
 // 光照贴图
-const lightMap = textureLoader.load('./texture/colors.png')
+const lightMap = textureLoader.load('./texture/c olors.png')
+
+// 高光贴图 白色反射 黑色不反射
+let specularMap = textureLoader.load('./texture/watercover/CityNewYork002_GLOSS_1K.jpg')
 
 // rgbeLoadg
 const rgbeLoader = new RGBELoader()
 rgbeLoader.load('./texture/Alex_Hart-Nature_Lab_Bones_2k.hdr', (envMap) => {
+  // 设置球形贴图
+  envMap.mapping = THREE.EquirectangularReflectionMapping
   // 设置环境贴图
   scene.background = envMap
+  scene.environment = envMap
+  planeMaterial.envMap = envMap
 })
 
 const planeGeometry = new THREE.PlaneGeometry(1, 1)
@@ -59,7 +66,9 @@ const planeMaterial = new THREE.MeshBasicMaterial({
   aoMap: aoMap, // ao贴图
   aoMapIntensity: 1, // 默认1
   // alphaMap: alphaMap, // 透明度贴图
-  lightMap: lightMap, // 光照贴图
+  // lightMap: lightMap, // 光照贴图
+  // reflectivity: 0.1, // 反射效果
+  specularMap: specularMap,
 })
 planeMaterial.map = texture
 const plane = new THREE.Mesh(planeGeometry, planeMaterial)
@@ -70,8 +79,6 @@ gui.add(planeMaterial, "aoMapIntensity").min(0).max(1).name('ao强度')
 
 function animate () {
   controls.update()
-  // cube.rotation.x += 0.01
-  // cube.rotation.y += 0.01
   renderer.render(scene, camera)
   requestAnimationFrame(animate)
 }
