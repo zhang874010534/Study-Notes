@@ -193,11 +193,26 @@
 
 - [qs](https://www.npmjs.com/package/qs) 字符串parse和字符串stringify
 
+  ```js
+  queryString = qs.stringify({ userIdList: this.list }, { arrayFormat: 'repeat' })
+  ```
+
 - [d6](https://github.com/antvis/g6)  关系数据可视化引擎与图分析工具
 
 - [countUp](https://github.com/inorganik/CountUp.js) 数字增长动画
 
 - [signature_pad](https://github.com/szimek/signature_pad) 基于 HTML5 canvas 的平滑签名绘图
+
+- [Luckysheet](https://github.com/dream-num/Luckysheet) 在线电子表格
+
+- [jspreadsheet](https://github.com/jspreadsheet/ce)  电子表格
+
+- [markjs](https://github.com/julmot/mark.js/)  突出显示关键字
+
+
+  - [vue3 + mark.js | 实现文字标注功能](https://juejin.cn/post/7282950051319283770)
+
+- [fabric.js](https://github.com/fabricjs/fabric.js) canvas 操作库
 
 ### CSS
 

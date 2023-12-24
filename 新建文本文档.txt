@@ -1,10 +1,12 @@
 浏览器 记录
 删除自己的文件(小飞机、笔记)
 vscode 插件远程同步
+webStorm translation alisdk
 webStorm
+copilot
 有道笔记
 钉钉
 微信
 qq
+向日葵
 ToDesk
-https://chat.forchange.cn/  https://poe.com/chatgpt
