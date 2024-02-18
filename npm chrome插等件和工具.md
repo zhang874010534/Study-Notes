@@ -111,6 +111,8 @@
     draft[1].done = true
   }))
   ```
+  
+- [react-selectable-fast](https://github.com/valerybugakov/react-selectable-fast) 鼠标选中库
 
 ### 通用
 
@@ -213,6 +215,7 @@
   - [vue3 + mark.js | 实现文字标注功能](https://juejin.cn/post/7282950051319283770)
 - [fabric.js](https://github.com/fabricjs/fabric.js) canvas 操作库
 - [chrome老版本下载](https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win_x64/)
+- [Selectto.js](https://github.com/daybrush/selecto) 允许您使用鼠标或触摸选择拖动区域中的元素的组件
 
 ### CSS
 

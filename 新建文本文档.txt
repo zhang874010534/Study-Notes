@@ -1,4 +1,4 @@
-浏览器 记录
+chrome、edge 浏览器 记录
 删除自己的文件(小飞机、笔记)
 vscode 插件远程同步
 webStorm translation alisdk
