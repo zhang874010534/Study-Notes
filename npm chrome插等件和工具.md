@@ -213,9 +213,28 @@
 
 
   - [vue3 + mark.js | 实现文字标注功能](https://juejin.cn/post/7282950051319283770)
+
 - [fabric.js](https://github.com/fabricjs/fabric.js) canvas 操作库
+
 - [chrome老版本下载](https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win_x64/)
+
 - [Selectto.js](https://github.com/daybrush/selecto) 允许您使用鼠标或触摸选择拖动区域中的元素的组件
+
+- 移动端rem
+
+  - postcss-pxtorem 
+
+    > 这是一个PostCSS插件，可以将像素（px）转换为相对单位（rem）。它可以与构建工具（如Webpack、Gulp等）集成，自动转换CSS文件中的像素值。你可以设置基准值和其他选项来满足你的需要。
+
+  - lib-flexible
+
+    > 这是一个用于移动端开发的库，它可以根据设备屏幕的宽度动态计算根元素的字体大小，从而实现将像素（px）转换为相对单位（rem）。它可以自动适配不同屏幕尺寸，并提供了一些额外的功能，如屏幕旋转的处理等。
+
+  - px2rem
+
+    > 这是一个独立的JavaScript库，可以将像素（px）转换为相对单位（rem）。你可以直接在代码中使用它来进行转换，也可以将它集成到构建工具中进行自动转换。
+
+- 
 
 ### CSS
 
