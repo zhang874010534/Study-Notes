@@ -1,2 +1,7 @@
+Tab 接受
+Esc 取消
+alt ] 下一条建议
+alt [ 上一条建议
+alt \ 触发建议
 ctrl 右箭头 接受一个
 ctrl alt 右箭头 接受一行  
