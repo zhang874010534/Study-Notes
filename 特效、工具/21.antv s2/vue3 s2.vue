@@ -283,7 +283,7 @@ const s2DataConfig = {
     },
     // {
     //   field: 'headerName3',
-    //   name: '病区\\项目'
+    //   name: '11\\22'
     // },
     {
       field: 'countNumStr',
