@@ -57,16 +57,36 @@ const graphics = new PIXI.Graphics()
 // graphics.drawShape(path2)
 
 // 设置描边颜色 beginFill(颜色, 不透明度)
-graphics.lineStyle(4, 0xffd900, 1)
-// 创建折线
-graphics.moveTo(10, 40) // 起始点
-graphics.lineTo(40, 20) // 经过的点
-graphics.lineTo(50, 80)
-graphics.lineTo(100, 70)
-// 闭合路径
-graphics.closePath()
+// graphics.lineStyle(4, 0xffd900, 1)
+// // 创建折线
+// graphics.moveTo(10, 40) // 起始点
+// graphics.lineTo(40, 20) // 经过的点
+// graphics.lineTo(50, 80)
+// graphics.lineTo(100, 70)
+// // 闭合路径
+// graphics.closePath()
 // 绘制
 // graphics.endFill()
+
+
+// // 设置线的颜色
+// graphics.lineStyle(4, 0xffd900, 1)
+// // 圆弧
+// graphics.arc(100, 100, 50, Math.PI, 2.3 * Math.PI)
+
+// 圆弧to
+// 设置线的颜色
+// graphics.lineStyle(4, 0xffd900, 1)
+// graphics.moveTo(40, 40) // 先确定起始点
+// graphics.arcTo(150, 40, 120, 120, 80)
+// graphics.endFill()
+
+// 贝塞尔曲线
+graphics.lineStyle(4, 0xffd900, 1)
+graphics.moveTo(50, 100)
+graphics.quadraticCurveTo(100, 50, 150, 100) // 二次贝塞尔曲线
+
+
 // 添加到舞台
 app.stage.addChild(graphics)
 nextTick(() => {
@@ -83,6 +103,7 @@ const destroy = () => {
 #pixi {
   display: flex;
 }
+
 .wrapper {
   height: 100vh;
 }
