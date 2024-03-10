@@ -9,7 +9,6 @@
 import * as PIXI from 'pixi.js'
 import '@pixi/graphics-extras';
 import {nextTick} from 'vue'
-import gradientmap_pars_fragmentGlsl from 'three/src/renderers/shaders/ShaderChunk/gradientmap_pars_fragment.glsl.js'
 const app = new PIXI.Application({
   width: 300,
   height: 300,
