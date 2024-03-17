@@ -50,24 +50,50 @@ app.stage.addChild(graphics)*/
 
 
 // 纹理
-const text = new PIXI.Text(
-    'hello world',
-    {
-      fontSize: 60,
-      fontWeight: 900, // 字体重量
-      fill: 0xffffff // 必须设置非黑色的填充色
-    }
-)
+// const text = new PIXI.Text(
+//     'hello world',
+//     {
+//       fontSize: 60,
+//       fontWeight: 900, // 字体重量
+//       fill: 0xffffff // 必须设置非黑色的填充色
+//     }
+// )
+// // 加载图片
+// const sprite = PIXI.Sprite.from('https://github.githubassets.com/assets/mona-loading-default-static-8f7c56ad1b9a.svg')
+//
+// // 设置图片宽高
+// sprite.width = app.screen.width
+// sprite.height = app.screen.height
+//
+// // 配置文字遮罩层
+// sprite.mask = text
+// app.stage.addChild(sprite)
+
 // 加载图片
 const sprite = PIXI.Sprite.from('https://github.githubassets.com/assets/mona-loading-default-static-8f7c56ad1b9a.svg')
+// 设置精灵宽高
+sprite.width = 100
+sprite.height = 100
+// 设置精灵宽高
+sprite.x = 100
+sprite.y = 100
+sprite.rotation = 45 * Math.PI / 180
+// 隐藏图片
+// sprite.visible = false
+// 设置不透明度
+// sprite.alpha = 0.6
+// 模糊滤镜
+const blurFilter = new PIXI.BlurFilter()
+// 模糊程度
+blurFilter.blur = 10
+// 将模糊滤镜添加到图片精灵上
+// sprite.filters = [blurFilter]
 
-// 设置图片宽高
-sprite.width = app.screen.width
-sprite.height = app.screen.height
-
-// 配置文字遮罩层
-sprite.mask = text
+const alphaFilter = new PIXI.AlphaFilter(0.5)
+// 将滤镜添加到精灵上
+sprite.filters = [alphaFilter]
 app.stage.addChild(sprite)
+
 
 nextTick(() => {
   const dom = document.querySelector('#pixi')
@@ -83,6 +109,7 @@ const destroy = () => {
 #pixi {
   display: flex;
 }
+
 .wrapper {
   height: 100vh;
 }
