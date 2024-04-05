@@ -9,6 +9,7 @@
 import * as PIXI from 'pixi.js'
 import '@pixi/graphics-extras';
 import {nextTick} from 'vue'
+
 const app = new PIXI.Application({
   width: 300,
   height: 300,
@@ -18,18 +19,34 @@ const app = new PIXI.Application({
 const graphics = new PIXI.Graphics()
 
 
-/*// 设置填充色
+// 设置填充色
 graphics.beginFill('hotpink', 0.8)
 // 图形
 graphics.drawRect(50, 50, 200, 100)
 
 // 绘制
-graphics.endFill()*/
+graphics.endFill()
 
-/*// 边框样式
-graphics.lineStyle(2, 0xff0000)
-graphics.drawRect(50, 50, 200, 100)
-app.stage.addChild(graphics)*/
+// 边框样式
+// graphics.lineStyle(2, 0xff0000)
+// graphics.drawRect(50, 50, 200, 100)
+
+// 修改图形的轴心点
+graphics.pivot.set(150, 100)
+
+app.stage.addChild(graphics)
+
+graphics.interactive = true
+graphics.cursor = 'pointer'
+
+graphics.on('click', () => {
+  console.log('click')
+})
+
+
+app.ticker.add((delta) => {
+  graphics.rotation += 0.01 * delta
+})
 
 // // 文本样式
 // const text = new PIXI.Text('hello', {
@@ -60,7 +77,7 @@ app.stage.addChild(graphics)*/
 // )
 // // 加载图片
 // const sprite = PIXI.Sprite.from('https://github.githubassets.com/assets/mona-loading-default-static-8f7c56ad1b9a.svg')
-//
+
 // // 设置图片宽高
 // sprite.width = app.screen.width
 // sprite.height = app.screen.height
