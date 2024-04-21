@@ -9,7 +9,7 @@ import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls'
 import {FirstPersonControls} from 'three/examples/jsm/controls/FirstPersonControls'
 // 飞行控件
 import {FlyControls} from 'three/examples/jsm/controls/FlyControls.js'
-// 翻转控件
+// 轨道控件
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 
 const clock = new THREE.Clock()
