@@ -2,14 +2,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-module.exports = {
+const config = {
   // context: path.resolve(__dirname, 'src'), // 工作目录
   entry: {
     index: {
       import: './src/index.js',
       dependOn: 'react-vendor'
     },
-    'react-vendor': ['react'],
+    'react-vendor': ['react'], // 代码拆分和优化 让浏览器能够长期缓存这些不经常变更的依赖库
     test: {
       import: './src/test.js',
       filename: 'app.js'
@@ -20,10 +20,10 @@ module.exports = {
     // publicPath: 'https://a.com/assets/', // 外部资源的公共路径
     clean: true,
     chunkFilename: 'asset_[id].js',
-    library: 'my_library'
+    // library: 'my_library'
   },
-  // mode: 'development',
-  mode: 'production',
+  mode: 'development',
+  // mode: 'production',
   module: {
     rules: [
       // {
@@ -70,4 +70,19 @@ module.exports = {
       })
     ]
   }
+}
+module.exports = (env, argv) => {
+  // env { WEBPACK_BUNDLE: true, WEBPACK_BUILD: true }
+  // argv {
+  //   config: [ './webpack.dev.js' ]
+  //   mode: 'development',
+  //   env: { WEBPACK_BUNDLE: true, WEBPACK_BUILD: true }
+  // }
+  console.log(env, argv)
+  if (argv.mode === 'development') {
+    config.output.filename = 'dev_[name].js'
+  } else if (argv.mode === 'production') {
+    config.output.filename = 'prod_[name].js'
+  }
+  return config
 }
