@@ -14,7 +14,6 @@ const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerH
 camera.position.set(100, 100, 0)
 camera.lookAt(new THREE.Vector3(0, 0, 0))
 
-
 // 创建一个渲染器
 const renderer = new THREE.WebGLRenderer()
 
@@ -27,7 +26,7 @@ document.body.appendChild(renderer.domElement)
 // const controls = new OrbitControls(camera, renderer.domElement)
 
 // 环境光
-const ambientLight = new THREE.AmbientLight(0xffffff, 3) // 创建环境光
+const ambientLight = new THREE.AmbientLight(0x000000, 3) // 创建环境光
 scene.add(ambientLight) // 将环境光添加到场景
 
 const spotLight = new THREE.SpotLight(0xffffff, 5) // 创建聚光灯
@@ -41,7 +40,7 @@ const geometry = new THREE.CylinderGeometry(2, 2, 40, 8, 12)
 const material = new THREE.MeshPhongMaterial()
 // 创建骨骼
 const bone = new THREE.Bone()
-bone.position.set(0, 20, 0)
+bone.position.set(0, -20, 0)
 const bone2 = new THREE.Bone()
 bone2.position.set(0, 10, 0)
 bone.add(bone2)
@@ -54,18 +53,49 @@ bone3.add(bone4)
 const bone5 = new THREE.Bone()
 bone5.position.set(0, 10, 0)
 bone4.add(bone5)
+
 // 创建 SkinnedMesh
-const mesh = new THREE.SkinnedMesh(geometry, material)
+const skinnedMesh = new THREE.SkinnedMesh(geometry, material)
 // 创建骨架
 const skeleton = new THREE.Skeleton([bone, bone2, bone3, bone4, bone5])
-mesh.add(bone)
+skinnedMesh.add(bone)
 // 绑定骨架
-mesh.bind(skeleton)
-scene.add(mesh)
+skinnedMesh.bind(skeleton)
+scene.add(skinnedMesh)
+
+// 为几何体添加蒙皮索引和蒙皮权重
+const position = geometry.attributes.position
+const skinIndices = []
+const skinWeights = []
+for (let i = 0; i < position.count; i++) {
+  const vertex = new THREE.Vector3().fromBufferAttribute(position, i)
+
+  // 根据顶点的位置计算蒙皮权重
+  // 1 - -20 / 20   1 - -1  = 2
+  // 1 - -10 / 20 = 1 - -0.5 = 1.5
+  const y = vertex.y
+  const boneIndex = y > 20 ? 1 : 0
+  const weight = boneIndex === 0 ? 1 - y / 20 : (y - 20) / 20
+
+  skinIndices.push(boneIndex, boneIndex === 0 ? 1 : 0, 0, 0)
+  skinWeights.push(weight, 1 - weight, 0, 0)
+}
+
+geometry.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(skinIndices, 4))
+geometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4))
+
+let step = 0.1
 const animation = () => {
   // 渲染
   renderer.render(scene, camera)
 
+  // 添加边界
+  if (bone.rotation.x > 0.3 || bone.rotation.x < -0.3) {
+    step = -step
+  }
+  for (let i = 0; i < skinnedMesh.skeleton.bones.length; i++) {
+    skinnedMesh.skeleton.bones[i].rotation.x += step * Math.PI / 180
+  }
   requestAnimationFrame(animation)
 }
 animation()
