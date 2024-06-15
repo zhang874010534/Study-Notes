@@ -8,4 +8,5 @@ import('./log').then(({ default: log }) => {
 export default function log_a() {
   console.log('hello')
 }
+throw new Error('error')
 React.createElement('div', null, 'hello')
