@@ -19,40 +19,32 @@ document.body.appendChild(renderer.domElement)
 // 定义了一个立方体的对象
 const geometry = new THREE.BoxGeometry(10, 10, 10)
 
-// 纹理加载器
-const textureLoader = new THREE.TextureLoader()
-textureLoader.load('src/assets/plaster.jpg', (texture) => {
-  // 创建材质
-  const material  = new THREE.MeshPhongMaterial({
-    // wireframe: true,
-    map: texture
-  })
-
-  const mesh = new THREE.Mesh(geometry, material )
-  mesh.rotation.y = 0.5
-  mesh.rotation.x = -12
-
-  // 添加到场景里
-  scene.add(mesh)
+// 创建材质
+const material = new THREE.MeshPhongMaterial({
+  // wireframe: true,
+  map: new THREE.TextureLoader().load('src/assets/plaster.jpg')
 })
+
+const mesh = new THREE.Mesh(geometry, material)
+mesh.rotation.y = 0.5
+mesh.rotation.x = -12
+
+// 添加到场景里
+scene.add(mesh)
+
+// 创建材质
+const material2 = new THREE.MeshPhongMaterial({
+  map: new THREE.TextureLoader().load('src/assets/plaster.jpg'),
+  normalMap: new THREE.TextureLoader().load('src/assets/plaster-normal.jpg'),
+})
+
+const mesh2 = new THREE.Mesh(geometry, material2)
+mesh2.rotation.y = -0.5
+mesh2.rotation.x = 12
+mesh2.position.x = 15
+// 添加到场景里
+scene.add(mesh2)
 renderer.setClearColor(0xffffff)
-textureLoader.load('src/assets/plaster.jpg', (texture) => {
-  textureLoader.load('src/assets/plaster-normal.jpg', (normal) => {
-    // 创建材质
-    const material = new THREE.MeshPhongMaterial({
-      map: texture,
-      normalMap: normal,
-    })
-
-    const mesh = new THREE.Mesh(geometry, material)
-    mesh.rotation.y = -0.5
-    mesh.rotation.x = 12
-    mesh.position.x = 15
-    // 添加到场景里
-    scene.add(mesh)
-  })
-})
-
 
 
 // 添加灯光
