@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input with @ Mention</title>
+  <style>
+      .suggestions {
+          border: 1px solid #ccc;
+          max-height: 100px;
+          overflow-y: auto;
+          position: absolute;
+          background: white;
+      }
+      .suggestion-item {
+          padding: 5px;
+          cursor: pointer;
+      }
+      .suggestion-item:hover {
+          background: #f0f0f0;
+      }
+  </style>
+</head>
+<body>
+<div style="position: relative;">
+  <input type="text" id="mention-input" placeholder="Type @ to mention someone">
+  <div id="suggestions" class="suggestions" style="display: none;"></div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('mention-input');
+    const suggestionsBox = document.getElementById('suggestions');
+    const users = ['TeerShen', 'Teer', 'teer', 'TTTeer', 'diandian']; // 示例用户列表
+
+    input.addEventListener('input', (event) => {
+      const value = event.target.value;
+      const cursorPosition = input.selectionStart;
+      const atIndex = value.lastIndexOf('@', cursorPosition - 1);
+      if (atIndex !== -1) {
+        const query = value.substring(atIndex + 1, cursorPosition).toLowerCase();
+        const filteredUsers = users.filter(user => user.toLowerCase().includes(query));
+
+        if (filteredUsers.length > 0) {
+          suggestionsBox.innerHTML = '';
+          filteredUsers.forEach(user => {
+            const item = document.createElement('div');
+            item.className = 'suggestion-item';
+            item.textContent = user;
+            item.addEventListener('click', () => {
+              const beforeMention = value.substring(0, atIndex);
+              const afterMention = value.substring(cursorPosition);
+              input.value = `${beforeMention}@${user} ${afterMention}`;
+              input.focus();
+              suggestionsBox.style.display = 'none';
+            });
+            suggestionsBox.appendChild(item);
+          });
+          suggestionsBox.style.display = 'block';
+        } else {
+          suggestionsBox.style.display = 'none';
+        }
+      } else {
+        suggestionsBox.style.display = 'none';
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (event.target !== input && event.target.parentNode !== suggestionsBox) {
+        suggestionsBox.style.display = 'none';
+      }
+    });
+  });
+
+</script>
+</body>
+</html>
