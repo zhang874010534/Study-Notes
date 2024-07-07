@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+      .hidden-element {
+          opacity: 0;
+          transform: translateY(20px); /* 向下移动20px */
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+
+      .hidden-element.show {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  </style>
+</head>
+<body>
+<div class="hidden-element">This is a hidden element</div>
+<div class="hidden-element">Another hidden element</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const hiddenElements = document.querySelectorAll('.hidden-element');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    hiddenElements.forEach(element => {
+      observer.observe(element);
+    });
+  });
+</script>
+</body>
+</html>

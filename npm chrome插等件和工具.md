@@ -344,3 +344,7 @@
 ### 组件库
 
 #### [storybook](https://storybook.js.org/docs/vue/get-started/introduction)
+
+### CDN
+
+https://unpkg.com/browse/@wangeditor/editor@5.1.23/dist/index.js
