@@ -25,10 +25,10 @@ const config = {
 
   mode: 'development',
   // mode: 'production',
-  // inline内敛 hidden生成不引入 eval以eval形式生成 nosources不生成源码 cheap省略一些详细信息比如列映射 module生成module信息
+  // inline内敛 hidden生成不引入 eval以eval形式生成 nosources不生成源码(生成sourcemap但是在控制台点报错信息无法看到源码) cheap省略一些详细信息比如列映射 module生成module信息
   // production模式只支持 source-map hidden-source-map nosources-source-map 以及 hidden-nosources-source-map
   // devtool: [inline-|hidden-|eval-][nosources-][cheap-[module-]]source-map
-  // devtool: 'source-map',
+  devtool: 'nosources-source-map',
   module: {
     rules: [
       // {
