@@ -42,12 +42,12 @@ scene.add(spotLight)
 
 // 创建虚拟的场景
 const imgs = [
-    'src/assets/sky/right.jpg',
-    'src/assets/sky/left.jpg',
-    'src/assets/sky/top.jpg',
-    'src/assets/sky/bottom.jpg',
-    'src/assets/sky/front.jpg',
-    'src/assets/sky/back.jpg'
+  'src/assets/sky/right.jpg',
+  'src/assets/sky/left.jpg',
+  'src/assets/sky/top.jpg',
+  'src/assets/sky/bottom.jpg',
+  'src/assets/sky/front.jpg',
+  'src/assets/sky/back.jpg'
 ]
 
 const mats = []
@@ -66,12 +66,34 @@ for (let i = 0; i < 6; ++i) {
 const skyBox = new THREE.Mesh(skyBoxGeometry, mats);
 scene.add(skyBox);
 
+// 创建一个球体 和一个立方体
+const sphereGeometry = new THREE.SphereGeometry(4, 15, 15)
+const cubeBoxGeometry = new THREE.BoxGeometry(5, 5, 5)
+
+// 立方体贴图是和环境一致, 球体是跟随当前环境
+const cubeMaterial = new THREE.MeshBasicMaterial({
+  envMap: new THREE.TextureLoader().load('src/assets/sky/right.jpg'),
+  side: THREE.DoubleSide,
+})
+
+// 通过立方体相机来实现
+const cubeCamera = new THREE.CubeCamera(0.1, 2000, 256)
+scene.add(cubeCamera)
+
+const sphereMaterial = new THREE.MeshBasicMaterial({
+  envMap: cubeCamera.renderTarget.texture,
+})
+
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
+const cube = new THREE.Mesh(cubeBoxGeometry, cubeMaterial)
+scene.add(sphere)
+scene.add(cube)
+
 const animation = () => {
   // trackBall.update()
   controls.update(clock.getDelta())
   // 渲染
   renderer.render(scene, camera)
-
   requestAnimationFrame(animation)
 }
 animation()
