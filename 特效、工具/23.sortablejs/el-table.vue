@@ -33,6 +33,15 @@ export default {
         }
       })
     },
+    save () {
+      // 保存
+      const dragDom = document.querySelector('.file-wrapper')
+      const fileList = []
+      for (let i = 0; i < dragDom.children.length; i++) {
+        const item = dragDom.children[i]
+        fileList.push(this.formState.fileList[item.dataset.index])
+      }
+    }
   }
 }
 </script>
