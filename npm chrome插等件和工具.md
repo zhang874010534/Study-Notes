@@ -348,3 +348,7 @@
 ### CDN
 
 https://unpkg.com/browse/@wangeditor/editor@5.1.23/dist/index.js
+
+### 精选网站
+
+https://magecdn.com/tools/svg-loaders  svg加载
