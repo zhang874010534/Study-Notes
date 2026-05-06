@@ -20,6 +20,7 @@
             type="file"
             accept="image/*"
             class="photo-file"
+            multiple
             @change="fileChange"
         >
       </div>
@@ -36,6 +37,9 @@
       <div class="photo-wrapper">
         <div class="camera-wrapper">
           <video ref="video" autoplay muted playsinline webkit-playsinline></video>
+          <div class="close-button" @click="closeCamera">
+            <van-icon name="cross" color="#fff" size="2em"/>
+          </div>
         </div>
         <div class="photo-bottom">
           <div class="left-photo">
@@ -79,7 +83,14 @@
           </template>
         </header-com>
         <div class="content">
-          <div class="content-image-item" v-for="(item, index) in photos" :key="index">
+          <div
+              class="content-image-item"
+              v-for="(item, index) in photos"
+              :class="{
+                'pad-image': deviceType === 'pad'
+              }"
+              :key="index"
+          >
             <img :src="item.url">
           </div>
         </div>
@@ -143,6 +154,7 @@ export default {
       imageEditPopup: false,
       upLoadUrl: common.upLoadUrl, // 图片上传地址
       sortableInstance: null,
+      deviceType: common.getLocalStorage('AD_deviceType')
     }
   },
   mounted () {
@@ -154,10 +166,10 @@ export default {
     showImagePopup () {
       this.show = true
     },
-    continuousPhoto (item) {
+    async continuousPhoto () {
       this.show = false;
       this.showCamera = true
-      this.openCamera()
+      await this.openCamera()
     },
     async openCamera() {
       this.stream = await navigator.mediaDevices.getUserMedia({
@@ -165,17 +177,28 @@ export default {
           noiseSuppression: false,
           echoCancellation: false,
           imageCaptureEnabled: false, // 关闭部分设备的高级拍照特性
-          width: { ideal: 640, max: 800 }, // 后置最高800x600（比前置略高但不卡顿）
-          height: { ideal: 480, max: 600 },
-          frameRate: { ideal: 30, max: 30 }, // 强制15帧（无商量）
+          width: {ideal: 640, max: 800}, // 后置最高800x600（比前置略高但不卡顿）
+          height: {ideal: 480, max: 600},
+          frameRate: {ideal: 15, max: 20}, // 强制15帧（无商量）
           focusMode: 'manual', // 关闭自动对焦（核心！减少卡顿）
           exposureMode: 'manual', // 关闭自动曝光调整
           whiteBalanceMode: 'manual', // 关闭自动白平衡
           facingMode: 'environment'
         }
       })
+
       let video = this.$refs.video
       video.srcObject = this.stream
+      await new Promise((resolve, reject) => {
+        video.onloadedmetadata = async () => {
+          try {
+            resolve()
+          } catch (err) {
+            reject(err)
+          }
+        }
+        video.onerror = reject
+      })
       this.photos = []
     },
     takePhoto() {
@@ -219,9 +242,7 @@ export default {
         }
       ]
       this.$emit('update:fileList', fileList)
-      this.showCamera = false
-      this.imageEditPopup = false
-      this.stream && this.stream.getTracks().forEach(t => t.stop())
+      this.closeCamera()
     },
     loadImage (src) {
       return new Promise((resolve, reject) => {
@@ -328,17 +349,71 @@ export default {
     },
     async fileChange (e) {
       this.show = false
-      let file = e.target.files[0];
-      if (!file) return;
-      const res = await this.compressImg(file)
-      let serviceImageUrl = await this.upload(res)
-      let fileList = [
-        ...this.fileList,
-        {
-          url: `/nis-file-server${serviceImageUrl.uriName}`,
+      console.log(e, 'e')
+      // 多选
+      if (e.target.files && e.target.files.length > 1) {
+        // 连拍
+        if (this.showContinuous) {
+          await this.continuousPhoto()
+          const files = Array.from(e.target.files || [])
+          const video = this.$refs.video
+
+          const targetWidth = video.videoWidth
+          const targetHeight = video.videoHeight
+          for (const file of files) {
+            if (!file.type.startsWith('image/')) continue
+
+            const img = await this.fileToImage(file)
+            const canvas = document.createElement('canvas')
+            canvas.width = targetWidth
+            canvas.height = targetHeight
+
+            const ctx = canvas.getContext('2d')
+
+            // 直接拉伸到 video 尺寸
+            ctx.drawImage(img, 0, 0, targetWidth, targetHeight)
+
+            this.photos.push({
+              url: canvas.toDataURL('image/jpeg', 0.9)
+            })
+          }
+
+          this.showImageEdit()
+        } else {
+          this.uploadFileList(e.target.files)
         }
-      ]
-      this.$emit('update:fileList', fileList)
+      } else {
+        this.uploadFileList(e.target.files)
+      }
+    },
+    fileToImage(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+
+        reader.onload = () => {
+          const img = new Image()
+
+          img.onload = () => resolve(img)
+          img.onerror = reject
+          img.src = reader.result
+        }
+
+        reader.onerror = reject
+        reader.readAsDataURL(file)
+      })
+    },
+    async uploadFileList (fileList) {
+      for (const fileListElement of fileList) {
+        const res = await this.compressImg(fileListElement)
+        let serviceImageUrl = await this.upload(res)
+        let fileList = [
+          ...this.fileList,
+          {
+            url: `${serviceImageUrl.uriName}`,
+          }
+        ]
+        this.$emit('update:fileList', fileList)
+      }
     },
     // 添加水印的核心方法
     addWatermark(file) {
@@ -447,6 +522,11 @@ export default {
         }
       })
     },
+    closeCamera () {
+      this.showCamera = false
+      this.imageEditPopup = false
+      this.stream && this.stream.getTracks().forEach(t => t.stop())
+    }
   }
 }
 </script>
@@ -460,6 +540,12 @@ export default {
     aspect-ratio: 3 / 4;
     background: #000;
     overflow: hidden;
+    position: relative;
+    .close-button {
+      position: absolute;
+      left: 2em;
+      top: 2em;
+    }
     video {
       width: 100%;
       height: 100%;
@@ -521,6 +607,11 @@ export default {
       img {
         width: 160px;
         object-fit: contain;
+      }
+      &.pad-image {
+        img {
+          width: 600px;
+        }
       }
     }
   }
