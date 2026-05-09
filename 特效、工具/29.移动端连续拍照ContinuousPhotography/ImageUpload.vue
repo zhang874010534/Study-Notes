@@ -24,6 +24,9 @@
             @change="fileChange"
         >
       </div>
+      <div class="action-item" v-if="deviceType === 'pad'" @click="chooseImage">
+        从相册选择
+      </div>
       <div class="action-item" @click="continuousPhoto" v-if="showContinuous">
         连拍拼图
       </div>
@@ -158,8 +161,10 @@ export default {
     }
   },
   mounted () {
+    window.addEventListener('message', this.imageResultEvent)
   },
   beforeDestroy() {
+    window.removeEventListener('message', this.imageResultEvent)
     this.stream && this.stream.getTracks().forEach(t => t.stop())
   },
   methods: {
@@ -349,36 +354,14 @@ export default {
     },
     async fileChange (e) {
       this.show = false
-      console.log(e, 'e')
+      console.log(e.target.files, 'e')
       // 多选
       if (e.target.files && e.target.files.length > 1) {
         // 连拍
         if (this.showContinuous) {
           await this.continuousPhoto()
           const files = Array.from(e.target.files || [])
-          const video = this.$refs.video
-
-          const targetWidth = video.videoWidth
-          const targetHeight = video.videoHeight
-          for (const file of files) {
-            if (!file.type.startsWith('image/')) continue
-
-            const img = await this.fileToImage(file)
-            const canvas = document.createElement('canvas')
-            canvas.width = targetWidth
-            canvas.height = targetHeight
-
-            const ctx = canvas.getContext('2d')
-
-            // 直接拉伸到 video 尺寸
-            ctx.drawImage(img, 0, 0, targetWidth, targetHeight)
-
-            this.photos.push({
-              url: canvas.toDataURL('image/jpeg', 0.9)
-            })
-          }
-
-          this.showImageEdit()
+          this.setFileToImageEdit(files)
         } else {
           this.uploadFileList(e.target.files)
         }
@@ -526,7 +509,68 @@ export default {
       this.showCamera = false
       this.imageEditPopup = false
       this.stream && this.stream.getTracks().forEach(t => t.stop())
-    }
+    },
+    chooseImage () {
+      this.show = false
+      window.parent.postMessage({
+        type: 'chooseImage',
+        id: Date.now(),
+      }, '*');
+    },
+    async imageResultEvent (event) {
+      const data = event.data
+
+      if (!data || data.type !== 'imageResult') return
+
+      const files = data.files.map(item => {
+        return this.dataUrlToFile(item.dataUrl, item.name);
+      });
+      if (files.length > 1) {
+        await this.continuousPhoto()
+        this.setFileToImageEdit(files)
+      } else {
+        this.uploadFileList(files)
+      }
+    },
+    dataUrlToFile (dataUrl, filename) {
+      const arr = dataUrl.split(',');
+      const mime = arr[0].match(/:(.*?);/)[1];
+      const bstr = atob(arr[1]);
+
+      let n = bstr.length;
+      const u8arr = new Uint8Array(n);
+
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+
+      return new File([u8arr], filename, { type: mime });
+    },
+    async setFileToImageEdit (files) {
+      const video = this.$refs.video
+
+      const targetWidth = video.videoWidth
+      const targetHeight = video.videoHeight
+      for (const file of files) {
+        if (!file.type.startsWith('image/')) continue
+
+        const img = await this.fileToImage(file)
+        const canvas = document.createElement('canvas')
+        canvas.width = targetWidth
+        canvas.height = targetHeight
+
+        const ctx = canvas.getContext('2d')
+
+        // 直接拉伸到 video 尺寸
+        ctx.drawImage(img, 0, 0, targetWidth, targetHeight)
+
+        this.photos.push({
+          url: canvas.toDataURL('image/jpeg', 0.9)
+        })
+      }
+
+      this.showImageEdit()
+    },
   }
 }
 </script>
